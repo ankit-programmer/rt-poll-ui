@@ -1,0 +1,16 @@
+.QuestionInput {
+    padding: 8px;
+    border-radius: 30px;
+    padding-left: 16px;
+    box-shadow: 10px;
+    font-size: larger;
+    margin-bottom: 16px;
+}
+
+.OptionInput {
+    margin: 16px 8px 0px 8px;
+    padding: 8px;
+    border-radius: 10px;
+    padding-left: 16px;
+    box-shadow: 10px;
+}
