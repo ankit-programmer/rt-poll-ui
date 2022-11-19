@@ -1,16 +1,38 @@
 .QuestionInput {
+    width: 100%;
     padding: 8px;
-    border-radius: 30px;
-    padding-left: 16px;
+    border-radius: 2em;
+    padding-left: 2.5em;
+    padding-right: 1.5em;
     box-shadow: 10px;
     font-size: larger;
     margin-bottom: 16px;
+    outline:0;
+}
+.QuestionIcon {
+    position: absolute;
+    font-size: 1.6rem;
+    color: rgba(248, 120, 120, 0.606);
+    padding: .15rem;
+    padding-left: 1.1rem;
 }
 
+
+.QuestionInput:focus, .OptionInput:focus {
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);;
+}
+.PollContainer {
+    width: 100%;
+    max-width: 800px;
+}
+.OptionContainer {
+    display: grid;
+}
 .OptionInput {
+    outline: 0;
     margin: 16px 8px 0px 8px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 0.5em;
     padding-left: 16px;
     box-shadow: 10px;
 }
