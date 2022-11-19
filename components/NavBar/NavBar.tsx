@@ -5,7 +5,7 @@ import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from 'react-icons/ai';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
 // import { useRouter } from 'next/router';
-import NavLogo from '../../public/assets/google.webp'
+import NavLogo from '../../public/assets/poll.png'
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -60,7 +60,7 @@ const Navbar = () => {
             <Image
               src={NavLogo}
               alt='/'
-              width='50'
+              width='100'
               height='50'
               className='cursor-pointer'
             />
@@ -119,8 +119,8 @@ const Navbar = () => {
                 <a>
                   <Image
                     src={NavLogo}
-                    width='87'
-                    height='35'
+                    width='200'
+                    height='100'
                     alt='/'
                   />
                 </a>
