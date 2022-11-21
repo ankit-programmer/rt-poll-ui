@@ -28,9 +28,9 @@
     max-width: 800px;
 }
 .OptionContainer {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    margin-inline:12px;
+    grid-template-columns: repeat(auto-fill,50%);
 }
 .Option {
     display: grid;
@@ -45,6 +45,7 @@
     cursor: pointer;
 }
 .OptionInput {
+    min-width: 200px;
     outline: 0;
     margin: 16px 8px 0px 8px;
     padding: 8px;
