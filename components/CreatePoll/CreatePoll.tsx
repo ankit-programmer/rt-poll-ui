@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './CreatePoll.module.css';
 import { BiImageAdd } from 'react-icons/bi';
+import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
+import {MdAdd, MdDeleteOutline} from 'react-icons/md';
 const CreatePoll = () => {
   let placeholders = ["Who will you vote for?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
@@ -41,34 +43,46 @@ const CreatePoll = () => {
             <div className={styles.Option}>
               <div className={styles.OptionIcon}>
 
-                <BiImageAdd size="2em"></BiImageAdd>
+                <BiImageAdd size="4em"></BiImageAdd>
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option One'></input>
-
+              <div className={styles.ActionContainer}>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
+                <MdAdd color="green" className={styles.OptionActionButton} size="1.5em"/>
+              </div>
             </div>
             <div className={styles.Option}>
               <div className={styles.OptionIcon}>
 
-                <BiImageAdd size="2em"></BiImageAdd>
+                <BiImageAdd size="4em"></BiImageAdd>
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option Two'></input>
-
+              <div className={styles.ActionContainer}>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
+                <MdAdd color="green" className={styles.OptionActionButton} size="1.5em"/>
+              </div>
             </div>
             <div className={styles.Option}>
               <div className={styles.OptionIcon}>
 
-                <BiImageAdd size="2em"></BiImageAdd>
+                <BiImageAdd size="4em"></BiImageAdd>
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option Three'></input>
-
+              <div className={styles.ActionContainer}>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
+                <MdAdd color='green' className={styles.OptionActionButton} size="1.5em"/>
+              </div>
             </div>
             <div className={styles.Option}>
               <div className={styles.OptionIcon}>
 
-                <BiImageAdd size="2em"></BiImageAdd>
+                <BiImageAdd size="4em"></BiImageAdd>
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option Four'></input>
-
+              <div className={styles.ActionContainer}>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
+                <MdAdd color='green' className={styles.OptionActionButton} size="1.5em"/>
+              </div>
             </div>
 
           </div>
