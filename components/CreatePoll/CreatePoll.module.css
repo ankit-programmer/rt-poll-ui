@@ -1,70 +1,73 @@
 .QuestionInput {
-    width: 100%;
-    padding: 8px;
-    border-radius: 2em;
-    padding-left: 2.5em;
-    padding-right: 1.5em;
-    box-shadow: 10px;
-    font-size: larger;
-    margin-bottom: 16px;
-    outline:0;
+  width: 100%;
+  padding: 8px;
+  border-radius: 2em;
+  padding-left: 2.5em;
+  padding-right: 1.5em;
+  box-shadow: 10px;
+  font-size: larger;
+  margin-bottom: 16px;
+  outline: 0;
 }
 .QuestionIcon {
-    position: absolute;
-    font-size: 1.6rem;
-    color: red;
-    opacity: 30%;
-    padding: .15rem;
-    padding-left: 1.1rem;
-    cursor: default
+  position: absolute;
+  font-size: 1.6rem;
+  color: red;
+  opacity: 30%;
+  padding: 0.15rem;
+  padding-left: 1.1rem;
+  cursor: default;
 }
 
-
-.QuestionInput:focus, .OptionInput:focus {
-    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);;
+.QuestionInput:focus,
+.OptionInput:focus {
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 .PollContainer {
-    width: 100%;
-    max-width: 800px;
+  width: 100%;
+  max-width: 800px;
 }
 .OptionContainer {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill,50%);
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  /* grid-template-columns: repeat(auto-fill,50%); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .Option {
-    display: grid;
-    margin-block: 4px;
+  width: 100%;
+  display: grid;
+  margin-block: 4px;
 }
 .OptionIcon {
-    position: absolute;
-    padding-top: 4px;
-    margin: 16px;
-    opacity: 20%;
-    color: black;
-    cursor: pointer;
+  position: absolute;
+  padding-top: 4px;
+  margin: 16px;
+  opacity: 20%;
+  color: black;
+  cursor: pointer;
 }
 .OptionInput {
-    min-width: 200px;
-    outline: 0;
-    margin: 16px 8px 0px 8px;
-    padding: 8px;
-    border-radius: 0.5em;
-    padding-left: 3rem;
-    box-shadow: 10px;
+  width: auto;
+  outline: 0;
+  margin: 16px 8px 0px 8px;
+  padding: 8px;
+  border-radius: 0.5em;
+  padding-left: 3rem;
+  box-shadow: 10px;
 }
 
 .ActionButton {
-    text-transform: uppercase;
-    padding: 0.5rem;
-    margin: 2rem;
-    padding-inline: 1rem;
-    border-radius: 0.5rem;
-    background-color: rgb(178, 178, 178);
-    opacity: 100%;
-    color: rgba(255, 255, 255, 0.932);
-    font-weight: bold;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  margin: 2rem;
+  padding-inline: 1rem;
+  border-radius: 0.5rem;
+  background-color: rgb(178, 178, 178);
+  opacity: 100%;
+  color: rgba(255, 255, 255, 0.932);
+  font-weight: bold;
 }
 .ActionButton:hover {
-    background-color: rgb(255, 164, 164);
+  background-color: rgb(255, 164, 164);
 }
