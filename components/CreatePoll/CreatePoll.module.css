@@ -1,21 +1,21 @@
 .QuestionInput {
   width: 100%;
-  padding: 8px;
+  padding: 16px;
   border-radius: 2em;
-  padding-left: 2.5em;
+  padding-left: 3em;
   padding-right: 1.5em;
   box-shadow: 10px;
   font-size: larger;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   outline: 0;
 }
 .QuestionIcon {
   position: absolute;
-  font-size: 1.6rem;
+  font-size: 2rem;
   color: red;
   opacity: 30%;
-  padding: 0.15rem;
-  padding-left: 1.1rem;
+  padding-left: 0.8rem;
+  margin: 6px;
   cursor: default;
 }
 
@@ -24,15 +24,18 @@
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 .PollContainer {
+position: relative;
   width: 100%;
   max-width: 800px;
 }
 .OptionContainer {
   width: 100%;
   display: grid;
+  grid-gap: 0.65rem;
+  /* padding-inline: 1rem; */
   justify-items: center;
   /* grid-template-columns: repeat(auto-fill,50%); */
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 .Option {
   position: relative;
@@ -47,7 +50,7 @@
   left: 0;
   margin: 0;
   bottom: 0;
-  margin-left: 0.5rem;
+  margin-left: 0.6rem;
   opacity: 10%;
   color: black;
   cursor: pointer;
@@ -55,10 +58,12 @@
 .OptionInput {
   width: auto;
   outline: 0;
+  font-size: large;
   margin: 16px 8px 0px 8px;
   padding: 8px;
   border-radius: 0.5em;
   padding-left: 4.5rem;
+  padding-right: 2rem;
   box-shadow: 10px;
 }
 
@@ -66,6 +71,7 @@
   position: absolute;
   display: grid;
   right: 0;
+  bottom: 0%;
   margin-top: 20px;
   margin-right: 8px;
   justify-items: center;
