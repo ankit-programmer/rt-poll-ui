@@ -67,6 +67,15 @@ position: relative;
   box-shadow: 10px;
 }
 
+@media screen and (max-width: 480px) {
+    .OptionInput {
+        min-width: 200px;
+    }
+    .OptionContainer {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
 .ActionContainer {
   position: absolute;
   display: grid;
