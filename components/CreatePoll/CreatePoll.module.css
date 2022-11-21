@@ -12,9 +12,11 @@
 .QuestionIcon {
     position: absolute;
     font-size: 1.6rem;
-    color: rgba(248, 120, 120, 0.606);
+    color: red;
+    opacity: 30%;
     padding: .15rem;
     padding-left: 1.1rem;
+    cursor: default
 }
 
 
@@ -27,12 +29,41 @@
 }
 .OptionContainer {
     display: grid;
+    grid-template-columns: repeat(2,1fr);
+    margin-inline:12px;
+}
+.Option {
+    display: grid;
+    margin-block: 4px;
+}
+.OptionIcon {
+    position: absolute;
+    padding-top: 4px;
+    margin: 16px;
+    opacity: 20%;
+    color: black;
+    cursor: pointer;
 }
 .OptionInput {
     outline: 0;
     margin: 16px 8px 0px 8px;
     padding: 8px;
     border-radius: 0.5em;
-    padding-left: 16px;
+    padding-left: 3rem;
     box-shadow: 10px;
+}
+
+.ActionButton {
+    text-transform: uppercase;
+    padding: 0.5rem;
+    margin: 2rem;
+    padding-inline: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(178, 178, 178);
+    opacity: 100%;
+    color: rgba(255, 255, 255, 0.932);
+    font-weight: bold;
+}
+.ActionButton:hover {
+    background-color: rgb(255, 164, 164);
 }

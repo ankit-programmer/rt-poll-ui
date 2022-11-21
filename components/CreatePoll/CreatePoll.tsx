@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './CreatePoll.module.css';
+import { BiImageAdd } from 'react-icons/bi';
 const CreatePoll = () => {
-  let placeholders = ["Who will you vote for?", "Who will win this T20 World Cup?", "Where should we go for vocation?"];
+  let placeholders = ["Who will you vote for?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
+  const quesRef: any = useRef(null);
   useEffect(() => {
+    if (quesRef.current) {
+      quesRef?.current?.focus();
+    }
     (async () => {
-      while(placeholders.length){
+      while (placeholders.length) {
         let ph = placeholders.shift();
         placeholders.push(ph || "");
         let sent = "";
         let words = ph?.split(" ") || [];
-        for(const word of words){
+        for (const word of words) {
           sent += `${word} `;
           setPlaceholder(sent);
           await dummyWait(300);
         }
         await dummyWait(5000);
-       
+
       }
-     
+
     })();
   }, [])
   return (
@@ -26,20 +31,48 @@ const CreatePoll = () => {
       <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
 
         <form className={styles.PollContainer}>
-      
+
 
           <div className={styles.QuestionIcon}>Q</div>
-          
-          <input className={styles.QuestionInput} type="text" id='question' placeholder={placeholder}></input>
-      
+
+          <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
+
           <div className={styles.OptionContainer}>
-            <input className={styles.OptionInput} type="text" id='question' placeholder='Option One'></input>
-            <input className={styles.OptionInput} type="text" id='question' placeholder='Option Two'></input>
-            <input className={styles.OptionInput} type="text" id='question' placeholder='Option Three'></input>
-            <input className={styles.OptionInput} type="text" id='question' placeholder='Option Four'></input>
+            <div className={styles.Option}>
+              <div className={styles.OptionIcon}>
+
+                <BiImageAdd size="2em"></BiImageAdd>
+              </div>
+              <input className={styles.OptionInput} type="text" placeholder='Option One'></input>
+
+            </div>
+            <div className={styles.Option}>
+              <div className={styles.OptionIcon}>
+
+                <BiImageAdd size="2em"></BiImageAdd>
+              </div>
+              <input className={styles.OptionInput} type="text" placeholder='Option Two'></input>
+
+            </div>
+            <div className={styles.Option}>
+              <div className={styles.OptionIcon}>
+
+                <BiImageAdd size="2em"></BiImageAdd>
+              </div>
+              <input className={styles.OptionInput} type="text" placeholder='Option Three'></input>
+
+            </div>
+            <div className={styles.Option}>
+              <div className={styles.OptionIcon}>
+
+                <BiImageAdd size="2em"></BiImageAdd>
+              </div>
+              <input className={styles.OptionInput} type="text" placeholder='Option Four'></input>
+
+            </div>
 
           </div>
-
+          <button className={styles.ActionButton}>Save and Share</button>
         </form>
 
       </div>
