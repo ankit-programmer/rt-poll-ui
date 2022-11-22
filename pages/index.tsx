@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import CreatePoll from '../components/CreatePoll/CreatePoll'
 import NavBar from '../components/NavBar/NavBar'
+import ViewPoll from '../components/ViewPoll/ViewPoll'
 
 export default function Home() {
   return (
@@ -12,7 +13,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar/>
-      <CreatePoll/>
+      {/* <CreatePoll/> */}
+      <ViewPoll/>
     </div>
   )
 }
