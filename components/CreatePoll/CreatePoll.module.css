@@ -86,7 +86,7 @@ position: relative;
   justify-items: center;
 }
 .OptionActionButton {
-  margin: 4px;
+  margin: 2px;
   color: red;
   opacity: 30%;
   cursor: pointer;

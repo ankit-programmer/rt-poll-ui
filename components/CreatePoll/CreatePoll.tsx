@@ -4,7 +4,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import {MdAdd, MdDeleteOutline} from 'react-icons/md';
 const CreatePoll = () => {
-  let placeholders = ["Who will you vote for?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
+  let placeholders = ["Who will you vote for?","Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
   const quesRef: any = useRef(null);
   useEffect(() => {
@@ -47,8 +47,8 @@ const CreatePoll = () => {
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option One'></input>
               <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
-                <MdAdd color="green" className={styles.OptionActionButton} size="1.5em"/>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
+                <MdAdd color="green" className={styles.OptionActionButton} size="1.7em"/>
               </div>
             </div>
             <div className={styles.Option}>
@@ -58,8 +58,8 @@ const CreatePoll = () => {
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option Two'></input>
               <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
-                <MdAdd color="green" className={styles.OptionActionButton} size="1.5em"/>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
+                <MdAdd color="green" className={styles.OptionActionButton} size="1.7em"/>
               </div>
             </div>
             <div className={styles.Option}>
@@ -69,8 +69,8 @@ const CreatePoll = () => {
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option Three'></input>
               <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
-                <MdAdd color='green' className={styles.OptionActionButton} size="1.5em"/>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
+                <MdAdd color='green' className={styles.OptionActionButton} size="1.7em"/>
               </div>
             </div>
             <div className={styles.Option}>
@@ -80,8 +80,8 @@ const CreatePoll = () => {
               </div>
               <input className={styles.OptionInput} type="text" placeholder='Option Four'></input>
               <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.5em"/>
-                <MdAdd color='green' className={styles.OptionActionButton} size="1.5em"/>
+                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
+                <MdAdd color='green' className={styles.OptionActionButton} size="1.7em"/>
               </div>
             </div>
 
