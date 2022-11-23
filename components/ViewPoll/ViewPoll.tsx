@@ -17,18 +17,18 @@ const ViewPoll = () => {
 
                     <div className={styles.QuestionContainer}>
 
-                    <div className={styles.QuestionIcon}>Q</div>
-                    <div className={styles.QuestionText}>{question}</div>
-                    {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
+                        <div className={styles.QuestionIcon}>Q</div>
+                        <div className={styles.QuestionText}>{question}</div>
+                        {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
 
                     </div>
                     <div className={styles.Divider}></div>
                     <div className={styles.OptionContainer}>
                         {
                             options.map((option, i) => (
-                                <div className={styles.Option}>
+                                <div className={styles.Option} key={i}>
                                     <div className={styles.OptionIcon}>
-                                        
+
                                         <BiImageAdd size="4em"></BiImageAdd>
                                     </div>
                                     <div className={styles.OptionText}>{option}
