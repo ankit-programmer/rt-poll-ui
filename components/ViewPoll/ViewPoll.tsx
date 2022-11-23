@@ -8,30 +8,7 @@ import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 const ViewPoll = () => {
     const question = "Who will you vote for? ";
     const options = ["Narendra Modi", "Rahul", "Kejriwal", "None"];
-    let placeholders = ["Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
-    let [placeholder, setPlaceholder] = useState("");
-    const quesRef: any = useRef(null);
-    useEffect(() => {
-        if (quesRef.current) {
-            quesRef?.current?.focus();
-        }
-        (async () => {
-            while (placeholders.length) {
-                let ph = placeholders.shift();
-                placeholders.push(ph || "");
-                let sent = "";
-                let words = ph?.split(" ") || [];
-                for (const word of words) {
-                    sent += `${word} `;
-                    setPlaceholder(sent);
-                    await dummyWait(300);
-                }
-                await dummyWait(5000);
 
-            }
-
-        })();
-    }, [])
     return (
         <div className='w-full h-screen text-center'>
             <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
