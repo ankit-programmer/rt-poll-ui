@@ -24,7 +24,8 @@
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 .PollContainer {
-position: relative;
+  margin-top: 100px;
+  position: relative;
   width: 100%;
   max-width: 800px;
 }
@@ -68,12 +69,12 @@ position: relative;
 }
 
 @media screen and (max-width: 480px) {
-    .OptionInput {
-        min-width: 200px;
-    }
-    .OptionContainer {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+  .OptionInput {
+    min-width: 200px;
+  }
+  .OptionContainer {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }
 
 .ActionContainer {

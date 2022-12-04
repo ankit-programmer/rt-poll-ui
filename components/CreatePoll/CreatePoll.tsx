@@ -1,12 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Dispatch, ReducerAction, useEffect, useReducer, useRef, useState } from 'react'
 import styles from './CreatePoll.module.css';
 import { BiImageAdd } from 'react-icons/bi';
 import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
-import {MdAdd, MdDeleteOutline} from 'react-icons/md';
+import { MdAdd, MdDeleteOutline } from 'react-icons/md';
+import { useAddNewPollQuery } from '../../services/poll';
+import { Option, Poll } from '../../services/types';
+
+const ACTIONS = {
+  ADD_OPTION: 'add-option',
+  REMOVE_OPTION: 'remove-option',
+  CHANGE_OPTION: 'change-option'
+}
+
+function reducer(options: Option[], action: any): Option[] {
+  console.log(action);
+  switch (action.type) {
+    case ACTIONS.ADD_OPTION:
+      {
+        if (options.length >= 8) return options;
+        return [...options, { text: "" }];
+        break;
+      }
+    case ACTIONS.REMOVE_OPTION:
+      {
+        const index = action?.payload?.index;
+        if (options.length <= 2) return options;
+        const opt = [...options];
+        opt.splice(index, 1);
+        return opt;
+        break;
+      }
+    case ACTIONS.CHANGE_OPTION:
+      {
+        const index = action?.payload?.index;
+        const text = action?.payload?.text
+        const opt = [...options]
+        opt[index] = { text };
+        return opt;
+        break;
+      }
+
+    default:
+      return options;
+      break;
+  }
+
+
+}
 const CreatePoll = () => {
-  let placeholders = ["Who will you vote for?","Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
+  let placeholders = ["Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
+  const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }] as Option[]);
+  // const [options, setOption] = useState([{}, {}, {}, {}]);
+  function addOption(text: string, index: number) {
+    dispatch({ type: ACTIONS.CHANGE_OPTION, payload: { text, index } });
+  }
   const quesRef: any = useRef(null);
+
+  function deleteOption(index: number) {
+    dispatch({ type: ACTIONS.REMOVE_OPTION, payload: { index } })
+
+  }
+
+  function addNewOption() {
+    dispatch({ type: ACTIONS.ADD_OPTION })
+  }
+
+  function handleSubmit(event: any) {
+    event?.preventDefault();
+    console.log("Clicked");
+    console.log(quesRef?.current?.value);
+    console.log(options);
+  }
+  function handleOptionChange(event: any) {
+    addOption(event?.target?.value, parseInt(event?.target?.id));
+  }
   useEffect(() => {
     if (quesRef.current) {
       quesRef?.current?.focus();
@@ -40,53 +108,25 @@ const CreatePoll = () => {
           <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
 
           <div className={styles.OptionContainer}>
-            <div className={styles.Option}>
-              <div className={styles.OptionIcon}>
+            {
+              options.map((option: any, i) => (
+                <div key={i} className={styles.Option}>
+                  <div className={styles.OptionIcon}>
 
-                <BiImageAdd size="4em"></BiImageAdd>
-              </div>
-              <input className={styles.OptionInput} type="text" placeholder='Option One'></input>
-              <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
-                <MdAdd color="green" className={styles.OptionActionButton} size="1.7em"/>
-              </div>
-            </div>
-            <div className={styles.Option}>
-              <div className={styles.OptionIcon}>
+                    <BiImageAdd size="4em"></BiImageAdd>
+                  </div>
+                  <input className={styles.OptionInput} type="text" onChange={handleOptionChange} id={`${i}`} value={option.text} placeholder='Option One'></input>
+                  <div className={styles.ActionContainer}>
+                    <MdDeleteOutline className={styles.OptionActionButton} size="1.7em" onClick={() => deleteOption(i)} />
+                    <MdAdd color="green" className={styles.OptionActionButton} size="1.7em" onClick={addNewOption} />
+                  </div>
+                </div>
+              ))
+            }
 
-                <BiImageAdd size="4em"></BiImageAdd>
-              </div>
-              <input className={styles.OptionInput} type="text" placeholder='Option Two'></input>
-              <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
-                <MdAdd color="green" className={styles.OptionActionButton} size="1.7em"/>
-              </div>
-            </div>
-            <div className={styles.Option}>
-              <div className={styles.OptionIcon}>
-
-                <BiImageAdd size="4em"></BiImageAdd>
-              </div>
-              <input className={styles.OptionInput} type="text" placeholder='Option Three'></input>
-              <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
-                <MdAdd color='green' className={styles.OptionActionButton} size="1.7em"/>
-              </div>
-            </div>
-            <div className={styles.Option}>
-              <div className={styles.OptionIcon}>
-
-                <BiImageAdd size="4em"></BiImageAdd>
-              </div>
-              <input className={styles.OptionInput} type="text" placeholder='Option Four'></input>
-              <div className={styles.ActionContainer}>
-                <MdDeleteOutline className={styles.OptionActionButton} size="1.7em"/>
-                <MdAdd color='green' className={styles.OptionActionButton} size="1.7em"/>
-              </div>
-            </div>
 
           </div>
-          <button className={styles.ActionButton}>Save and Share</button>
+          <button className={styles.ActionButton} onClick={handleSubmit}>Save and Share</button>
         </form>
 
       </div>
