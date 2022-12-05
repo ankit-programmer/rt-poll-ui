@@ -3,7 +3,7 @@ import styles from './CreatePoll.module.css';
 import { BiImageAdd } from 'react-icons/bi';
 import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import { MdAdd, MdDeleteOutline } from 'react-icons/md';
-import { useAddNewPollQuery } from '../../services/poll';
+import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
 
 const ACTIONS = {
@@ -51,6 +51,7 @@ const CreatePoll = () => {
   let placeholders = ["Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
   const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }] as Option[]);
+  const [addPoll, { isLoading }] = useAddNewPollMutation();
   // const [options, setOption] = useState([{}, {}, {}, {}]);
   function addOption(text: string, index: number) {
     dispatch({ type: ACTIONS.CHANGE_OPTION, payload: { text, index } });
@@ -71,6 +72,7 @@ const CreatePoll = () => {
     console.log("Clicked");
     console.log(quesRef?.current?.value);
     console.log(options);
+    addPoll({ title: quesRef?.current?.value, options });
   }
   function handleOptionChange(event: any) {
     addOption(event?.target?.value, parseInt(event?.target?.id));

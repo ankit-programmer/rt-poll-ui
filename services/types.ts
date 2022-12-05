@@ -13,3 +13,9 @@ export type Option = {
     text?: string,
     image?: string
 }
+
+export type Auth = {
+    token?: string,
+    email?: string,
+    isAnonymous?: boolean
+}

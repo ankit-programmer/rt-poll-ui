@@ -5,8 +5,12 @@ import { BiImageAdd } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
 import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import { MdAdd, MdDeleteOutline } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useGetUserQuery } from '../../services/user';
 const ViewPoll = () => {
     const { data, error, isLoading } = useGetPollByIdQuery("nawpnTl1cx1jE0k2I0S9");
+    const user = useGetUserQuery("");
+    console.log(user);
     const question = "Who will you vote for? ";
     const options = ["Narendra Modi", "Rahul", "Kejriwal", "None"];
 

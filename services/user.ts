@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Poll } from './types'
 import { store } from '../app/store';
 // Define a service using a base URL and expected endpoints
-export const pollApi = createApi({
-    reducerPath: 'pollApi',
+export const userApi = createApi({
+    reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://api.rtpoll.com',
         prepareHeaders: (headers, { getState }) => {
@@ -15,21 +15,14 @@ export const pollApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getPollById: builder.query<Poll, string>({
-            query: (id) => ({
-                url: '/poll',
-                params: { id }
-            }),
-        }),
-        addNewPoll: builder.mutation({
-            query: (poll) =>
-            ({
-                url: '/poll',
-                method: 'POST',
-                body: poll
-            }),
+        getUser: builder.query<Poll, string>({
+            query: () => {
+                return {
+                    url: '/user'
+                }
+            },
         })
     }),
 })
 
-export const { useGetPollByIdQuery, useAddNewPollMutation } = pollApi;
+export const { useGetUserQuery } = userApi;
