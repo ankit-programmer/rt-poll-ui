@@ -7,7 +7,7 @@ const PollList = () => {
 
     return (<>
         {
-            data?.map(({ id }) => <ViewPoll id={id}></ViewPoll>)
+            data?.map(({ id }) => <ViewPoll key={id} id={id}></ViewPoll>)
         }
     </>);
 }
