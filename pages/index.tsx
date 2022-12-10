@@ -9,6 +9,9 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../app/firebaseApp'
 import { setAuth } from '../services/auth';
 import { useDispatch } from 'react-redux';
+import { useGetPollsQuery } from '../services/poll';
+import { useEffect } from 'react'
+import PollList from '../components/PollList/PollList'
 export default function Home() {
   const dispatch = useDispatch();
   onAuthStateChanged(auth, (user: any) => {
@@ -16,6 +19,7 @@ export default function Home() {
     dispatch(setAuth({ token: user?.accessToken, email: user?.email, isAnonymous: user?.isAnonymous }))
   });
   const { token } = useSelector((state: any) => state.auth) as any;
+
   return (
 
 
@@ -27,7 +31,11 @@ export default function Home() {
       </Head>
       <NavBar />
       <CreatePoll />
-      {token ? <ViewPoll /> : <>Login to view poll</>}
+      {/* 
+        -> Get all poll of user
+        -> Render ViewPoll for all ids
+      */}
+      {token ? <PollList></PollList> : <>Login To View Polls</>}
 
     </div>
   )

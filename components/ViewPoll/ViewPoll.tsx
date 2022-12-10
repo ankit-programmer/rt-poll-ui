@@ -7,10 +7,8 @@ import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useGetUserQuery } from '../../services/user';
-const ViewPoll = () => {
-    const { data, error, isLoading } = useGetPollByIdQuery("nawpnTl1cx1jE0k2I0S9");
-    const user = useGetUserQuery("");
-    console.log(user);
+const ViewPoll = (params: any) => {
+    const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
     const question = "Who will you vote for? ";
     const options = ["Narendra Modi", "Rahul", "Kejriwal", "None"];
 
@@ -24,7 +22,7 @@ const ViewPoll = () => {
                         <div className={styles.QuestionContainer}>
 
                             <div className={styles.QuestionIcon}>Q</div>
-                            <div className={styles.QuestionText}>{question}</div>
+                            <div className={styles.QuestionText}>{data?.title || question}</div>
                             {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
 
                         </div>

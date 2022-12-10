@@ -15,6 +15,11 @@ export const pollApi = createApi({
         }
     }),
     endpoints: (builder) => ({
+        getPolls: builder.query<Poll[], string>({
+            query: () => ({
+                url: '/poll'
+            })
+        }),
         getPollById: builder.query<Poll, string>({
             query: (id) => ({
                 url: '/poll',
@@ -32,4 +37,4 @@ export const pollApi = createApi({
     }),
 })
 
-export const { useGetPollByIdQuery, useAddNewPollMutation } = pollApi;
+export const { useGetPollByIdQuery, useAddNewPollMutation, useGetPollsQuery} = pollApi;
