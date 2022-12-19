@@ -5,6 +5,7 @@ import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
+import { CircularProgress } from '@mui/material';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -70,6 +71,7 @@ const CreatePoll = () => {
   function handleSubmit(event: any) {
     event?.preventDefault();
     console.log("Clicked");
+    // Check if all the required inputs are provided
     console.log(quesRef?.current?.value);
     console.log(options);
     addPoll({ title: quesRef?.current?.value, options });
@@ -101,8 +103,8 @@ const CreatePoll = () => {
   return (
     <div className='w-full h-screen text-center'>
       <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
-
-        <form className={styles.PollContainer}>
+        {/* {true ? <CircularProgress className={styles.Progress}></CircularProgress> : <></>} */}
+        <form className={styles.PollContainer} autoComplete="off">
 
 
           <div className={styles.QuestionIcon}>Q</div>
@@ -128,7 +130,9 @@ const CreatePoll = () => {
 
 
           </div>
-          <button className={styles.ActionButton} onClick={handleSubmit}>Save and Share</button>
+          <button className={styles.ActionButton} onClick={handleSubmit}>
+            {isLoading ? <CircularProgress size="2rem"></CircularProgress> : "Save and Share"}</button>
+
         </form>
 
       </div>
