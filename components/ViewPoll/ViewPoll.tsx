@@ -11,7 +11,6 @@ const ViewPoll = (params: any) => {
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
     const question = "Who will you vote for? ";
     const options = ["Narendra Modi", "Rahul", "Kejriwal", "None"];
-    fetch("https://s3.ap-south-1.amazonaws.com/walkover.things-of-brand.assets/05bb5640c50d9dc4e0d43b083e114a9e",{mode: "no-cors"}).then(res=>res.text()).then(value=>console.log(value))
     return (
         <div className='w-full h-screen text-center'>
             <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>

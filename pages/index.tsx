@@ -12,10 +12,11 @@ import { useDispatch } from 'react-redux';
 import { useGetPollsQuery } from '../services/poll';
 import { useEffect } from 'react'
 import PollList from '../components/PollList/PollList'
+import Report from '../components/Report/Report'
 export default function Home() {
   const dispatch = useDispatch();
+
   onAuthStateChanged(auth, (user: any) => {
-    console.log(user);
     dispatch(setAuth({ token: user?.accessToken, email: user?.email, isAnonymous: user?.isAnonymous }))
   });
   const { token } = useSelector((state: any) => state.auth) as any;
@@ -36,7 +37,7 @@ export default function Home() {
         -> Render ViewPoll for all ids
       */}
       {token ? <PollList></PollList> : <>Login To View Polls</>}
-
+      {/* <Report></Report> */}
     </div>
   )
 }
