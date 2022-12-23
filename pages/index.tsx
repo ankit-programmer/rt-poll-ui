@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useGetPollsQuery } from '../services/poll';
 import { useEffect } from 'react'
 import PollList from '../components/PollList/PollList'
-import Report from '../components/Report/Report'
+// import Report from '../components/Report/Report'
 export default function Home() {
   const dispatch = useDispatch();
 
