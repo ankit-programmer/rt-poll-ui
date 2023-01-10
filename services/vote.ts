@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Vote } from './types'
 import { store } from '../app/store';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 // Define a service using a base URL and expected endpoints
 export const voteApi = createApi({
     reducerPath: 'voteApi',
@@ -26,7 +27,7 @@ export const voteApi = createApi({
                 url: `/vote/${id}`
             }),
             async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
-                const ws = new WebSocket(`wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`);
+                const ws = new ReconnectingWebSocket(`wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`);
                 try {
                     await cacheDataLoaded;
                     const listener = (event: MessageEvent) => {
