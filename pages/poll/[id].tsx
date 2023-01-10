@@ -14,7 +14,7 @@ export default function Home() {
     const dispatch = useDispatch();
 
     onAuthStateChanged(auth, (user: any) => {
-        dispatch(setAuth({ token: user?.accessToken, email: user?.email, isAnonymous: user?.isAnonymous }))
+        dispatch(setAuth({ token: user?.accessToken, email: user?.email, isAnonymous: user?.isAnonymous, uid: user?.uid }))
     });
     const { token } = useSelector((state: any) => state.auth) as any;
 
