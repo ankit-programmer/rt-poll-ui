@@ -25,6 +25,46 @@ export const voteApi = createApi({
             query: (id) => ({
                 url: `/vote/${id}`
             }),
+            async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
+                const ws = new WebSocket(`wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`);
+                try {
+                    await cacheDataLoaded;
+                    const listener = (event: MessageEvent) => {
+
+                        const data = JSON.parse(event.data);
+                        console.log(data);
+                        updateCachedData((draft) => {
+                            switch (data?.event) {
+                                case 'add': {
+                                    const tempData = { ...draft };
+                                    tempData.options[data?.optionId].count++;
+                                    Object.assign(draft, tempData);
+
+                                    break;
+                                }
+                                case 'remove': {
+                                    const tempData = { ...draft };
+                                    tempData.options[data?.optionId].count--;
+                                    Object.assign(draft, tempData);
+                                }
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                            if (data?.event == "add") {
+
+
+                            }
+                        })
+                    }
+                    ws.addEventListener('message', listener);
+                } catch {
+
+                }
+                await cacheEntryRemoved;
+                ws.close();
+            }
         }),
         addVote: builder.mutation({
             query: (vote) =>
