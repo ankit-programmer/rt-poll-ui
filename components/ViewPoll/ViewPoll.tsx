@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
 import { useGetPollByIdQuery } from '../../services/poll';
+import { useGetVoteByIdQuery, useAddVoteMutation } from '../../services/vote';
 import { BiImageAdd } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
-import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
-import { MdAdd, MdDeleteOutline } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import { useGetUserQuery } from '../../services/user';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { IconButton } from '@mui/material';
 const ViewPoll = (params: any) => {
+
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
-    const question = "Who will you vote for? ";
-    const options = ["Narendra Modi", "Rahul", "Kejriwal", "None"];
+    const vote = useGetVoteByIdQuery(params?.id);
+    const winner = getWinner(vote?.data?.options);
+    const [addVote, status] = useAddVoteMutation();
+
     return (
         <div className='w-full h-screen text-center'>
             <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
@@ -21,7 +23,7 @@ const ViewPoll = (params: any) => {
                         <div className={styles.QuestionContainer}>
 
                             <div className={styles.QuestionIcon}>Q</div>
-                            <div className={styles.QuestionText}>{data?.title || question}</div>
+                            <div className={styles.QuestionText}>{data?.title}</div>
                             {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
 
                         </div>
@@ -30,15 +32,21 @@ const ViewPoll = (params: any) => {
                             {
                                 data ?
                                     data?.options?.map((option, i) => (
-                                        <div className={styles.Option} key={i}>
+                                        <div onClick={() => {
+                                            addVote({
+                                                pollId: vote.data?.pollId,
+                                                optionId: option.id
+                                            })
+                                        }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
+
                                             <div className={styles.OptionIcon}>
 
                                                 <BiImageAdd size="4em"></BiImageAdd>
                                             </div>
                                             <div className={styles.OptionText}>{option.text}
-                                                {i == 0 ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
+                                                {option?.id == winner ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
                                             </div>
-                                            <div className={styles.OptionStat}>100% </div>
+                                            <div className={styles.OptionStat}>{vote?.data?.options[option.id]?.count} </div>
                                         </div>
 
                                     )) : <>Loading</>
@@ -48,12 +56,19 @@ const ViewPoll = (params: any) => {
                         </div>
                     </>) : null}</div>
                     {/* <button className={styles.ActionButton}>Save and Share</button> */}
+                    <IconButton onClick={() => {
+                        navigator.clipboard.writeText(getPollLink(params?.id))
+                    }}>
+
+                        <ContentCopyIcon color='primary'></ContentCopyIcon>
+                    </IconButton>
                 </form>
 
             </div>
         </div>
 
     )
+
 }
 
 function dummyWait(time = 1000) {
@@ -62,6 +77,20 @@ function dummyWait(time = 1000) {
             return resolve(true);
         }, time);
     })
+}
+
+function getWinner(options: any) {
+    if (!options) return null;
+    const keys = Object.keys(options);
+    keys.sort((a: any, b: any) => {
+        a = options[a];
+        b = options[b];
+        return a?.count - b?.count;
+    });
+    return keys.pop();
+}
+function getPollLink(pollId?: string) {
+    return `https://rtpoll.com/poll/${pollId}`;
 }
 export default ViewPoll;
 

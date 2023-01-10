@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { pollApi } from '../services/poll'
 import { userApi } from '../services/user'
+import { voteApi } from '../services/vote';
 import authReducer from '../services/auth';
 
 export const store = configureStore({
@@ -10,14 +11,15 @@ export const store = configureStore({
         // Add the generated reducer as a specific top-level slice
         [pollApi.reducerPath]: pollApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
+        [voteApi.reducerPath]: voteApi.reducer,
         auth: authReducer
     },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
-    middleware: (getDefaultMiddleware) =>{
-       return getDefaultMiddleware().concat(pollApi.middleware).concat(userApi.middleware);
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(pollApi.middleware).concat(userApi.middleware).concat(voteApi.middleware);
     }
-        ,
+    ,
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

@@ -1,7 +1,6 @@
 import React, { Dispatch, ReducerAction, useEffect, useReducer, useRef, useState } from 'react'
 import styles from './CreatePoll.module.css';
 import { BiImageAdd } from 'react-icons/bi';
-import { BsPlus, BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
@@ -61,7 +60,6 @@ const CreatePoll = () => {
 
   function deleteOption(index: number) {
     dispatch({ type: ACTIONS.REMOVE_OPTION, payload: { index } })
-
   }
 
   function addNewOption() {
