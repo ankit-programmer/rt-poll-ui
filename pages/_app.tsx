@@ -5,15 +5,23 @@ import { Provider } from 'react-redux';
 import { store } from '../app/store';
 import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { auth } from '../app/firebaseApp'
+import { useEffect } from 'react';
 
 
 export default function App({ Component, pageProps }: AppProps) {
-  if (!auth.currentUser) {
-    signInAnonymously(auth);
-  }
-  onAuthStateChanged(auth, (user: any) => {
-    console.log(user);
-  })
+  useEffect(() => {
+    return auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("Persist User");
+        console.log(user?.uid);
+        console.log(user?.isAnonymous);
+      } else {
+        signInAnonymously(auth).catch((error) => {
+          console.log(error);
+        })
+      }
+    })
+  }, [])
   return (<>
     <Provider store={store}>
       <Component {...pageProps} />
