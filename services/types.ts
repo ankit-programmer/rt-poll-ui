@@ -27,5 +27,6 @@ export type Option = {
 export type Auth = {
     token?: string,
     email?: string,
-    isAnonymous?: boolean
+    isAnonymous?: boolean,
+    uid?: string
 }

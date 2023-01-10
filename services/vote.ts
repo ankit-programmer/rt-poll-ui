@@ -38,6 +38,7 @@ export const voteApi = createApi({
                                 case 'add': {
                                     const tempData = { ...draft };
                                     tempData.options[data?.optionId].count++;
+                                    tempData.selected = (data?.uid == store.getState().auth.uid) ? data?.optionId : tempData.selected;
                                     Object.assign(draft, tempData);
 
                                     break;
@@ -45,6 +46,7 @@ export const voteApi = createApi({
                                 case 'remove': {
                                     const tempData = { ...draft };
                                     tempData.options[data?.optionId].count--;
+                                    tempData.selected = (data?.uid == store.getState().auth.uid) ? 'null' : tempData.selected;
                                     Object.assign(draft, tempData);
                                 }
 
