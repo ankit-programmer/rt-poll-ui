@@ -6,8 +6,8 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 export const voteApi = createApi({
     reducerPath: 'voteApi',
     baseQuery: fetchBaseQuery({
-        // baseUrl: 'http://localhost:4000',
-        baseUrl: 'https://api.rtpoll.com',
+        baseUrl: 'http://localhost:4000',
+        // baseUrl: 'https://api.rtpoll.com',
         prepareHeaders: (headers, { getState }) => {
             const token = store.getState().auth.token;
             if (token) {

@@ -5,8 +5,8 @@ import { store } from '../app/store';
 export const pollApi = createApi({
     reducerPath: 'pollApi',
     baseQuery: fetchBaseQuery({
-        // baseUrl: 'http://localhost:4000',
-        baseUrl: 'https://api.rtpoll.com',
+        baseUrl: 'http://localhost:4000',
+        // baseUrl: 'https://api.rtpoll.com',
         prepareHeaders: (headers, { getState }) => {
             const token = store.getState().auth.token;
             if (token) {

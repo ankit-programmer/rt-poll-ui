@@ -3,25 +3,61 @@ import Auth from '../components/Auth/Auth'
 import { auth as firebaseAuth } from '../app/firebaseApp'
 import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { GiTurret } from 'react-icons/gi';
-
+import { useMergeUserMutation } from '../services/user';
+import { useGetPollByIdQuery } from '../services/poll';
+import { setAuth } from '../services/auth';
+import { useDispatch } from 'react-redux';
+let anonymousToken: string = "";
 export default function Login() {
-    firebaseAuth.onAuthStateChanged((user: any) => {
-        console.log(user?.accessToken);
-    })
+    const dispatch = useDispatch();
+    const [mergeUser, { data, error, isLoading }] = useMergeUserMutation();
+    let successUrl = "/";
+
     return (
         <Auth uiConfig={{
             autoUpgradeAnonymousUsers: true,
             callbacks: {
                 signInSuccessWithAuthResult(authResult, redirectUrl?) {
+                    successUrl = redirectUrl || "/";
                     return true;
                 },
-                signInFailure(error) {
-                    if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
+                signInFailure(err) {
+                    if (err.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
                         return Promise.resolve();
                     }
                     // Handle account merge conflict
                     // The credential the user tried to sign in with.
-                    var cred = error.credential;
+                    var cred = err.credential;
+                    return firebaseAuth.currentUser?.getIdToken().then(token => {
+                        return anonymousToken = token;
+                    }).then(() => {
+                        return firebaseAuth.signInWithCredential(cred);
+                    }).then(async (user: any) => {
+                        user = firebaseAuth.currentUser;
+                        const token = await user?.getIdToken();
+                        return dispatch(setAuth({ 'token': token, email: user?.email, isAnonymous: user?.isAnonymous, uid: user?.uid }))
+
+                    }).then(() => {
+
+                        return mergeUser(anonymousToken).then((result: any) => {
+                            if (!error) {
+                                console.log('User upgraded successfully!');
+
+                            } else {
+                                console.log(result);
+                                console.log("Something went wrong while merging user");
+                            }
+
+                        }).catch(error => {
+                            console.log(error);
+                            console.log('Something went wrong while merging user');
+                        });
+
+                    }).then(() => {
+                        anonymousToken = "";
+                        console.log(successUrl);
+                        window.location.assign(successUrl);
+                    })
 
                     /**
                      * TODO: ANKIT : PENDING
