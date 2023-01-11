@@ -3,6 +3,10 @@ import type { Vote } from './types'
 import { store } from '../app/store';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 // Define a service using a base URL and expected endpoints
+
+const wsUrlProvider = async (arg: string) => {
+    return `wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`;
+}
 export const voteApi = createApi({
     reducerPath: 'voteApi',
     baseQuery: fetchBaseQuery({
@@ -27,7 +31,14 @@ export const voteApi = createApi({
                 url: `/vote/${id}`
             }),
             async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
-                const ws = new ReconnectingWebSocket(`wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`);
+                if (!arg) return;
+                const urlProvider = () => {
+                    // return `ws://localhost:5000/poll/${arg}?token=${store.getState().auth.token}`
+                    return `wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`
+                }
+                const ws = new ReconnectingWebSocket(urlProvider, [], {
+                    maxRetries: 10
+                });
                 try {
                     await cacheDataLoaded;
                     const listener = (event: MessageEvent) => {
@@ -55,10 +66,7 @@ export const voteApi = createApi({
                                 default:
                                     break;
                             }
-                            if (data?.event == "add") {
 
-
-                            }
                         })
                     }
                     ws.addEventListener('message', listener);
