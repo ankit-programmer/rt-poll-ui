@@ -37,7 +37,7 @@ export const voteApi = createApi({
                     return `wss://ws.rtpoll.com/poll/${arg}?token=${store.getState().auth.token}`
                 }
                 const ws = new ReconnectingWebSocket(urlProvider, [], {
-                    maxRetries: 10
+                    maxRetries: 20
                 });
                 try {
                     await cacheDataLoaded;

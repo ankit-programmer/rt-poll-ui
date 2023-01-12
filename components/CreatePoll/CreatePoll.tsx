@@ -48,7 +48,7 @@ function reducer(options: Option[], action: any): Option[] {
 
 }
 const CreatePoll = () => {
-  let placeholders = ["Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
+  let placeholders = ["What shoud I cover in my next video?", "Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
   const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }] as Option[]);
   const [addPoll, { isLoading }] = useAddNewPollMutation();
@@ -68,10 +68,6 @@ const CreatePoll = () => {
 
   function handleSubmit(event: any) {
     event?.preventDefault();
-    console.log("Clicked");
-    // Check if all the required inputs are provided
-    console.log(quesRef?.current?.value);
-    console.log(options);
     addPoll({ title: quesRef?.current?.value, options });
   }
   function handleOptionChange(event: any) {

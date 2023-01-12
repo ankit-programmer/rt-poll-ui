@@ -6,29 +6,17 @@ import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
 // import { useRouter } from 'next/router';
 import NavLogo from '../../public/assets/poll.png'
+import { store } from '../../app/store';
+import { auth } from '../../app/firebaseApp';
+import { useSelector, useStore } from 'react-redux';
+import { Auth } from '../../services/types';
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
   const [navBg, setNavBg] = useState('#ecf0f3');
   const [linkColor, setLinkColor] = useState('#1f2937');
-  // const [position, setPosition] = useState('fixed')
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   if (
-  //     router.asPath === '/property' ||
-  //     router.asPath === '/crypto' ||
-  //     router.asPath === '/netflix' ||
-  //     router.asPath === '/twitch'
-  //   ) {
-  //     setNavBg('transparent');
-  //     setLinkColor('#ecf0f3');
-  //   } else {
-  //     setNavBg('#ecf0f3');
-  //     setLinkColor('#1f2937');
-  //   }
-  // }, [router]);
+  const { token, isAnonymous } = useSelector((state: any) => state.auth) as Auth;
 
   const handleNav = () => {
     setNav(!nav);
@@ -82,6 +70,14 @@ const Navbar = () => {
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
               <Link legacyBehavior href='/pricacy'>Privacy</Link>
+            </li>
+            <li className='ml-10 text-sm uppercase hover:border-b'>
+              {
+                !isAnonymous ? <Link onClick={() => {
+                  auth.signOut();
+                }} href={''} >Logout</Link> : <Link legacyBehavior href='/auth'>Login</Link>
+              }
+
             </li>
           </ul>
           {/* Hamburger Icon */}
@@ -137,36 +133,46 @@ const Navbar = () => {
           </div>
           <div className='py-4 flex flex-col'>
             <ul className='uppercase'>
-              <Link legacyBehavior href='/'>
+
+              <Link legacyBehavior href='/faq'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Home
+                  FAQ
                 </li>
               </Link>
-              <Link legacyBehavior href='/#about'>
+              <Link legacyBehavior href='/pricing'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  About
+                  Pricing
                 </li>
               </Link>
-              <Link legacyBehavior href='/#skills'>
+              <Link legacyBehavior href='/feeback'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Skills
+                  Feedback
                 </li>
               </Link>
-              <Link legacyBehavior href='/#projects'>
+              <Link legacyBehavior href='/about-us'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Projects
+                  About Us
                 </li>
               </Link>
-              <Link legacyBehavior href='/resume'>
+              <Link legacyBehavior href='/privacy'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Resume
+                  Privacy
                 </li>
               </Link>
-              <Link legacyBehavior href='/#contact'>
-                <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Contact
-                </li>
-              </Link>
+              {
+                !isAnonymous ? <Link onClick={() => {
+                  auth.signOut();
+                }} href={''}>
+                  <li onClick={() => setNav(false)} className='py-4 text-sm'>
+                    Logout
+                  </li>
+                </Link> : <Link legacyBehavior href='/auth'>
+                  <li onClick={() => setNav(false)} className='py-4 text-sm'>
+                    Login
+                  </li>
+                </Link>
+              }
+
             </ul>
             <div className='pt-40'>
               <p className='uppercase tracking-widest text-[#5651e5]'>
