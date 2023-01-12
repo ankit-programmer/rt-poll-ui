@@ -146,3 +146,21 @@
 .ActionButton:hover {
   background-color: rgb(255, 164, 164);
 }
+
+.InfoButton {
+  opacity: 50%;
+  display: inline;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 4px;
+}
+.TotalCount {
+  display: inline;
+  font-size: large;
+  font-weight: bold;
+  opacity: 50%;
+}
+.BadgeContainer {
+  opacity: 75%;
+}
