@@ -12,12 +12,23 @@ import Tooltip from '@mui/material/Tooltip';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import AlarmOutlinedIcon from '@mui/icons-material/AlarmOutlined';
+import event from '../../app/analytics';
+import { useSelector } from 'react-redux';
 const ViewPoll = (params: any) => {
 
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
     const vote = useGetVoteByIdQuery(params?.id);
     const winner = getWinner(vote?.data?.options);
     const [addVote, voteStatus] = useAddVoteMutation();
+    const { uid } = useSelector((state: any) => state.auth) as any;
+    useEffect(() => {
+        if (!voteStatus?.isLoading && voteStatus?.isError) {
+            event.voteAdded(voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
+        }
+    }, [voteStatus.data])
+    useEffect(() => {
+        event.viewPoll(params?.id)
+    }, []);
     return (
         <div className='w-full h-screen text-center'>
             <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
@@ -44,6 +55,7 @@ const ViewPoll = (params: any) => {
 
                                         data?.options?.map((option, i) => (
                                             <div onClick={() => {
+                                                event.addVote(vote?.data?.pollId || "", option?.id);
                                                 addVote({
                                                     pollId: vote.data?.pollId,
                                                     optionId: option.id

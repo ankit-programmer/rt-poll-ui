@@ -9,17 +9,18 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useGetPollByIdQuery } from '../../services/poll';
+import Report from '../../components/Report/Report';
+import { Auth } from '../../services/types';
 
 // import Report from '../components/Report/Report'
-export default function Home() {
+export default function PollReport() {
     const router = useRouter();
     const { id } = router.query;
     const dispatch = useDispatch();
-
     onAuthStateChanged(auth, (user: any) => {
         dispatch(setAuth({ token: user?.accessToken, email: user?.email, isAnonymous: user?.isAnonymous, uid: user?.uid }))
     });
-    const { token } = useSelector((state: any) => state.auth) as any;
+    const { token } = useSelector((state: any) => state.auth) as Auth;
 
     return (
 
@@ -31,7 +32,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <NavBar />
-            {token ? <ViewPoll key={id} id={id}></ViewPoll> : <CircularProgress></CircularProgress>}
+            {token ? <Report key={id} id={id}></Report> : <CircularProgress></CircularProgress>}
         </div>
     )
 }

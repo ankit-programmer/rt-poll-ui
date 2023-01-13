@@ -6,11 +6,13 @@ import { store } from '../app/store';
 import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { auth } from '../app/firebaseApp'
 import { useEffect } from 'react';
+import { setUser } from '../app/analytics';
 
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     return auth.onAuthStateChanged((user) => {
+      if (user) setUser(user.uid, user.isAnonymous);
       if (user) {
         console.log("Persist User");
         console.log(user?.uid);

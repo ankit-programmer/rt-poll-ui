@@ -21,7 +21,8 @@ export type Poll = {
 
 export type Option = {
     text?: string,
-    image?: string
+    image?: string,
+    count?: number
 }
 
 export type Auth = {

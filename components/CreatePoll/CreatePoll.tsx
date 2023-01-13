@@ -5,6 +5,7 @@ import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
 import { CircularProgress } from '@mui/material';
+import event from '../../app/analytics';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -51,7 +52,13 @@ const CreatePoll = () => {
   let placeholders = ["What shoud I cover in my next video?", "Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
   const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }] as Option[]);
-  const [addPoll, { isLoading }] = useAddNewPollMutation();
+  const [addPoll, { isLoading, data, error }] = useAddNewPollMutation();
+  useEffect(() => {
+    if (!error) {
+      event.pollCreated(data?.pollId);
+    }
+
+  }, [data]);
   // const [options, setOption] = useState([{}, {}, {}, {}]);
   function addOption(text: string, index: number) {
     dispatch({ type: ACTIONS.CHANGE_OPTION, payload: { text, index } });
@@ -66,8 +73,9 @@ const CreatePoll = () => {
     dispatch({ type: ACTIONS.ADD_OPTION })
   }
 
-  function handleSubmit(event: any) {
-    event?.preventDefault();
+  function handleSubmit(e: any) {
+    e?.preventDefault();
+    event?.createPoll('default');
     addPoll({ title: quesRef?.current?.value, options });
   }
   function handleOptionChange(event: any) {
