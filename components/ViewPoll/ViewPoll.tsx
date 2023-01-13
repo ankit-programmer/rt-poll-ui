@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import AlarmOutlinedIcon from '@mui/icons-material/AlarmOutlined';
 import event from '../../app/analytics';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { useSelector } from 'react-redux';
 const ViewPoll = (params: any) => {
 
@@ -37,11 +38,16 @@ const ViewPoll = (params: any) => {
                         <>
                             <form className={styles.PollContainer}>
                                 <div className={styles.InfoButton}>
-                                    <Tooltip title="Info">
-                                        <IconButton>
-                                            <InfoOutlinedIcon />
+                                    <Tooltip onClick={() => {
+                                        navigator.clipboard.writeText(getPollLink(params?.id))
+                                    }} title="Copy URL">
+                                        <IconButton >
+                                            {/* <ContentCopyIcon /> */}
+                                            {true ? <ContentCopyIcon color='primary' /> : <ShareOutlinedIcon color='secondary' />}
+
                                         </IconButton>
                                     </Tooltip>
+
                                 </div>
                                 <div className={styles.QuestionContainer}>
 
