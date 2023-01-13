@@ -1,10 +1,12 @@
 import React, { Dispatch, ReducerAction, useEffect, useReducer, useRef, useState } from 'react'
 import styles from './CreatePoll.module.css';
 import { BiImageAdd } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
 import { CircularProgress } from '@mui/material';
+import Button from '@mui/material/Button';
 import event from '../../app/analytics';
 
 const ACTIONS = {
@@ -49,13 +51,15 @@ function reducer(options: Option[], action: any): Option[] {
 
 }
 const CreatePoll = () => {
+  const router = useRouter();
   let placeholders = ["What shoud I cover in my next video?", "Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
   const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }] as Option[]);
-  const [addPoll, { isLoading, data, error }] = useAddNewPollMutation();
+  const [addPoll, { isLoading, data, isError, isSuccess }] = useAddNewPollMutation();
   useEffect(() => {
-    if (!error) {
-      event.pollCreated(data?.pollId);
+    if (isSuccess) {
+      event.pollCreated(data?.id);
+      router.push(`/report/${data?.id}`)
     }
 
   }, [data]);
@@ -132,9 +136,10 @@ const CreatePoll = () => {
 
 
           </div>
-          <button className={styles.ActionButton} onClick={handleSubmit}>
-            {isLoading ? <CircularProgress size="2rem"></CircularProgress> : "Save and Share"}</button>
-
+          {/* <button className={styles.ActionButton} onClick={handleSubmit}>
+            {isLoading ? <CircularProgress size="2rem"></CircularProgress> : "Save and Share"}</button> */}
+          <Button onClick={handleSubmit}
+            className={styles.ActionButton} disabled={isLoading} endIcon={isLoading ? <CircularProgress color={'secondary'} size='1em' ></CircularProgress> : null} variant='contained'>Publish</Button>
         </form>
 
       </div>

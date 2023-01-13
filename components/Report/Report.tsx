@@ -46,13 +46,14 @@ const Report = (params: any) => {
         <div className='w-full h-screen text-center'>
             <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
                 <>
-                    <div className={styles.PieChart}>
+                    <div className={styles.ReportContainer}>
                         {
                             error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : (
 
                                 (data?.owner != uid) ? <>You are not authorized to view report.</> :
                                     <>
-                                        <Bar width={50} height={50} data={
+                                        <h2>{data?.title}</h2>
+                                        {/* <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
                                             {
                                                 labels: pollReport.options?.map(option => option?.text),
                                                 datasets: [
@@ -64,8 +65,11 @@ const Report = (params: any) => {
                                                     }
                                                 ],
 
-                                            }} />
-                                        <Doughnut width={50} height={50} data={
+                                            }} /> */}
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <Doughnut style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
                                             {
                                                 labels: pollReport.options?.map(option => option?.text),
                                                 datasets: [
@@ -79,6 +83,9 @@ const Report = (params: any) => {
 
 
                                             }} />
+                                        <br />
+                                        <br />
+                                        <br />
                                     </>
                             )
                         }

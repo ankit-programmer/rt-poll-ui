@@ -94,16 +94,18 @@
 }
 
 .ActionButton {
+  font-weight: bold;
+  font-size: small;
   text-transform: uppercase;
   padding: 0.5rem;
   margin: 2rem;
   padding-inline: 1rem;
-  border-radius: 0.5rem;
-  background-color: rgb(178, 178, 178);
+  background-color: rgba(0, 0, 0, 0.3);
   opacity: 100%;
-  color: rgba(255, 255, 255, 0.932);
   font-weight: bold;
 }
+
 .ActionButton:hover {
-  background-color: rgb(255, 164, 164);
+  background-color: rgba(255, 0, 0, 0.3);
+
 }

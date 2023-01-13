@@ -1,4 +1,15 @@
 .PieChart{
-    width: 30%;
-    height: 30%;
+    display: inline;
+}
+
+.ReportContainer {
+    width: 50%;
+    height: 50%;
+}
+
+@media screen and (max-width: 480px){
+    .ReportContainer{
+        width: 90%;
+    }
+    
 }
