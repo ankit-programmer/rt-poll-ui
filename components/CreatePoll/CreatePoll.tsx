@@ -8,6 +8,8 @@ import { Option, Poll } from '../../services/types';
 import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
 import event from '../../app/analytics';
+import PollOption, { AddOption } from '../PollOption/PollOption';
+import MainActionButton from '../ActionButton/ActionButton';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -16,6 +18,7 @@ const ACTIONS = {
 }
 
 function reducer(options: Option[], action: any): Option[] {
+  console.log(options);
   console.log(action);
   switch (action.type) {
     case ACTIONS.ADD_OPTION:
@@ -54,7 +57,8 @@ const CreatePoll = () => {
   const router = useRouter();
   let placeholders = ["What shoud I cover in my next video?", "Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
   let [placeholder, setPlaceholder] = useState("");
-  const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }] as Option[]);
+  const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
+
   const [addPoll, { isLoading, data, isError, isSuccess }] = useAddNewPollMutation();
   useEffect(() => {
     if (isSuccess) {
@@ -63,28 +67,24 @@ const CreatePoll = () => {
     }
 
   }, [data]);
-  // const [options, setOption] = useState([{}, {}, {}, {}]);
-  function addOption(text: string, index: number) {
+
+  function changeOption(text: string, index: number) {
     dispatch({ type: ACTIONS.CHANGE_OPTION, payload: { text, index } });
   }
-  const quesRef: any = useRef(null);
 
   function deleteOption(index: number) {
     dispatch({ type: ACTIONS.REMOVE_OPTION, payload: { index } })
-  }
 
-  function addNewOption() {
-    dispatch({ type: ACTIONS.ADD_OPTION })
   }
+  const quesRef: any = useRef(null);
+
 
   function handleSubmit(e: any) {
     e?.preventDefault();
     event?.createPoll('default');
     addPoll({ title: quesRef?.current?.value, options });
   }
-  function handleOptionChange(event: any) {
-    addOption(event?.target?.value, parseInt(event?.target?.id));
-  }
+
   useEffect(() => {
     if (quesRef.current) {
       quesRef?.current?.focus();
@@ -120,26 +120,21 @@ const CreatePoll = () => {
           <div className={styles.OptionContainer}>
             {
               options.map((option: any, i) => (
-                <div key={i} className={styles.Option}>
-                  <div className={styles.OptionIcon}>
-
-                    <BiImageAdd size="4em"></BiImageAdd>
-                  </div>
-                  <input className={styles.OptionInput} type="text" onChange={handleOptionChange} id={`${i}`} value={option.text} placeholder='Option One'></input>
-                  <div className={styles.ActionContainer}>
-                    <MdDeleteOutline className={styles.OptionActionButton} size="1.7em" onClick={() => deleteOption(i)} />
-                    <MdAdd color="green" className={styles.OptionActionButton} size="1.7em" onClick={addNewOption} />
-                  </div>
-                </div>
+                <PollOption key={i} option={option} handleChange={(option: Option) => {
+                  changeOption(option.text || "", i);
+                }} handleDelete={() => {
+                  console.log(`Deleting Option at : ${i}`);
+                  deleteOption(i);
+                }} />
               ))
             }
-
-
+            {
+              (options.length < 8) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
+            }
           </div>
-          {/* <button className={styles.ActionButton} onClick={handleSubmit}>
-            {isLoading ? <CircularProgress size="2rem"></CircularProgress> : "Save and Share"}</button> */}
-          <Button onClick={handleSubmit}
-            className={styles.ActionButton} disabled={isLoading} endIcon={isLoading ? <CircularProgress color={'secondary'} size='1em' ></CircularProgress> : null} variant='contained'>Publish</Button>
+          <br />
+          <br />
+          <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
         </form>
 
       </div>
