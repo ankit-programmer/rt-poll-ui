@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { textAlign, width } from '@mui/system';
 import { Button } from '@mui/material';
-
+import { StyledEngineProvider } from '@mui/material/styles';
 type PollOptionProp = {
     handleChange: (option: Option) => void,
     handleDelete: any,
@@ -33,7 +33,7 @@ const PollOption = (props: PollOptionProp) => {
                 </div>
                 <input className={styles.OptionInput} type="text" onChange={handleOptionChange} value={option.text} placeholder='Option One'></input>
 
-                <Tooltip onClick={handleDelete} title="Delete Option">
+                <Tooltip onClick={handleDelete} title="Delete">
                     <IconButton >
                         <MdDeleteOutline className={styles.OptionActionButton} size="1.2em" />
 
@@ -47,18 +47,21 @@ const PollOption = (props: PollOptionProp) => {
 export const AddOption = (props: any) => {
     return (
         <>
-            <Button {...props} className={styles.Option}>
-                <div style={{
-                    flex: 1
-                }}>
-                    <BsPlusCircleDotted style={{
-                        display: 'inline',
-                        opacity: '50%'
-                    }} size="3em"></BsPlusCircleDotted>
+            <StyledEngineProvider injectFirst>
 
-                </div>
+                <Button {...props} className={styles.Option}>
+                    <div style={{
+                        flex: 1
+                    }}>
+                        <BsPlusCircleDotted style={{
+                            display: 'inline',
+                            opacity: '50%'
+                        }} size="3em"></BsPlusCircleDotted>
 
-            </Button>
+                    </div>
+
+                </Button>
+            </StyledEngineProvider>
         </>
     )
 }
