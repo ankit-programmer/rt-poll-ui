@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { useGetPollByIdQuery } from '../../services/poll';
 import { Auth, Option } from '../../services/types';
 import PollReport from '../../pages/report/[id]';
+import { BiCopy } from 'react-icons/bi';
 type PollReport = {
     id?: string,// Poll Id,
     options?: Option[]
@@ -47,13 +48,15 @@ const Report = (params: any) => {
             <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
                 <>
                     <div className={styles.ReportContainer}>
-                        {
-                            error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : (
 
-                                (data?.owner != uid) ? <>You are not authorized to view report.</> :
-                                    <>
-                                        <h2>{data?.title}</h2>
-                                        {/* <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
+                        <div className={styles.ChartContainer}>
+                            {
+                                error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : (
+
+                                    (data?.owner != uid) ? <>You are not authorized to view report.</> :
+                                        <>
+                                            <h2>{data?.title}</h2>
+                                            {/* <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
                                             {
                                                 labels: pollReport.options?.map(option => option?.text),
                                                 datasets: [
@@ -61,37 +64,49 @@ const Report = (params: any) => {
                                                         label: pollReport?.id,
                                                         data: pollReport?.options?.map(option => option.count),
                                                         backgroundColor: ["green", "red", "blue", "pink"]
-
+                                                        
                                                     }
                                                 ],
-
+                                                
                                             }} /> */}
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <Doughnut style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
-                                            {
-                                                labels: pollReport.options?.map(option => option?.text),
-                                                datasets: [
-                                                    {
-                                                        label: pollReport?.id,
-                                                        data: pollReport?.options?.map(option => option.count),
-                                                        backgroundColor: ["green", "red", "blue", "pink"]
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Doughnut style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
+                                                {
+                                                    labels: pollReport.options?.map(option => option?.text),
+                                                    datasets: [
+                                                        {
+                                                            label: pollReport?.id,
+                                                            data: pollReport?.options?.map(option => option.count),
+                                                            backgroundColor: ["green", "red", "blue", "pink"]
 
-                                                    }
-                                                ],
+                                                        }
+                                                    ],
 
 
-                                            }} />
-                                        <br />
-                                        <br />
-                                        <br />
-                                    </>
-                            )
-                        }
+                                                }} />
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </>
+                                )
+                            }
+                        </div>
+
+                        <div className={styles.ShareContainer}>
+                            <div>
+
+                                <h3 style={{
+                                    textAlign: 'left'
+                                }}>LINK</h3>
+                                <div>
+                                    <span>https://rtpoll.com/poll/60PLZ8NSLGLMCbYxDbmX</span>
+                                    <BiCopy />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
                 </>
 
             </div></div>

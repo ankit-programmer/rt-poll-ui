@@ -1,15 +1,37 @@
-.PieChart{
+.PieChart {
     display: inline;
 }
 
 .ReportContainer {
-    width: 50%;
-    height: 50%;
+    margin-top: 10rem;
+    display: flex;
+    /* background-color: grey; */
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
 }
 
-@media screen and (max-width: 480px){
-    .ReportContainer{
+.ChartContainer {
+    flex: 1;
+    border-color: black;
+    border: 8px;
+    display: grid;
+    width: 50%;
+    height: 50%;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+}
+
+.ShareContainer {
+    flex: 1;
+    display: grid;
+    /* background-color: red; */
+}
+
+@media screen and (max-width: 480px) {
+    .ChartContainer {
         width: 90%;
     }
-    
+
 }
