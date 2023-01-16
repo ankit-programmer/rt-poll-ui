@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import event from '../../app/analytics';
 import PollOption, { AddOption } from '../PollOption/PollOption';
 import MainActionButton from '../ActionButton/ActionButton';
+import { getReportLink } from '../../utility';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -63,7 +64,7 @@ const CreatePoll = () => {
   useEffect(() => {
     if (isSuccess) {
       event.pollCreated(data?.id);
-      router.push(`/report/${data?.id}`)
+      router.push(getReportLink(data?.id));
     }
 
   }, [data]);

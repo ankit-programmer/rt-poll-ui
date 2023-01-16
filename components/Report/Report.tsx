@@ -6,9 +6,9 @@ Chart.register(ArcElement);
 Chart.register(CategoryScale);
 Chart.register(LinearScale);
 Chart.register(BarElement);
-// Chart.register(Title);
+Chart.register(Title);
 Chart.register(Tooltip);
-Chart.register(Legend);
+// Chart.register(Legend);
 import { Doughnut, Bar } from 'react-chartjs-2'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useGetVoteByIdQuery } from '../../services/vote';
@@ -92,7 +92,7 @@ const Report = (params: any) => {
 
                                 ) : (
 
-                                    (data?.owner != uid) ? <>You are not authorized to view report.</> :
+                                    (false && (data?.owner != uid)) ? <>You are not authorized to view report.</> :
                                         <>
                                             <h3 style={{
                                                 fontSize: '1.8rem',
@@ -107,12 +107,13 @@ const Report = (params: any) => {
                                                         {
                                                             label: pollReport?.id,
                                                             data: pollReport?.options?.map(option => option.count),
-                                                            backgroundColor: ["green", "red", "blue", "pink"]
+                                                            backgroundColor: ["#488f31", "red", "#332FD0", "#FF78F0","#FF8B13", "#A31ACB", "pink", "#f8bd8c"]
 
                                                         }
                                                     ],
 
                                                 }} />
+
                                             <br />
                                             <br />
                                             <br />
@@ -123,7 +124,7 @@ const Report = (params: any) => {
                                                         {
                                                             label: pollReport?.id,
                                                             data: pollReport?.options?.map(option => option.count),
-                                                            backgroundColor: ["green", "red", "blue", "pink"]
+                                                            backgroundColor: ["green", "red", "blue", "pink", "#332FD0", "#39B5E0", "#A31ACB"]
 
                                                         }
                                                     ],
@@ -196,12 +197,12 @@ const Report = (params: any) => {
                                             analytics.sharePoll(params?.id, 'sms');
                                             if (navigator.userAgent.match(/Android/i)) {
 
-                                                window.open(`sms:body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+                                                window.open(`sms:?body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
 
                                             }
                                             if (navigator.userAgent.match(/iPhone/i)) {
 
-                                                window.open(`sms:body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+                                                window.open(`sms:&body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
 
                                             }
                                         }}>

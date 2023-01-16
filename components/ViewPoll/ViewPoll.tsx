@@ -2,22 +2,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
 import { useGetPollByIdQuery } from '../../services/poll';
 import { useGetVoteByIdQuery, useAddVoteMutation } from '../../services/vote';
-import { BiImageAdd } from 'react-icons/bi';
+import { BiImageAdd, BiShare } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CircularProgress from '@mui/material/CircularProgress';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import AlarmOutlinedIcon from '@mui/icons-material/AlarmOutlined';
 import event from '../../app/analytics';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import { useSelector } from 'react-redux';
-import { getPollLink } from '../../utility';
+import { getReportLink } from '../../utility';
+import { useRouter } from 'next/router';
 const ViewPoll = (params: any) => {
-
+    const router = useRouter();
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
     const vote = useGetVoteByIdQuery(params?.id);
     const winner = getWinner(vote?.data?.options);
@@ -39,12 +36,12 @@ const ViewPoll = (params: any) => {
                             <form className={styles.PollContainer}>
                                 <div className={styles.InfoButton}>
                                     <Tooltip onClick={() => {
-                                        navigator.clipboard.writeText(getPollLink(params?.id))
-                                    }} title="Copy URL">
+                                        router.push(getReportLink(params?.id));
+                                    }} title="Share">
                                         <IconButton >
-                                            {/* <ContentCopyIcon /> */}
-                                            {true ? <ContentCopyIcon color='primary' /> : <ShareOutlinedIcon color='secondary' />}
-
+                                            <BiShare size='1.5rem' style={{
+                                                transform: 'scaleX(-1)'
+                                            }} />
                                         </IconButton>
                                     </Tooltip>
 
