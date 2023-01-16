@@ -24,6 +24,7 @@ import { MdOutlineMail } from 'react-icons/md';
 import { MdOutlineMessage } from 'react-icons/md';
 import { BiShare } from 'react-icons/bi';
 import { BsWhatsapp } from 'react-icons/bs';
+import analytics from '../../app/analytics';
 
 
 type PollReport = {
@@ -165,17 +166,40 @@ const Report = (params: any) => {
                                         display: 'flex',
                                         gap: '8px'
                                     }}>
-                                        <IconButton>
-                                            <BsWhatsapp href={`whatsapp://send?text=${data?.title}`} target="_blank" color='green' size='1.7rem' />
+                                        <IconButton onClick={() => {
+                                            analytics.sharePoll(params?.id, 'wa');
+                                            window.open(`https://wa.me?text=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, "_blank");
+                                        }}>
+                                            <BsWhatsapp color='green' size='1.7rem' />
+
                                         </IconButton>
-                                        <IconButton>
+                                        <IconButton onClick={() => {
+                                            analytics.sharePoll(params?.id, 'mail');
+                                            window.open(`mailto:?subject=${data?.title}&body=${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n%0a")}%0a%0aClick here to vote:\n%0a${getPollLink(params?.id)}`)
+                                        }}>
+
+
                                             <MdOutlineMail color='#0085FF' size='2rem' />
+
                                         </IconButton>
-                                        <IconButton>
+                                        <IconButton onClick={() => {
+                                            analytics.sharePoll(params?.id, 'sms');
+                                            if (navigator.userAgent.match(/Android/i)) {
+
+                                                window.open(`sms://?body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+
+                                            }
+                                            if (navigator.userAgent.match(/iPhone/i)) {
+
+                                                window.open(`sms://&body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+
+                                            }
+                                        }}>
                                             <MdOutlineMessage color='#E18989' size='1.9rem' />
                                         </IconButton>
                                         <IconButton>
                                             <BiShare onClick={() => {
+                                                analytics.sharePoll(params?.id, 'other');
                                                 if (navigator.share) {
                                                     navigator.share({
                                                         title: data?.title,
@@ -184,8 +208,6 @@ const Report = (params: any) => {
                                                     })
                                                         .then(() => console.log('Successful share'))
                                                         .catch((error) => console.log('Error sharing', error));
-                                                } else {
-                                                    console.log('Share not supported on this browser, do it the old way.');
                                                 }
                                             }} size='2rem' style={{
                                                 transform: 'scaleX(-1)'
