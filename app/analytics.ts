@@ -26,21 +26,21 @@ class Event {
     addVote(pollId: string, optionId: string) {
         analytics.logEvent("add_vote", {
             id: pollId,
-            optionId
+            optionId: optionId
         })
     }
 
     voteAdded(pollId: string, optionId: string) {
         analytics.logEvent("vote_added", {
             id: pollId,
-            optionId
+            optionId: optionId
         });
     }
 
     sharePoll(pollId: string, shareMethod?: string) {
         analytics.logEvent("share_poll", {
             id: pollId,
-            shareMethod
+            method: shareMethod
         })
     }
 
