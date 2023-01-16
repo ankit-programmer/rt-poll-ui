@@ -6,26 +6,29 @@
     margin-top: 10rem;
     display: flex;
     /* background-color: grey; */
+    padding-top: 8vh;
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
 }
 
 .ChartContainer {
-    flex: 1;
+    flex: 3;
     border-color: black;
     border: 8px;
     display: grid;
     width: 50%;
     height: 50%;
-    align-self: center;
-    justify-self: center;
-    justify-content: center;
+    align-self: left;
+    justify-self: left;
+    justify-content: left;
+    text-align: left;
 }
 
 .ShareContainer {
-    flex: 1;
+    flex: 2;
     display: grid;
+    /* width: 100%; */
     /* background-color: red; */
 }
 
@@ -33,5 +36,15 @@
     .ChartContainer {
         width: 90%;
     }
+    .ReportContainer{
+        flex-direction: column-reverse;
+        padding-top: 4vh;
+    }
+    .ShareContainer{
+        flex: 0;
+        padding-bottom: 4rem;
+        
+    }
+
 
 }

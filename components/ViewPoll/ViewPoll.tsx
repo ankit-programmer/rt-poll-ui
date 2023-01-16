@@ -15,15 +15,15 @@ import AlarmOutlinedIcon from '@mui/icons-material/AlarmOutlined';
 import event from '../../app/analytics';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { useSelector } from 'react-redux';
+import { getPollLink } from '../../utility';
 const ViewPoll = (params: any) => {
 
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
     const vote = useGetVoteByIdQuery(params?.id);
     const winner = getWinner(vote?.data?.options);
     const [addVote, voteStatus] = useAddVoteMutation();
-    const { uid } = useSelector((state: any) => state.auth) as any;
     useEffect(() => {
-        if (!voteStatus?.isLoading && voteStatus?.isError) {
+        if (voteStatus?.isSuccess) {
             event.voteAdded(voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
         }
     }, [voteStatus.data])
@@ -32,7 +32,7 @@ const ViewPoll = (params: any) => {
     }, []);
     return (
         <div className='w-full h-screen text-center'>
-            <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
+            <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center styles.MainContainer' >
                 {
                     error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : data ? (
                         <>
@@ -156,8 +156,6 @@ function getWinner(options: any) {
     });
     return keys.pop();
 }
-function getPollLink(pollId?: string) {
-    return `https://rtpoll.com/poll/${pollId}`;
-}
+
 export default ViewPoll;
 
