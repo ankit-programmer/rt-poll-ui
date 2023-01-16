@@ -30,7 +30,13 @@ export default function PollReport() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <NavBar />
-            {token ? <Report key={id} id={id}></Report> : <CircularProgress></CircularProgress>}
+            <>
+                <div className='w-full h-screen text-center'>
+                    <div className='max-w-[1240px] w-full h-full mx-auto p-2 flex justify-center items-center'>
+                        {token ? <Report key={id} id={id}></Report> : <CircularProgress></CircularProgress>}
+                    </div>
+                </div>
+            </>
         </div>
     )
 }

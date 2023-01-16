@@ -1,38 +1,3 @@
-/* .Option {
-    position: grid;
-    width: 100%;
-    height: 5rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 1fr);
-    margin-block: 4px;
-}
-.OptionIcon {
-    position: absolute;
-    left: 0;
-    margin: 0;
-    bottom: 0;
-    margin-left: 0.6rem;
-    opacity: 10%;
-    color: black;
-    cursor: pointer;
-}
-.OptionInput {
-    width: auto;
-    outline: 0;
-    font-size: large;
-    margin: 16px 8px 0px 8px;
-    padding: 8px;
-    border-radius: 0.5em;
-    padding-left: 4.5rem;
-    padding-right: 2rem;
-    box-shadow: 10px;
-}
-@media screen and (max-width: 480px) {
-    .OptionInput {
-        min-width: 200px;
-    }
-} */
-
 .Option {
     display: flex;
     width: 100%;

@@ -28,60 +28,59 @@ const ViewPoll = (params: any) => {
         event.viewPoll(params?.id)
     }, []);
     return (
-        <div className='w-full h-screen text-center'>
-            <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center styles.MainContainer' >
-                {
-                    error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : data ? (
-                        <>
-                            <form className={styles.PollContainer}>
-                                <div className={styles.InfoButton}>
-                                    <Tooltip onClick={() => {
-                                        router.push(getReportLink(params?.id));
-                                    }} title="Share">
-                                        <IconButton >
-                                            <BiShare size='1.5rem' style={{
-                                                transform: 'scaleX(-1)'
-                                            }} />
-                                        </IconButton>
-                                    </Tooltip>
+        <>
+            {
+                error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : data ? (
+                    <>
+                        <form className={styles.PollContainer}>
+                            <div className={styles.InfoButton}>
+                                <Tooltip onClick={() => {
+                                    router.push(getReportLink(params?.id));
+                                }} title="Share">
+                                    <IconButton >
+                                        <BiShare size='1.5rem' style={{
+                                            transform: 'scaleX(-1)'
+                                        }} />
+                                    </IconButton>
+                                </Tooltip>
 
-                                </div>
-                                <div className={styles.QuestionContainer}>
+                            </div>
+                            <div className={styles.QuestionContainer}>
 
-                                    <div className={styles.QuestionIcon}>Q</div>
-                                    <div className={styles.QuestionText}>{data?.title}</div>
-                                    {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
-                                </div>
-                                <div className={styles.Divider}></div>
-                                <div className={styles.OptionContainer}>
-                                    {
+                                <div className={styles.QuestionIcon}>Q</div>
+                                <div className={styles.QuestionText}>{data?.title}</div>
+                                {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
+                            </div>
+                            <div className={styles.Divider}></div>
+                            <div className={styles.OptionContainer}>
+                                {
 
-                                        data?.options?.map((option, i) => (
-                                            <div onClick={() => {
-                                                event.addVote(vote?.data?.pollId || "", option?.id);
-                                                addVote({
-                                                    pollId: vote.data?.pollId,
-                                                    optionId: option.id
-                                                })
-                                            }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
+                                    data?.options?.map((option, i) => (
+                                        <div onClick={() => {
+                                            event.addVote(vote?.data?.pollId || "", option?.id);
+                                            addVote({
+                                                pollId: vote.data?.pollId,
+                                                optionId: option.id
+                                            })
+                                        }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
 
-                                                <div className={styles.OptionIcon}>
+                                            <div className={styles.OptionIcon}>
 
-                                                    <BiImageAdd size="4em"></BiImageAdd>
-                                                </div>
-                                                <div className={styles.OptionText}>{option.text}
-                                                    {option?.id == winner ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
-                                                </div>
-                                                <div className={styles.OptionStat}>{
-                                                    (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : getOptionCountView(vote, option?.id))
-                                                } </div>
+                                                <BiImageAdd size="4em"></BiImageAdd>
                                             </div>
+                                            <div className={styles.OptionText}>{option.text}
+                                                {option?.id == winner ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
+                                            </div>
+                                            <div className={styles.OptionStat}>{
+                                                (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : getOptionCountView(vote, option?.id))
+                                            } </div>
+                                        </div>
 
-                                        ))
-                                    }
+                                    ))
+                                }
 
-                                </div>
-                                {/* <IconButton onClick={() => {
+                            </div>
+                            {/* <IconButton onClick={() => {
                                     navigator.clipboard.writeText(getPollLink(params?.id))
                                 }}>
 
@@ -89,36 +88,34 @@ const ViewPoll = (params: any) => {
                                 </IconButton> */}
 
 
-                                <div className={styles.TotalCount}>Total Votes : {vote?.data?.total}</div>
-                                <div className={styles.BadgeContainer}>
+                            <div className={styles.TotalCount}>Total Votes : {vote?.data?.total}</div>
+                            <div className={styles.BadgeContainer}>
 
-                                    <Tooltip title="Anonymous Vote: No one will be able to identify the option you voted for!">
-                                        <IconButton>
-                                            <AdminPanelSettingsOutlinedIcon />
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Anonymous Vote: No one will be able to identify the option you voted for!">
+                                    <IconButton>
+                                        <AdminPanelSettingsOutlinedIcon />
+                                    </IconButton>
+                                </Tooltip>
 
-                                    <Tooltip title="Only signed in user can vote on this poll.">
-                                        <IconButton>
-                                            <LockOutlinedIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="This poll is open for voting for limited time.">
-                                        <IconButton>
-                                            <AlarmOutlinedIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </div>
+                                <Tooltip title="Only signed in user can vote on this poll.">
+                                    <IconButton>
+                                        <LockOutlinedIcon />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="This poll is open for voting for limited time.">
+                                    <IconButton>
+                                        <AlarmOutlinedIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
 
-                            </form>
-                        </>
-                    ) : (<CircularProgress></CircularProgress>)
+                        </form>
+                    </>
+                ) : (<CircularProgress></CircularProgress>)
 
-                }
+            }
 
-
-            </div>
-        </div>
+        </>
 
     )
 

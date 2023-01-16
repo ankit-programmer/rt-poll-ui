@@ -73,51 +73,50 @@ const Report = (params: any) => {
         </React.Fragment>
     );
     return (
-        <div className='w-full h-screen text-center'>
-            <div className='max-w-[1240px] w-full h-full mx-auto p-2 flex justify-center items-center'>
-                <>
-                    <div className={styles.ReportContainer}>
 
-                        <div className={styles.ChartContainer}>
-                            {
-                                error ? (<>Something Went Wrong</>) : isLoading ? (
-                                    <StyledEngineProvider injectFirst>
+        <>
+            <div className={styles.ReportContainer}>
 
-                                        <CircularProgress style={{
-                                            flex: 1,
-                                            alignSelf: 'center',
-                                            justifySelf: 'center'
-                                        }}></CircularProgress>
-                                    </StyledEngineProvider>
+                <div className={styles.ChartContainer}>
+                    {
+                        error ? (<>Something Went Wrong</>) : isLoading ? (
+                            <StyledEngineProvider injectFirst>
 
-                                ) : (
+                                <CircularProgress style={{
+                                    flex: 1,
+                                    alignSelf: 'center',
+                                    justifySelf: 'center'
+                                }}></CircularProgress>
+                            </StyledEngineProvider>
 
-                                    (false && (data?.owner != uid)) ? <>You are not authorized to view report.</> :
-                                        <>
-                                            <h3 style={{
-                                                fontSize: '1.8rem',
-                                                fontWeight: 'bold'
-                                            }}>{data?.title}</h3>
-                                            <br></br>
-                                            <br></br>
-                                            <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
+                        ) : (
+
+                            (false && (data?.owner != uid)) ? <>You are not authorized to view report.</> :
+                                <>
+                                    <h3 style={{
+                                        fontSize: '1.8rem',
+                                        fontWeight: 'bold'
+                                    }}>{data?.title}</h3>
+                                    <br></br>
+                                    <br></br>
+                                    <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
+                                        {
+                                            labels: pollReport.options?.map(option => option?.text),
+                                            datasets: [
                                                 {
-                                                    labels: pollReport.options?.map(option => option?.text),
-                                                    datasets: [
-                                                        {
-                                                            label: pollReport?.id,
-                                                            data: pollReport?.options?.map(option => option.count),
-                                                            backgroundColor: ["#488f31", "red", "#332FD0", "#FF78F0","#FF8B13", "#A31ACB", "pink", "#f8bd8c"]
+                                                    label: pollReport?.id,
+                                                    data: pollReport?.options?.map(option => option.count),
+                                                    backgroundColor: ["#488f31", "red", "#332FD0", "#FF78F0", "#FF8B13", "#A31ACB", "pink", "#f8bd8c"]
 
-                                                        }
-                                                    ],
+                                                }
+                                            ],
 
-                                                }} />
+                                        }} />
 
-                                            <br />
-                                            <br />
-                                            <br />
-                                            {/* <Doughnut style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
+                                    <br />
+                                    <br />
+                                    <br />
+                                    {/* <Doughnut style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
                                                 {
                                                     labels: pollReport.options?.map(option => option?.text),
                                                     datasets: [
@@ -131,107 +130,105 @@ const Report = (params: any) => {
 
 
                                                 }} /> */}
-                                            <br />
-                                            <br />
-                                            <br />
-                                        </>
-                                )
-                            }
-                        </div>
-
-                        <div className={styles.ShareContainer}>
-                            <div style={{
-                                textAlign: 'left'
-                            }}>
-
-                                <h3 style={{
-                                    fontSize: '1.5rem',
-                                    fontWeight: 'bold'
-                                }}>LINK</h3>
-                                <div>
-                                    <span style={{
-                                        opacity: '75%',
-                                        fontSize: 'medium'
-                                    }}>{getPollLink(params?.id)}</span>
-                                    <IconButton onClick={() => {
-                                        navigator.clipboard.writeText(getPollLink(params?.id));
-                                        setCopied(true);
-                                    }}>
-                                        <ContentCopyIcon color='primary' />
-                                    </IconButton>
-                                    <Snackbar
-                                        open={isCoppied}
-                                        autoHideDuration={2000}
-                                        onClose={handleClose}
-                                        message="Link Copied"
-                                        action={action}
-                                    />
                                     <br />
-                                    <br></br>
-                                    <h3 style={{
-                                        fontSize: '1.5rem',
-                                        fontWeight: 'bold'
-                                    }}>SHARE</h3>
-                                    <div style={{
-                                        paddingBlock: '8px',
-                                        display: 'flex',
-                                        gap: '8px'
-                                    }}>
-                                        <IconButton onClick={() => {
-                                            analytics.sharePoll(params?.id, 'wa');
-                                            window.open(`https://wa.me?text=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, "_blank");
-                                        }}>
-                                            <BsWhatsapp color='green' size='1.7rem' />
+                                    <br />
+                                    <br />
+                                </>
+                        )
+                    }
+                </div>
 
-                                        </IconButton>
-                                        <IconButton onClick={() => {
-                                            analytics.sharePoll(params?.id, 'mail');
-                                            window.open(`mailto:?subject=${data?.title}&body=${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n%0a")}%0a%0aClick here to vote:\n%0a${getPollLink(params?.id)}`)
-                                        }}>
+                <div className={styles.ShareContainer}>
+                    <div style={{
+                        textAlign: 'left'
+                    }}>
+
+                        <h3 style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold'
+                        }}>LINK</h3>
+                        <div>
+                            <span style={{
+                                opacity: '75%',
+                                fontSize: 'medium'
+                            }}>{getPollLink(params?.id)}</span>
+                            <IconButton onClick={() => {
+                                navigator.clipboard.writeText(getPollLink(params?.id));
+                                setCopied(true);
+                            }}>
+                                <ContentCopyIcon color='primary' />
+                            </IconButton>
+                            <Snackbar
+                                open={isCoppied}
+                                autoHideDuration={2000}
+                                onClose={handleClose}
+                                message="Link Copied"
+                                action={action}
+                            />
+                            <br />
+                            <br></br>
+                            <h3 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 'bold'
+                            }}>SHARE</h3>
+                            <div style={{
+                                paddingBlock: '8px',
+                                display: 'flex',
+                                gap: '8px'
+                            }}>
+                                <IconButton onClick={() => {
+                                    analytics.sharePoll(params?.id, 'wa');
+                                    window.open(`https://wa.me?text=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, "_blank");
+                                }}>
+                                    <BsWhatsapp color='green' size='1.7rem' />
+
+                                </IconButton>
+                                <IconButton onClick={() => {
+                                    analytics.sharePoll(params?.id, 'mail');
+                                    window.open(`mailto:?subject=${data?.title}&body=${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n%0a")}%0a%0aClick here to vote:\n%0a${getPollLink(params?.id)}`)
+                                }}>
 
 
-                                            <MdOutlineMail color='#0085FF' size='2rem' />
+                                    <MdOutlineMail color='#0085FF' size='2rem' />
 
-                                        </IconButton>
-                                        <IconButton onClick={() => {
-                                            analytics.sharePoll(params?.id, 'sms');
-                                            if (navigator.userAgent.match(/Android/i)) {
+                                </IconButton>
+                                <IconButton onClick={() => {
+                                    analytics.sharePoll(params?.id, 'sms');
+                                    if (navigator.userAgent.match(/Android/i)) {
 
-                                                window.open(`sms:?body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+                                        window.open(`sms:?body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
 
-                                            }
-                                            if (navigator.userAgent.match(/iPhone/i)) {
+                                    }
+                                    if (navigator.userAgent.match(/iPhone/i)) {
 
-                                                window.open(`sms:&body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+                                        window.open(`sms:&body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
 
-                                            }
-                                        }}>
-                                            <MdOutlineMessage color='#E18989' size='1.9rem' />
-                                        </IconButton>
-                                        <IconButton onClick={() => {
-                                            analytics.sharePoll(params?.id, 'other');
-                                            if (navigator.share) {
-                                                navigator.share({
-                                                    title: data?.title,
-                                                    text: data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n"),
-                                                    url: getPollLink(params?.id),
-                                                })
-                                                    .then(() => console.log('Successful share'))
-                                                    .catch((error) => console.log('Error sharing', error));
-                                            }
-                                        }}>
-                                            <BiShare size='2rem' style={{
-                                                transform: 'scaleX(-1)'
-                                            }} />
-                                        </IconButton>
-                                    </div>
-                                </div>
+                                    }
+                                }}>
+                                    <MdOutlineMessage color='#E18989' size='1.9rem' />
+                                </IconButton>
+                                <IconButton onClick={() => {
+                                    analytics.sharePoll(params?.id, 'other');
+                                    if (navigator.share) {
+                                        navigator.share({
+                                            title: data?.title,
+                                            text: data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n"),
+                                            url: getPollLink(params?.id),
+                                        })
+                                            .then(() => console.log('Successful share'))
+                                            .catch((error) => console.log('Error sharing', error));
+                                    }
+                                }}>
+                                    <BiShare size='2rem' style={{
+                                        transform: 'scaleX(-1)'
+                                    }} />
+                                </IconButton>
                             </div>
                         </div>
                     </div>
-                </>
-
-            </div></div>
+                </div>
+            </div>
+        </>
     )
 }
 

@@ -8,32 +8,47 @@ import { store } from '../../app/store';
 import { auth } from '../../app/firebaseApp';
 import { useSelector, useStore } from 'react-redux';
 import { Auth } from '../../services/types';
-
+let lastScrollY = 0;
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
   const [navBg, setNavBg] = useState('#ecf0f3');
   const [linkColor, setLinkColor] = useState('#1f2937');
   const { token, isAnonymous } = useSelector((state: any) => state.auth) as Auth;
-
+  const [visible, setNavVisibility] = useState(true);
   const handleNav = () => {
     setNav(!nav);
   };
 
   useEffect(() => {
-    const handleShadow = () => {
-      if (window.scrollY >= 90) {
-        setShadow(true);
-      } else {
-        setShadow(false);
+    const controlNavBar = () => {
+      if (typeof window != 'undefined') {
+        if (window.scrollY >= 90) {
+          setShadow(true);
+        } else {
+          setShadow(false);
+        }
+        const currentScrollPos = window.pageYOffset;
+        if (lastScrollY > currentScrollPos) {
+          setNavVisibility(true);
+        } else {
+          setNavVisibility(false);
+        }
+        lastScrollY = currentScrollPos;
       }
-    };
-    window.addEventListener('scroll', handleShadow);
+    }
+    if (typeof window != 'undefined') {
+      window.addEventListener('scroll', controlNavBar);
+    }
+    return () => {
+      window.removeEventListener('scroll', controlNavBar);
+    }
   }, []);
 
   return (
+
     <div
-      style={{ backgroundColor: `${navBg}` }}
+      style={{ backgroundColor: `${navBg}`, top: visible ? "0px" : "-100px" }}
       className={
         shadow
           ? 'fixed w-full h-20 shadow-xl z-[100] ease-in-out duration-300'
@@ -172,7 +187,7 @@ const Navbar = () => {
               }
 
             </ul>
-           
+
           </div>
         </div>
       </div>

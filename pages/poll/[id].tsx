@@ -8,7 +8,6 @@ import { setAuth } from '../../services/auth';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useGetPollByIdQuery } from '../../services/poll';
 
 // import Report from '../components/Report/Report'
 export default function Home() {
@@ -31,7 +30,15 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <NavBar />
-            {token ? <ViewPoll key={id} id={id}></ViewPoll> : <CircularProgress></CircularProgress>}
+            <>
+                <div className='w-full h-screen text-center'>
+                    <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center styles.MainContainer' >
+                        {token ? <ViewPoll key={id} id={id}></ViewPoll> : <CircularProgress></CircularProgress>}
+
+                    </div>
+                </div>
+
+            </>
         </div>
     )
 }
