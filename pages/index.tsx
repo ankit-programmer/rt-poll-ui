@@ -26,7 +26,7 @@ export default function Home() {
 
     <div>
       <Head>
-        <title>RT Poll</title>
+        <title>RT Poll - Create Poll</title>
         <meta name="description" content="Get your friends opinion in minutes!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

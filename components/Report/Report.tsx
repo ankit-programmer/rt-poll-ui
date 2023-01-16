@@ -25,7 +25,7 @@ import { MdOutlineMessage } from 'react-icons/md';
 import { BiShare } from 'react-icons/bi';
 import { BsWhatsapp } from 'react-icons/bs';
 import analytics from '../../app/analytics';
-
+import { StyledEngineProvider } from '@mui/material/styles';
 
 type PollReport = {
     id?: string,// Poll Id,
@@ -80,7 +80,17 @@ const Report = (params: any) => {
 
                         <div className={styles.ChartContainer}>
                             {
-                                error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : (
+                                error ? (<>Something Went Wrong</>) : isLoading ? (
+                                    <StyledEngineProvider injectFirst>
+
+                                        <CircularProgress style={{
+                                            flex: 1,
+                                            alignSelf: 'center',
+                                            justifySelf: 'center'
+                                        }}></CircularProgress>
+                                    </StyledEngineProvider>
+
+                                ) : (
 
                                     (data?.owner != uid) ? <>You are not authorized to view report.</> :
                                         <>
@@ -186,30 +196,30 @@ const Report = (params: any) => {
                                             analytics.sharePoll(params?.id, 'sms');
                                             if (navigator.userAgent.match(/Android/i)) {
 
-                                                window.open(`sms://?body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+                                                window.open(`sms:body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
 
                                             }
                                             if (navigator.userAgent.match(/iPhone/i)) {
 
-                                                window.open(`sms://&body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
+                                                window.open(`sms:body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
 
                                             }
                                         }}>
                                             <MdOutlineMessage color='#E18989' size='1.9rem' />
                                         </IconButton>
-                                        <IconButton>
-                                            <BiShare onClick={() => {
-                                                analytics.sharePoll(params?.id, 'other');
-                                                if (navigator.share) {
-                                                    navigator.share({
-                                                        title: data?.title,
-                                                        text: data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n"),
-                                                        url: getPollLink(params?.id),
-                                                    })
-                                                        .then(() => console.log('Successful share'))
-                                                        .catch((error) => console.log('Error sharing', error));
-                                                }
-                                            }} size='2rem' style={{
+                                        <IconButton onClick={() => {
+                                            analytics.sharePoll(params?.id, 'other');
+                                            if (navigator.share) {
+                                                navigator.share({
+                                                    title: data?.title,
+                                                    text: data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n"),
+                                                    url: getPollLink(params?.id),
+                                                })
+                                                    .then(() => console.log('Successful share'))
+                                                    .catch((error) => console.log('Error sharing', error));
+                                            }
+                                        }}>
+                                            <BiShare size='2rem' style={{
                                                 transform: 'scaleX(-1)'
                                             }} />
                                         </IconButton>

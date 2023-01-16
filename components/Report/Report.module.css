@@ -17,6 +17,7 @@
     border-color: black;
     border: 8px;
     display: grid;
+    grid-template-columns: 1fr;
     width: 50%;
     height: 50%;
     align-self: left;
