@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    return onAuthStateChanged(auth,(user: any) => {
+    return onAuthStateChanged(auth, (user: any) => {
       if (user) {
         console.log(user);
         setUser(user.uid, user.isAnonymous);
@@ -82,7 +82,7 @@ const Navbar = () => {
       <div className='flex justify-between items-center w-full h-full px-2 2xl:px-16'>
         <Link legacyBehavior href='/'>
           <a>
-            <Image
+            <Image priority
               src={NavLogo}
               alt='/'
               width='100'
