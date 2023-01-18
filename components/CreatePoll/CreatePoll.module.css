@@ -27,7 +27,8 @@
   margin: auto;
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  padding-top: 100px;
+  min-height: 99vh;
   display: grid;
   grid-template-columns: 1fr;
   max-width: 800px;
@@ -52,8 +53,5 @@
   .OptionContainer {
     padding-inline: 16px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  .PollContainer {
-    margin-top: 80px;
   }
 }

@@ -12,7 +12,7 @@ const MainActionButton = (props: ActionButtonProps) => {
     const { progress = false } = props;
     return (
         <>
-            <StyledEngineProvider injectFirst>
+           
 
                 <Button onClick={props?.onClick} disabled={progress} className={styles.PrimaryActionButton} endIcon={
                     progress ? <CircularProgress size="2rem" /> : <BiShare style={{
@@ -23,7 +23,6 @@ const MainActionButton = (props: ActionButtonProps) => {
                 }>
                     SHARE
                 </Button>
-            </StyledEngineProvider>
         </>
     )
 }

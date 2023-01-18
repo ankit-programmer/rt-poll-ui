@@ -7,13 +7,31 @@ const PollList = () => {
     const { data, error, isLoading } = useGetPollsQuery("");
 
     return (<>
-       
-                <div className={styles.PollContainer}>
+        <div className={styles.PollContainer}>
+            {
+                data?.length ? <>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
 
-                    {
-                        data?.map(({ id }) => <ViewPoll key={id} id={id}></ViewPoll>)
-                    }
-                </div>
+                </> : <></>
+            }
+            {
+                data?.map(({ id }) => <ViewPoll key={id} id={id}></ViewPoll>)
+            }
+            {
+                data?.length ? <>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+                </> : <></>
+            }
+        </div>
 
     </>);
 }
