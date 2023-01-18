@@ -24,6 +24,7 @@
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 .PollContainer {
+  margin: auto;
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -56,4 +57,3 @@
     margin-top: 80px;
   }
 }
-
