@@ -108,37 +108,35 @@ const CreatePoll = () => {
     })();
   }, [])
   return (
-    <div className='w-full h-screen text-center'>
-      <div className='max-w-[1240px] w-full h-full mx-auto p-5 flex justify-center items-center'>
-        <form className={styles.PollContainer} autoComplete="off">
+    <div className={styles.PollContainer} >
+
+    <form style={{width: '100%'}} autoComplete="off">
 
 
-          <div className={styles.QuestionIcon}>Q</div>
+      <div className={styles.QuestionIcon}>Q</div>
 
-          <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
+      <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
 
-          <div className={styles.OptionContainer}>
-            {
-              options.map((option: any, i) => (
-                <PollOption key={i} option={option} handleChange={(option: Option) => {
-                  changeOption(option.text || "", i);
-                }} handleDelete={() => {
-                  console.log(`Deleting Option at : ${i}`);
-                  deleteOption(i);
-                }} />
-              ))
-            }
-            {
-              (options.length < 8) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
-            }
-          </div>
-          <br />
-          <br />
-          <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
-        </form>
-
+      <div className={styles.OptionContainer}>
+        {
+          options.map((option: any, i) => (
+            <PollOption key={i} option={option} handleChange={(option: Option) => {
+              changeOption(option.text || "", i);
+            }} handleDelete={() => {
+              console.log(`Deleting Option at : ${i}`);
+              deleteOption(i);
+            }} />
+            ))
+          }
+        {
+          (options.length < 8) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
+        }
       </div>
-    </div>
+      <br />
+      <br />
+      <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
+    </form>
+</div>
 
   )
 }

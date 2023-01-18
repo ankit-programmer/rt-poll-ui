@@ -24,10 +24,16 @@
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 .PollContainer {
-  margin-top: 100px;
   position: relative;
   width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
   max-width: 800px;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
 }
 .OptionContainer {
   padding: 16px;
@@ -45,6 +51,9 @@
   .OptionContainer {
     padding-inline: 16px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .PollContainer {
+    margin-top: 80px;
   }
 }
 

@@ -6,10 +6,15 @@ import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from 'react-icons/ai'
 import NavLogo from '../../public/assets/poll.png'
 import { store } from '../../app/store';
 import { auth } from '../../app/firebaseApp';
-import { useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Auth } from '../../services/types';
+import { setUser } from '../../app/analytics';
+import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import { setAuth } from '../../services/auth';
 let lastScrollY = 0;
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
   const [navBg, setNavBg] = useState('#ecf0f3');
@@ -19,6 +24,25 @@ const Navbar = () => {
   const handleNav = () => {
     setNav(!nav);
   };
+
+  useEffect(() => {
+    return onAuthStateChanged(auth,(user: any) => {
+      if (user) {
+        console.log(user);
+        setUser(user.uid, user.isAnonymous);
+        dispatch(setAuth({ token: user?.accessToken, email: user?.email, isAnonymous: user?.isAnonymous, uid: user?.uid }))
+
+        console.log("Persist User");
+        console.log(user?.uid);
+        console.log(user?.isAnonymous);
+      } else {
+        signInAnonymously(auth).catch((error) => {
+          console.log(error);
+        })
+      }
+    })
+  }, []);
+
 
   useEffect(() => {
     const controlNavBar = () => {
