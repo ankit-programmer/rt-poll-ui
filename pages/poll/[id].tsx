@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getPollLink } from '../../utility';
 
-export default function Home() {
+export default function Home({ props }: any) {
     const router = useRouter();
     const { id } = router.query;
     const { token } = useSelector((state: any) => state.auth) as any;
@@ -38,4 +38,10 @@ export default function Home() {
 }
 
 
-
+export async function getServerSideProps(context: any) {
+    return {
+        props: {
+            ssr: true
+        }, // will be passed to the page component as props
+    }
+}
