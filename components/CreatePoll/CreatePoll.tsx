@@ -99,9 +99,9 @@ const CreatePoll = () => {
         for (const word of words) {
           sent += `${word} `;
           setPlaceholder(sent);
-          await dummyWait(300);
+          await wait(300);
         }
-        await dummyWait(5000);
+        await wait(5000);
 
       }
 
@@ -144,7 +144,7 @@ const CreatePoll = () => {
   )
 }
 
-function dummyWait(time = 1000) {
+function wait(time = 1000) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       return resolve(true);
