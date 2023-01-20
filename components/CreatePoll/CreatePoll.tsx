@@ -3,8 +3,6 @@ import styles from './CreatePoll.module.css';
 import { useRouter } from 'next/router';
 import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
-import { CircularProgress } from '@mui/material';
-import Button from '@mui/material/Button';
 import event from '../../app/analytics';
 import PollOption, { AddOption } from '../PollOption/PollOption';
 import MainActionButton from '../ActionButton/ActionButton';
@@ -41,7 +39,7 @@ function reducer(options: Option[], action: any): Option[] {
         const index = action?.payload?.index;
         const text = action?.payload?.text
         const opt = [...options]
-        opt[index] = { text };
+        opt[index] = { ...opt[index], text };
         return opt;
         break;
       }
@@ -125,7 +123,7 @@ const CreatePoll = () => {
         <div className={styles.OptionContainer}>
           {
             options.map((option: any, i) => (
-              <PollOption key={i} option={option} handleChange={(option: Option) => {
+              <PollOption key={i} id={i} option={option} handleChange={(option: Option) => {
                 changeOption(option.text || "", i);
               }} handleDelete={() => {
                 console.log(`Deleting Option at : ${i}`);
@@ -141,7 +139,9 @@ const CreatePoll = () => {
         <br />
         <br />
         <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
+
       </form>
+
     </div>
 
 

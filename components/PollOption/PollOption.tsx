@@ -12,27 +12,50 @@ import { textAlign, width } from '@mui/system';
 import { Button } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import analytics from '../../app/analytics';
+import ImageUpload from '../ImageUpload/ImageUpload';
+import Image from 'next/image';
 type PollOptionProp = {
     handleChange: (option: Option) => void,
     handleDelete: any,
-    option: Option
+    option: Option,
+    id: string | number
 }
 const PollOption = (props: PollOptionProp) => {
-    const { handleChange, handleDelete, option } = props;
+    const { handleChange, handleDelete, option, id } = props;
+    const [imagePopup, setImagePopup] = useState(false);
     function handleOptionChange(event: any) {
         const value = event?.target?.value;
         option.text = value || "";
         handleChange(option);
     }
+    function handleImageChange(imageUrl: string) {
+        option.image = imageUrl;
+        handleChange(option);
+    }
 
     return (
         <>
+            {imagePopup ? <ImageUpload onClose={(files: any) => {
+                console.log("Files", files);
+                const file = files.pop();
+                if (file) handleImageChange(file?.downloadUrl);
+                setImagePopup(false);
+            }}></ImageUpload> : null}
             <div className={styles.Option}>
-                <div className={styles.OptionIcon}>
+                <div onClick={() => {
+                    analytics.addOptionImage();
+                    setImagePopup(true);
+                }} className={styles.OptionIcon}>
+                    {
+                        option?.image ?
+                            <Image style={{
+                                borderRadius: '8px'
+                            }} height={100} width={100} src={option.image || ""} alt={''}></Image> :
+                            <BiImageAdd style={{
+                                opacity: "15%"
+                            }} size="4em"></BiImageAdd>
+                    }
 
-                    <BiImageAdd size="4em" onClick={() => {
-                        analytics.addOptionImage();
-                    }}></BiImageAdd>
                 </div>
                 <input className={styles.OptionInput} type="text" onChange={handleOptionChange} value={option.text} placeholder='Option One'></input>
 

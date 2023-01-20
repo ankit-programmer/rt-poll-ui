@@ -9,14 +9,17 @@
 }
 .OptionInput {
     flex: 1;
-    font-size: large;
+    font-size: larger;
     outline: 0;
     overflow: auto;
     box-shadow: 8px;
     padding-left: 8px;
 }
 .OptionIcon {
-    opacity: 15%;
+    height: 4rem;
+    width: 4rem;
+    cursor: pointer;
+    overflow: hidden;
 }
 
 .OptionActionButton {

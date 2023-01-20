@@ -15,7 +15,8 @@ export type Poll = {
     owner: string,
     options: [{
         text: string,
-        id: string
+        id: string,
+        image?: string
     }]
 }
 

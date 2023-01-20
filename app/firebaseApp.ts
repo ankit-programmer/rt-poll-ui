@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import "firebase/compat/auth";
-import "firebase/compat/analytics"
+import "firebase/compat/analytics";
+import "firebase/compat/storage";
 
 const app = firebase.initializeApp({
     apiKey: "AIzaSyCLHjoSpPueDt3_Fy5BcyT9vKWLXuh0sjw",
@@ -22,4 +23,5 @@ export const analytics: firebase.analytics.Analytics = (typeof window !== 'undef
 //     appId: "1:146578956832:web:c7bdf3b5046a0674e39245",
 //     measurementId: "G-TJ180W7MZG"
 // });
+export const storage = firebase.storage();
 export const auth = firebase.auth();
