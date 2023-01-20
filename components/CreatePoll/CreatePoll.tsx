@@ -1,8 +1,6 @@
 import React, { Dispatch, ReducerAction, useEffect, useReducer, useRef, useState } from 'react'
 import styles from './CreatePoll.module.css';
-import { BiImageAdd } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useAddNewPollMutation } from '../../services/poll';
 import { Option, Poll } from '../../services/types';
 import { CircularProgress } from '@mui/material';
@@ -84,7 +82,11 @@ const CreatePoll = () => {
   function handleSubmit(e: any) {
     e?.preventDefault();
     event?.createPoll('default');
-    addPoll({ title: quesRef?.current?.value, options });
+    const validatedOptions = options.filter(option => option.text != "");
+    if (validatedOptions.length < 2) {
+      // TOTO: ANKIT  Show error message
+    }
+    addPoll({ title: quesRef?.current?.value, options: validatedOptions });
   }
 
   useEffect(() => {

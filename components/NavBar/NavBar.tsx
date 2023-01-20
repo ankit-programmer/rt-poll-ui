@@ -94,11 +94,14 @@ const Navbar = () => {
         <div>
           <ul style={{ color: `${linkColor}` }} className='hidden md:flex'>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/faq'>FAQ</Link>
+              <Link legacyBehavior href='/'>Create</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/pricing'>Pricing</Link>
+              <Link legacyBehavior href='/my-poll'>My Poll</Link>
             </li>
+            {/* <li className='ml-10 text-sm uppercase hover:border-b'>
+              <Link legacyBehavior href='/pricing'>Pricing</Link>
+            </li> */}
             <li className='ml-10 text-sm uppercase hover:border-b'>
               <Link legacyBehavior href='/feedback'>Feedback</Link>
             </li>
@@ -171,16 +174,21 @@ const Navbar = () => {
           <div className='py-4 flex flex-col'>
             <ul className='uppercase'>
 
-              <Link legacyBehavior href='/faq'>
+              <Link legacyBehavior href='/'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  FAQ
+                  Create
                 </li>
               </Link>
-              <Link legacyBehavior href='/pricing'>
+              <Link legacyBehavior href='/my-poll'>
+                <li onClick={() => setNav(false)} className='py-4 text-sm'>
+                  My Poll
+                </li>
+              </Link>
+              {/* <Link legacyBehavior href='/pricing'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Pricing
                 </li>
-              </Link>
+              </Link> */}
               <Link legacyBehavior href='/feeback'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Feedback

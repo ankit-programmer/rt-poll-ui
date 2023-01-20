@@ -70,4 +70,14 @@ class Event {
     }
 }
 
-export default new Event();
+export class EventProxy {
+    get(target: any, prop: any, receiver: any) {
+        const env = process.env.NODE_ENV;
+        if (env == "development") return () => {
+            console.log("Events Disabled in development Mode");
+        };
+        return Reflect.get(target, prop, receiver);
+    }
+}
+
+export default new Proxy(new Event(), new EventProxy()) as Event;
