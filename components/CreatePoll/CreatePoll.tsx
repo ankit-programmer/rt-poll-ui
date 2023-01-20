@@ -11,6 +11,7 @@ import event from '../../app/analytics';
 import PollOption, { AddOption } from '../PollOption/PollOption';
 import MainActionButton from '../ActionButton/ActionButton';
 import { getReportLink } from '../../utility';
+import analytics from '../../app/analytics';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -126,6 +127,7 @@ const CreatePoll = () => {
                 changeOption(option.text || "", i);
               }} handleDelete={() => {
                 console.log(`Deleting Option at : ${i}`);
+                analytics.deleteOption();
                 deleteOption(i);
               }} />
             ))

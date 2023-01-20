@@ -11,6 +11,7 @@ import { BsPlusCircleDotted } from 'react-icons/bs';
 import { textAlign, width } from '@mui/system';
 import { Button } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
+import analytics from '../../app/analytics';
 type PollOptionProp = {
     handleChange: (option: Option) => void,
     handleDelete: any,
@@ -29,7 +30,9 @@ const PollOption = (props: PollOptionProp) => {
             <div className={styles.Option}>
                 <div className={styles.OptionIcon}>
 
-                    <BiImageAdd size="4em"></BiImageAdd>
+                    <BiImageAdd size="4em" onClick={() => {
+                        analytics.addOptionImage();
+                    }}></BiImageAdd>
                 </div>
                 <input className={styles.OptionInput} type="text" onChange={handleOptionChange} value={option.text} placeholder='Option One'></input>
 

@@ -55,7 +55,14 @@ class Event {
             type: type
         })
     }
-
+    deleteOption() {
+        analytics.logEvent("delete_option");
+    }
+    addOptionImage() {
+        analytics.logEvent("add_image", {
+            type: "option_image"
+        })
+    }
     pollCreated(pollId: string) {
         analytics.logEvent("poll_created", {
             id: pollId
