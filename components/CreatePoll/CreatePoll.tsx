@@ -8,6 +8,7 @@ import PollOption, { AddOption } from '../PollOption/PollOption';
 import MainActionButton from '../ActionButton/ActionButton';
 import { getReportLink } from '../../utility';
 import analytics from '../../app/analytics';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -110,38 +111,40 @@ const CreatePoll = () => {
   }, [])
   return (
     <div className={styles.PollContainer} >
+      <ErrorBoundary>
 
-      <form style={{
-        width: '100%'
-      }} autoComplete="off">
+        <form style={{
+          width: '100%'
+        }} autoComplete="off">
 
 
-        <div className={styles.QuestionIcon}>Q</div>
+          <div className={styles.QuestionIcon}>Q</div>
 
-        <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
+          <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
 
-        <div className={styles.OptionContainer}>
-          {
-            options.map((option: any, i) => (
-              <PollOption key={i} id={i} option={option} handleChange={(option: Option) => {
-                changeOption(option.text || "", i);
-              }} handleDelete={() => {
-                console.log(`Deleting Option at : ${i}`);
-                analytics.deleteOption();
-                deleteOption(i);
-              }} />
-            ))
-          }
-          {
-            (options.length < 8) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
-          }
-        </div>
-        <br />
-        <br />
-        <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
+          <div className={styles.OptionContainer}>
+            {
+              options.map((option: any, i) => (
+                <PollOption key={i} id={i} option={option} handleChange={(option: Option) => {
+                  changeOption(option.text || "", i);
+                }} handleDelete={() => {
+                  console.log(`Deleting Option at : ${i}`);
+                  analytics.deleteOption();
+                  deleteOption(i);
+                }} />
+              ))
+            }
+            {
+              (options.length < 8) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
+            }
+          </div>
+          <br />
+          <br />
+          <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
 
-      </form>
+        </form>
 
+      </ErrorBoundary>
     </div>
 
 

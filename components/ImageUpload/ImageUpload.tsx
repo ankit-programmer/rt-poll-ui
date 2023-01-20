@@ -49,7 +49,6 @@ uppy.use(UppyFirebasePlugin, {
 } as any);
 
 export default function ImageUpload({ onClose }: any) {
-
     const isMobile = useMediaQuery('(max-width:480px)');
     return (<div className={styles.ImageUploadPopup}>
         <div style={{
@@ -57,11 +56,11 @@ export default function ImageUpload({ onClose }: any) {
         }}>
             <Dashboard proudlyDisplayPoweredByUppy={false} showRemoveButtonAfterComplete autoOpenFileEditor doneButtonHandler={() => {
                 onClose(uppy.getFiles() || []);
-                uppy.removeFile(uppy.getFiles()[0]?.id);
-            }} width={isMobile ? '100vw' : ""} uppy={uppy} plugins={['ImageEditor']} />
+                uppy.getFiles() && uppy.removeFile(uppy.getFiles()[0]?.id);
+            }} width={isMobile ? '95vw' : ""} uppy={uppy} plugins={['ImageEditor']} />
             <IconButton onClick={() => {
                 onClose(uppy.getFiles() || []);
-                uppy.removeFile(uppy.getFiles()[0]?.id);
+                uppy.getFiles() && uppy.removeFile(uppy.getFiles()[0]?.id);
             }} style={{
                 position: 'absolute',
                 right: '0',

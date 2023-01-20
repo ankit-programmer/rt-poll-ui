@@ -68,6 +68,15 @@ class Event {
             id: pollId
         })
     }
+
+    clientError(error: any) {
+        try {
+
+            analytics.logEvent("client_error", { ...error });
+        } catch (error) {
+
+        }
+    }
 }
 
 export class EventProxy {

@@ -14,6 +14,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import analytics from '../../app/analytics';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import Image from 'next/image';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 type PollOptionProp = {
     handleChange: (option: Option) => void,
     handleDelete: any,
@@ -35,12 +36,16 @@ const PollOption = (props: PollOptionProp) => {
 
     return (
         <>
-            {imagePopup ? <ImageUpload onClose={(files: any) => {
-                console.log("Files", files);
-                const file = files.pop();
-                if (file) handleImageChange(file?.downloadUrl);
-                setImagePopup(false);
-            }}></ImageUpload> : null}
+            <ErrorBoundary>
+
+                {imagePopup ? <ImageUpload onClose={(files: any) => {
+                    console.log("Files", files);
+
+                    const file = files.pop();
+                    if (file) handleImageChange(file?.downloadUrl);
+                    setImagePopup(false);
+                }}></ImageUpload> : null}
+            </ErrorBoundary>
             <div className={styles.Option}>
                 <div onClick={() => {
                     analytics.addOptionImage();

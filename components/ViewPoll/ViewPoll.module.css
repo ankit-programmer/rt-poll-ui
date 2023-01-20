@@ -8,7 +8,6 @@
 .QuestionText {
   color: black;
   opacity: 70%;
-  font-size: large;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -87,7 +86,7 @@
   height: 4.5rem;
 }
 .OptionText {
-  font-size: large;
+  font-size: 1.4rem;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -116,6 +115,15 @@
   }
   .OptionContainer {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .QuestionIcon {
+    font-size: 2rem;
+  }
+  .QuestionText {
+    font-size: 1.5rem;
+  }
+  .OptionText {
+    font-size: 1.2rem;
   }
 }
 
