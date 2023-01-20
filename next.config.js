@@ -2,7 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  compress: true
+  compress: true,
+  images: {
+    remotePatterns: [
+      {
+        hostname: "firebasestorage.googleapis.com"
+      }
+    ]
+  },
 }
 
 module.exports = nextConfig

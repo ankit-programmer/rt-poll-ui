@@ -81,8 +81,10 @@
   align-items: center;
   flex-direction: row;
   align-content: center;
-  opacity: 15%;
-  padding-left: 0.4rem;
+  opacity: 85%;
+  /* padding-left: 0.4rem; */
+  width: 4.5rem;
+  height: 4.5rem;
 }
 .OptionText {
   font-size: large;

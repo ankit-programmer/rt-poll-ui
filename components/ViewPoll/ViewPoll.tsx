@@ -12,6 +12,7 @@ import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettin
 import AlarmOutlinedIcon from '@mui/icons-material/AlarmOutlined';
 import event from '../../app/analytics';
 import { getReportLink } from '../../utility';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 const ViewPoll = (params: any) => {
     const router = useRouter();
@@ -65,8 +66,12 @@ const ViewPoll = (params: any) => {
                                         }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
 
                                             <div className={styles.OptionIcon}>
-
-                                                <BiImageAdd size="4em"></BiImageAdd>
+                                                {option?.image ? <Image style={{
+                                                    borderRadius: '8px'
+                                                }} height={100} width={100} src={option?.image || ""} alt={''}></Image> :
+                                                    <BiImageAdd style={{
+                                                        opacity: "15%"
+                                                    }} size="4em"></BiImageAdd>}
                                             </div>
                                             <div className={styles.OptionText}>{option.text}
                                                 {option?.id == winner ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
