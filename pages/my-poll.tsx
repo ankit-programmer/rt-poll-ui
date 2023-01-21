@@ -15,8 +15,8 @@ export default function Home() {
                 <link rel="icon" href="/favicon.png" />
             </Head>
             <Navbar></Navbar>
-            <div className='w-full h-screen text-center'>
-                <div className='max-w-[1240px] w-full h-full mx-auto p-2 grid grid-cols-1 items-center justify-center justify-items-center'>
+            <div className='w-full text-center'>
+                <div className='max-w-[1240px] min-h-screen w-full mt-24 h-full mx-auto p-2 grid grid-cols-1 items-center justify-center justify-items-center'>
                     {token ? <PollList></PollList> : <CircularProgress></CircularProgress>}
                     {/* <CircularProgress></CircularProgress> */}
                 </div>
