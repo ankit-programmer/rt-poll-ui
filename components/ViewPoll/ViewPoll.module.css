@@ -86,7 +86,7 @@
   height: 4.5rem;
 }
 .OptionText {
-  font-size: 1.4rem;
+  font-size: large;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
