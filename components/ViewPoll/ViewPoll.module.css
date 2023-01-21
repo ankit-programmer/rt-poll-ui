@@ -36,16 +36,21 @@
   width: 100%;
   max-width: 800px;
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
-  text-align: center;
+  text-align: left;
 }
 .OptionContainer {
   display: grid;
+  /* grid-column: 1; */
   grid-gap: 1.25rem;
   margin: 24px;
   /* padding-inline: 1rem; */
   justify-items: center;
   /* grid-template-columns: repeat(auto-fill,50%); */
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.LongOptionContainer {
+  grid-template-columns: 1fr;
 }
 .Option {
   background-color: white;
@@ -164,11 +169,13 @@
   margin: 4px;
 }
 .TotalCount {
-  display: inline;
+  display: block;
+  text-align: center;
   font-size: large;
   font-weight: bold;
   opacity: 50%;
 }
 .BadgeContainer {
+  text-align: center;
   opacity: 50%;
 }

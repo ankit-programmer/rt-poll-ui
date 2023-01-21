@@ -64,7 +64,7 @@ const ViewPoll = (params: any) => {
                                 {/* <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input> */}
                             </div>
                             <div className={styles.Divider}></div>
-                            <div className={styles.OptionContainer}>
+                            <div className={`${styles.OptionContainer} ${data?.options?.some((option => option?.text?.length >= 50)) ? styles.LongOptionContainer : ''}`}>
                                 {
 
                                     data?.options?.map((option, i) => (
@@ -84,8 +84,10 @@ const ViewPoll = (params: any) => {
                                                         opacity: "15%"
                                                     }} size="4em"></BiImageAdd>}
                                             </div>
-                                            <div className={styles.OptionText}>{option.text}
-                                                {option?.id == winner ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
+                                            <div className={styles.OptionText}><span>{option.text}
+                                                {option?.id == winner ? <GiAchievement style={{
+                                                    display: 'inline'
+                                                }} display={"inline"} size="1.5em" color='green'></GiAchievement> : ""}</span>
                                             </div>
                                             <div className={styles.OptionStat}>{
                                                 (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : (vote?.isSuccess ? getOptionCountView(vote, option?.id) : 0))
