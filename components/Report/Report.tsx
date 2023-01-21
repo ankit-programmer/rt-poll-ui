@@ -101,7 +101,7 @@ const Report = (params: any) => {
                                     <br></br>
                                     <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
                                         {
-                                            labels: pollReport.options?.map(option => option?.text),
+                                            labels: pollReport.options?.map((option, index) => (option?.text && option?.text.length <= 16) ? option?.text : `Option ${index+1}`),
                                             datasets: [
                                                 {
                                                     label: pollReport?.id,
