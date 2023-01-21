@@ -44,6 +44,7 @@ export default class FirebaseStorage extends BasePlugin {
                         () => {
                             uploadTask.snapshot.ref.getDownloadURL().then((downloadUrl: any) => {
                                 const file: any = this.uppy.getFile(id);
+                                if (!file) return;
                                 file.downloadUrl = downloadUrl;
                                 console.log("Download URL", downloadUrl);
                                 this.uppy.emit('upload-success', file, uploadTask.snapshot, downloadUrl);
