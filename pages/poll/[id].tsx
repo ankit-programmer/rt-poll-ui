@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getPollLink } from '../../utility';
 
-export default function Home({ props }: any) {
+export default function Home(props: any) {
     const router = useRouter();
     const { id } = router.query;
     const { token } = useSelector((state: any) => state.auth) as any;
+    const { poll } = props;
     const oembedUrl = `https://api.rtpoll.com/oembed?url=${encodeURI(getPollLink(id as string))}&format=json`
     return (
 
@@ -27,7 +28,7 @@ export default function Home({ props }: any) {
             <>
                 <div className='w-full h-screen text-center'>
                     <div className='max-w-[1240px] w-full h-full mx-auto p-2 flex justify-center items-center styles.MainContainer' >
-                        {token ? <ViewPoll key={id} id={id}></ViewPoll> : <CircularProgress></CircularProgress>}
+                        <ViewPoll poll={poll} key={id} id={id}></ViewPoll>
 
                     </div>
                 </div>
@@ -39,9 +40,12 @@ export default function Home({ props }: any) {
 
 
 export async function getServerSideProps(context: any) {
+    const { id } = context?.params;
+    const poll = await (await fetch(`https://api.rtpoll.com/poll/?id=${id}`)).json();
     return {
         props: {
-            ssr: true
+            ssr: true,
+            poll: poll
         }, // will be passed to the page component as props
     }
 }

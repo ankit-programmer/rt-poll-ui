@@ -104,4 +104,4 @@ export const voteApi = createApi({
     }),
 })
 
-export const { useGetVoteByIdQuery, useAddVoteMutation, useGetVotesQuery } = voteApi;
+export const { useGetVoteByIdQuery, useLazyGetVoteByIdQuery, useAddVoteMutation, useGetVotesQuery } = voteApi;

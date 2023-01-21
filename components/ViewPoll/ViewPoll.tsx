@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
-import { useGetPollByIdQuery } from '../../services/poll';
-import { useGetVoteByIdQuery, useAddVoteMutation } from '../../services/vote';
+import { useGetPollByIdQuery, useLazyGetPollByIdQuery } from '../../services/poll';
+import { useGetVoteByIdQuery, useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
 import { BiImageAdd, BiShare } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,12 +14,23 @@ import event from '../../app/analytics';
 import { getReportLink } from '../../utility';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { Poll } from '../../services/types';
 const ViewPoll = (params: any) => {
     const router = useRouter();
-    const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
-    const vote = useGetVoteByIdQuery(params?.id);
+    const { token } = useSelector((state: any) => state.auth) as any;
+    const defaultPoll: Poll = params?.poll;
+    const [getPoll, { data = defaultPoll, error, isLoading }] = useLazyGetPollByIdQuery();
+    const [getVote, vote] = useLazyGetVoteByIdQuery();
     const winner = getWinner(vote?.data?.options);
     const [addVote, voteStatus] = useAddVoteMutation();
+    useEffect(() => {
+        if (token) {
+
+            getPoll(params?.id);
+            getVote(params?.id);
+        }
+    }, [token]);
     useEffect(() => {
         if (voteStatus?.isSuccess) {
             event.voteAdded(voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
@@ -31,7 +42,7 @@ const ViewPoll = (params: any) => {
     return (
         <>
             {
-                error ? (<>Something Went Wrong</>) : isLoading ? (<CircularProgress></CircularProgress>) : data ? (
+                data ? (
                     <>
                         <form className={styles.PollContainer}>
                             <div className={styles.InfoButton}>
@@ -77,7 +88,7 @@ const ViewPoll = (params: any) => {
                                                 {option?.id == winner ? <GiAchievement size="1.5em" color='green'></GiAchievement> : ""}
                                             </div>
                                             <div className={styles.OptionStat}>{
-                                                (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : getOptionCountView(vote, option?.id))
+                                                (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : (vote?.isSuccess ? getOptionCountView(vote, option?.id) : 0))
                                             } </div>
                                         </div>
 
@@ -85,14 +96,6 @@ const ViewPoll = (params: any) => {
                                 }
 
                             </div>
-                            {/* <IconButton onClick={() => {
-                                    navigator.clipboard.writeText(getPollLink(params?.id))
-                                }}>
-
-                                    <ContentCopyIcon color='primary'></ContentCopyIcon>
-                                </IconButton> */}
-
-
                             <div className={styles.TotalCount}>Total Votes : {vote?.data?.total}</div>
                             <div className={styles.BadgeContainer}>
 
