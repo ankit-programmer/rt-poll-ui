@@ -26,8 +26,8 @@ export default function Home(props: any) {
             </Head>
             <NavBar />
             <>
-                <div className='w-full h-screen text-center'>
-                    <div className='max-w-[1240px] w-full h-full mx-auto p-2 flex justify-center items-center styles.MainContainer' >
+                <div className='w-full min-h-screen mt-24 text-center'>
+                    <div className='max-w-[1240px] min-h-screen w-full h-full mx-auto p-2 flex justify-center items-center styles.MainContainer' >
                         <ViewPoll poll={poll} key={id} id={id}></ViewPoll>
 
                     </div>

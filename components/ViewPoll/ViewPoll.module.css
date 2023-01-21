@@ -73,17 +73,14 @@
     opacity: 10%;
     color: black;
     cursor: pointer; */
-  font-size: large;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  align-items: center;
+  /* display: flex; */
+
   flex-direction: row;
-  align-content: center;
   opacity: 85%;
   /* padding-left: 0.4rem; */
   width: 4.5rem;
   height: 4.5rem;
+  align-self: center;
 }
 .OptionText {
   font-size: large;
