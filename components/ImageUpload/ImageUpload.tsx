@@ -50,6 +50,11 @@ uppy.use(UppyFirebasePlugin, {
 
 export default function ImageUpload({ onClose }: any) {
     const isMobile = useMediaQuery('(max-width:480px)');
+    useEffect(() => {
+        uppy.on('file-editor:complete', () => {
+            uppy.upload();
+        });
+    }, []);
     return (<div className={styles.ImageUploadPopup}>
         <div style={{
             position: 'relative'
