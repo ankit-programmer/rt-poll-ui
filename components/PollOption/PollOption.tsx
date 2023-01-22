@@ -12,9 +12,10 @@ import { textAlign, width } from '@mui/system';
 import { Button } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import analytics from '../../app/analytics';
-import ImageUpload from '../ImageUpload/ImageUpload';
+// import ImageUpload from '../ImageUpload/ImageUpload';
 import Image from 'next/image';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import dynamic from 'next/dynamic';
 type PollOptionProp = {
     handleChange: (option: Option) => void,
     handleDelete: any,
@@ -22,6 +23,10 @@ type PollOptionProp = {
     id: string | number
 }
 const PollOption = (props: PollOptionProp) => {
+    const ImageUpload = dynamic(() => import('../ImageUpload/ImageUpload'), {
+        loading: () => null
+    })
+
     const { handleChange, handleDelete, option, id } = props;
     const [imagePopup, setImagePopup] = useState(false);
     function handleOptionChange(event: any) {
@@ -80,7 +85,15 @@ export const AddOption = (props: any) => {
         <>
             <StyledEngineProvider injectFirst>
 
-                <Button {...props} className={styles.Option}>
+                <Button {...props} style={{
+                    display: 'flex',
+                    width: '100%',
+                    flexDirection: 'row',
+                    backgroundColor: 'white',
+                    borderRadius: '8px',
+                    alignItems: 'center',
+                    boxShadow: '0 1px 6px 0 rgba(32, 33, 36, 0.28)',
+                }} className={styles.Option}>
                     <div style={{
                         flex: 1
                     }}>

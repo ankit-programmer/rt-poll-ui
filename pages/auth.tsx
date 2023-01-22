@@ -1,5 +1,5 @@
 import React from 'react'
-import Auth from '../components/Auth/Auth'
+// import Auth from '../components/Auth/Auth'
 import { auth as firebaseAuth } from '../app/firebaseApp'
 import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { GiTurret } from 'react-icons/gi';
@@ -7,8 +7,12 @@ import { useMergeUserMutation } from '../services/user';
 import { useGetPollByIdQuery } from '../services/poll';
 import { setAuth } from '../services/auth';
 import { useDispatch } from 'react-redux';
+import dynamic from 'next/dynamic';
 let anonymousToken: string = "";
 export default function Login() {
+    const Auth = dynamic(() => import('../components/Auth/Auth'), {
+        loading: () => null
+    })
     const dispatch = useDispatch();
     const [mergeUser, { data, error, isLoading }] = useMergeUserMutation();
     let successUrl = "/";

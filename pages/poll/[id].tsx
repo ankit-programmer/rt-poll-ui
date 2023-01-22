@@ -1,10 +1,11 @@
 import Head from 'next/head'
-import NavBar from '../../components/NavBar/NavBar'
+// import NavBar from '../../components/NavBar/NavBar'
 import ViewPoll from '../../components/ViewPoll/ViewPoll'
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getPollLink } from '../../utility';
+import dynamic from 'next/dynamic';
 
 export default function Home(props: any) {
     const router = useRouter();
@@ -12,6 +13,9 @@ export default function Home(props: any) {
     const { token } = useSelector((state: any) => state.auth) as any;
     const { poll } = props;
     const oembedUrl = `https://api.rtpoll.com/oembed?url=${encodeURI(getPollLink(id as string))}&format=json`
+    const NavBar = dynamic(() => import('../../components/NavBar/NavBar'), {
+        loading: () => null
+    })
     return (
 
 
@@ -41,13 +45,13 @@ export default function Home(props: any) {
 }
 
 
-export async function getServerSideProps(context: any) {
-    const { id } = context?.params;
-    const poll = await (await fetch(`https://api.rtpoll.com/poll/?id=${id}`)).json();
-    return {
-        props: {
-            ssr: true,
-            poll: poll
-        }, // will be passed to the page component as props
-    }
-}
+// export async function getServerSideProps(context: any) {
+//     const { id } = context?.params;
+//     const poll = await (await fetch(`https://api.rtpoll.com/poll/?id=${id}`)).json();
+//     return {
+//         props: {
+//             ssr: true,
+//             poll: poll
+//         }, // will be passed to the page component as props
+//     }
+// }

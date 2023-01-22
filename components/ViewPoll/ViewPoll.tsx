@@ -27,7 +27,6 @@ const ViewPoll = (params: any) => {
     useEffect(() => {
         if (token) {
 
-            getPoll(params?.id);
             getVote(params?.id);
         }
     }, [token]);
@@ -37,7 +36,11 @@ const ViewPoll = (params: any) => {
         }
     }, [voteStatus.data])
     useEffect(() => {
-        event.viewPoll(params?.id)
+        if (params?.id) {
+
+            getPoll(params?.id);
+            event.viewPoll(params?.id)
+        }
     }, []);
     return (
         <>
@@ -90,7 +93,7 @@ const ViewPoll = (params: any) => {
                                                 }} display={"inline"} size="1.5em" color='green'></GiAchievement> : ""}</span>
                                             </div>
                                             <div className={styles.OptionStat}>{
-                                                (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : (vote?.isSuccess ? getOptionCountView(vote, option?.id) : 0))
+                                                (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : (vote?.isSuccess ? getOptionCountView(vote, option?.id) : ""))
                                             } </div>
                                         </div>
 

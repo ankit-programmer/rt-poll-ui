@@ -1,11 +1,14 @@
 import Head from 'next/head'
-import CreatePoll from '../components/CreatePoll/CreatePoll'
+// import CreatePoll from '../components/CreatePoll/CreatePoll'
 import { useSelector } from 'react-redux';
-import Navbar from '../components/NavBar/NavBar';
+// import Navbar from '../components/NavBar/NavBar';
 import dynamic from 'next/dynamic';
 export default function Home() {
   const { token } = useSelector((state: any) => state.auth) as any;
-  const PollList = dynamic(() => import('../components/PollList/PollList'), {
+  const CreatePoll = dynamic(() => import('../components/CreatePoll/CreatePoll'), {
+    loading: () => null
+  })
+  const NavBar = dynamic(() => import('../components/NavBar/NavBar'), {
     loading: () => null
   })
   return (
@@ -15,7 +18,7 @@ export default function Home() {
         <meta name="description" content="Get your friends opinion in minutes!" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Navbar></Navbar>
+      <NavBar></NavBar>
       <div className='w-full h-screen text-center'>
         <div className='max-w-[1240px] w-full h-full mx-auto p-2 grid grid-cols-1 justify-center items-center'>
 
