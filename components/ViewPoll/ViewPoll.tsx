@@ -20,10 +20,19 @@ const ViewPoll = (params: any) => {
     const router = useRouter();
     const { token } = useSelector((state: any) => state.auth) as any;
     const defaultPoll: Poll = params?.poll;
+    const [selectedOption, selectOption] = useState("");
     const [getPoll, { data = defaultPoll, error, isLoading }] = useLazyGetPollByIdQuery();
     const [getVote, vote] = useLazyGetVoteByIdQuery();
     const winner = getWinner(vote?.data?.options);
     const [addVote, voteStatus] = useAddVoteMutation();
+    useEffect(() => {
+        if (token && selectedOption) {
+            addVote({
+                pollId: params?.id,
+                optionId: selectedOption
+            })
+        }
+    }, [token, selectedOption]);
     useEffect(() => {
         if (token) {
 
@@ -73,10 +82,7 @@ const ViewPoll = (params: any) => {
                                     data?.options?.map((option, i) => (
                                         <div onClick={() => {
                                             event.addVote(vote?.data?.pollId || "", option?.id);
-                                            addVote({
-                                                pollId: vote.data?.pollId,
-                                                optionId: option.id
-                                            })
+                                            selectOption(option?.id);
                                         }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
 
                                             <div className={styles.OptionIcon}>
