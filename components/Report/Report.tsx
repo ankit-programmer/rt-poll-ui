@@ -1,15 +1,6 @@
 
 import React, { useReducer, useState } from 'react'
-import { Chart, ArcElement, plugins, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import styles from './Report.module.css'
-Chart.register(ArcElement);
-Chart.register(CategoryScale);
-Chart.register(LinearScale);
-Chart.register(BarElement);
-Chart.register(Title);
-Chart.register(Tooltip);
-// Chart.register(Legend);
-import { Doughnut, Bar } from 'react-chartjs-2'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useGetVoteByIdQuery } from '../../services/vote';
 import { Button, CircularProgress, IconButton, Snackbar } from '@mui/material';
@@ -26,6 +17,7 @@ import { BiShare } from 'react-icons/bi';
 import { BsWhatsapp } from 'react-icons/bs';
 import analytics from '../../app/analytics';
 import { StyledEngineProvider } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
 
 type PollReport = {
     id?: string,// Poll Id,
@@ -33,25 +25,11 @@ type PollReport = {
 }
 const Report = (params: any) => {
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
-    const vote = useGetVoteByIdQuery(params?.id);
-    const defaultReport: PollReport = {};
-    const [pollReport, setReport] = useState(defaultReport);
     const { token, uid } = useSelector((state: any) => state.auth) as Auth;
     const [isCoppied, setCopied] = useState(false);
-    useEffect(() => {
-        setReport({
-            id: data?.id,
-            options: data?.options?.map(option => {
-                const text = option.text;
-                const count = vote?.data?.options[option?.id]?.count || 0;
-                return {
-                    text,
-                    count
-                }
-            })
-        })
-    }, [vote?.data, data]);
-
+    const PollChart = dynamic(() => import("../PollChart/PollChart"), {
+        loading: () => null
+    })
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
@@ -59,7 +37,6 @@ const Report = (params: any) => {
 
         setCopied(false);
     };
-
     const action = (
         <React.Fragment>
             <IconButton
@@ -99,7 +76,8 @@ const Report = (params: any) => {
                                     }}>{data?.title}</h3>
                                     <br></br>
                                     <br></br>
-                                    <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
+                                    <PollChart {...params}></PollChart>
+                                    {/* <Bar style={{ display: "inline" }} className={styles.PieChart} width={50} height={50} data={
                                         {
                                             labels: pollReport.options?.map((option, index) => (option?.text && option?.text.length <= 16) ? option?.text : `Option ${index+1}`),
                                             datasets: [
@@ -111,7 +89,7 @@ const Report = (params: any) => {
                                                 }
                                             ],
 
-                                        }} />
+                                        }} /> */}
 
                                     <br />
                                     <br />
