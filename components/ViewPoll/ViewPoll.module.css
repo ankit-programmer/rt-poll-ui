@@ -175,6 +175,9 @@
   font-weight: bold;
   opacity: 50%;
 }
+.HiddenTotalCount {
+  visibility: hidden;
+}
 .BadgeContainer {
   text-align: center;
   opacity: 50%;

@@ -65,6 +65,17 @@ export const voteApi = createApi({
                                 }
 
                                     break;
+                                case 'sync': {
+                                    const tempData = { ...draft };
+                                    if (tempData?.pollId == data?.pollId) {
+                                        if (!data?.total || !data?.options) return;
+                                        tempData.total = data?.total;
+                                        tempData.options = { ...tempData?.options, ...data?.options };
+                                        Object.assign(draft, tempData);
+                                    }
+                                }
+
+                                    break;
                                 default:
                                     break;
                             }

@@ -107,7 +107,7 @@ const ViewPoll = (params: any) => {
                                 }
 
                             </div>
-                            <div className={styles.TotalCount}>Total Votes : {vote?.data?.total}</div>
+                            <div className={`${styles.TotalCount} ${vote?.data?.total ? null : styles.HiddenTotalCount}`}>Total Votes : {vote?.data?.total}</div>
                             <div className={styles.BadgeContainer}>
 
                                 <Tooltip title="Anonymous Vote: No one will be able to identify the option you voted for!">

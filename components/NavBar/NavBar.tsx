@@ -9,7 +9,7 @@ import { auth } from '../../app/firebaseApp';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Auth } from '../../services/types';
 import { setUser } from '../../app/analytics';
-import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import {  onIdTokenChanged, signInAnonymously } from 'firebase/auth';
 import { setAuth } from '../../services/auth';
 let lastScrollY = 0;
 const Navbar = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    return onAuthStateChanged(auth, (user: any) => {
+    return onIdTokenChanged(auth, (user: any) => {
       if (user) {
         console.log(user);
         setUser(user.uid, user.isAnonymous);
@@ -106,10 +106,10 @@ const Navbar = () => {
               <Link legacyBehavior href='/feedback'>Feedback</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/about-us'>About Us</Link>
+              <Link legacyBehavior href='/about'>About Us</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/pricacy'>Privacy</Link>
+              <Link legacyBehavior href='/privacy'>Privacy</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
               {
@@ -167,7 +167,7 @@ const Navbar = () => {
             </div>
             <div className='border-b border-gray-300 my-4'>
               <p className='w-[85%] md:w-[90%] py-4'>
-                Let&#39;s build something legendary together
+                Get your team opinion in seconds!
               </p>
             </div>
           </div>
@@ -194,7 +194,7 @@ const Navbar = () => {
                   Feedback
                 </li>
               </Link>
-              <Link legacyBehavior href='/about-us'>
+              <Link legacyBehavior href='/about'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   About Us
                 </li>
