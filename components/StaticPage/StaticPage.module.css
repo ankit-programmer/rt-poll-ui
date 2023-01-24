@@ -1,0 +1,23 @@
+.Page {
+    text-align: left;
+    align-self: flex-start;
+    margin: 2rem;
+}
+@media screen and (max-width: 480px) {
+    .Page {
+        margin: 1rem;
+    }
+}
+.Page h1 {
+    font-size: 2rem;
+    /* text-align: center; */
+}
+
+.Page li {
+    padding-left: 2rem;
+    cursor: auto;
+}
+.Page ul {
+    list-style-type: circle;
+    list-style-position: inside;
+}

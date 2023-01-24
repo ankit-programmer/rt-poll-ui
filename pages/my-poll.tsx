@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useSelector } from 'react-redux';
 import Navbar from '../components/NavBar/NavBar';
-import dynamic from 'next/dynamic';
 import PollList from '../components/PollList/PollList';
 import CircularProgress from '@mui/material/CircularProgress';
 export default function Home() {
@@ -10,9 +9,10 @@ export default function Home() {
     return (
         <div>
             <Head>
-                <title>RT Poll - Create Poll</title>
+                <title>RT Poll - My Poll</title>
                 <meta name="description" content="Get your friends opinion in minutes!" />
                 <link rel="icon" href="/favicon.png" />
+                <link rel='canonical' href='https://rtpoll.com' />
             </Head>
             <Navbar></Navbar>
             <div className='w-full text-center'>

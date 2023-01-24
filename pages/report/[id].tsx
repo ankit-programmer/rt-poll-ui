@@ -19,6 +19,7 @@ export default function PollReport() {
                 <title>RT Poll - Report</title>
                 <meta name="description" content="Next-Gen realtime voting system!" />
                 <link rel="icon" href="/favicon.png" />
+                <link rel='canonical' href='https://rtpoll.com' />
             </Head>
             <NavBar />
             <>
