@@ -3,13 +3,12 @@ import Head from 'next/head'
 import { useSelector } from 'react-redux';
 // import Navbar from '../components/NavBar/NavBar';
 import dynamic from 'next/dynamic';
+import FeedbackPoll from '../components/ViewPoll/ViewPoll';
 export default function Home() {
     const NavBar = dynamic(() => import('../components/NavBar/NavBar'), {
         loading: () => null
     });
-    const FeedbackPoll = dynamic(() => import('../components/ViewPoll/ViewPoll'), {
-        loading: () => null
-    })
+
     const title = "Your Input is our Power: Help us Improve RT Poll";
     const randomTitle = ["Be the Change: Your Feedback Can Make RT Poll Even Better", "Have Your Say: Your Opinion Matters to Us", "Make RT Poll Your Own: Share Your Feedback and Watch It Grow", "Your Input is our Power: Help us Improve RT Poll", "Join the Conversation: Your Feedback Can Help RT Poll Reach its Potential"];
     return (
