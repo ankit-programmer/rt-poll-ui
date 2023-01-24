@@ -189,7 +189,7 @@ const Navbar = () => {
                   Pricing
                 </li>
               </Link> */}
-              <Link legacyBehavior href='/feeback'>
+              <Link legacyBehavior href='/feedback'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Feedback
                 </li>
