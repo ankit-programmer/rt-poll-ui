@@ -17,7 +17,7 @@ import { Poll } from '../../services/types';
 // import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 // import ShareButton from '../ShareButton/ShareButton';
 import dynamic from 'next/dynamic';
-import Snackbar from '@mui/material/Snackbar';
+// import Snackbar from '@mui/material/Snackbar';
 const ViewPoll = (params: any) => {
     const [currentAction, setAction] = useState("share");
     const [messageStatus, setMessageStatus] = useState(false);
@@ -69,6 +69,9 @@ const ViewPoll = (params: any) => {
         }
     }, []);
     const ShareButton = dynamic(() => import('../ShareButton/ShareButton'), {
+        loading: () => null
+    });
+    const Snackbar = dynamic(() => import('@mui/material/Snackbar'), {
         loading: () => null
     });
 

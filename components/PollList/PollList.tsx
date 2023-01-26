@@ -16,7 +16,7 @@ const PollList = () => {
                 <br></br>
                 <br></br>
 
-            </> : <><p>You haven't created any poll yet!</p></>
+            </> : <><p>You haven&apos;t created any poll yet!</p></>
         }
         <div className={styles.PollContainer}>
             {
