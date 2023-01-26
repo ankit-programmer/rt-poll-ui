@@ -26,6 +26,11 @@ export const pollApi = createApi({
                 url: '/poll',
                 params: { id }
             }),
+            transformResponse(baseQueryReturnValue, meta, pollId) {
+                return {
+                    ...baseQueryReturnValue as Poll, id: pollId
+                }
+            },
         }),
         addNewPoll: builder.mutation({
             query: (poll) =>

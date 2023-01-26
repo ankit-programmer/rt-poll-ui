@@ -1,21 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
-import { useGetPollByIdQuery, useLazyGetPollByIdQuery } from '../../services/poll';
-import { useGetVoteByIdQuery, useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
+import {  useLazyGetPollByIdQuery } from '../../services/poll';
+import {  useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
 import { BiImageAdd, BiShare } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
-import AlarmOutlinedIcon from '@mui/icons-material/AlarmOutlined';
 import event from '../../app/analytics';
 import { getReportLink } from '../../utility';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { Poll } from '../../services/types';
+import ShareButton from '../ShareButton/ShareButton';
 const ViewPoll = (params: any) => {
     const router = useRouter();
     const { token } = useSelector((state: any) => state.auth) as any;
@@ -110,7 +108,7 @@ const ViewPoll = (params: any) => {
                             <div className={`${styles.TotalCount} ${vote?.data?.total ? null : styles.HiddenTotalCount}`}>Total Votes : {vote?.data?.total}</div>
                             <div className={styles.BadgeContainer}>
 
-                                <Tooltip title="Anonymous Vote: No one will be able to identify the option you voted for!">
+                                {/* <Tooltip title="Anonymous Vote: No one will be able to identify the option you voted for!">
                                     <IconButton>
                                         <AdminPanelSettingsOutlinedIcon />
                                     </IconButton>
@@ -125,7 +123,8 @@ const ViewPoll = (params: any) => {
                                     <IconButton>
                                         <AlarmOutlinedIcon />
                                     </IconButton>
-                                </Tooltip>
+                                </Tooltip> */}
+                                <ShareButton opacity={"50%"} poll={data}></ShareButton>
                             </div>
 
                         </form>

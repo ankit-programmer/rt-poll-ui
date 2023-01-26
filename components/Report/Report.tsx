@@ -1,23 +1,13 @@
-
 import React, { useReducer, useState } from 'react'
 import styles from './Report.module.css'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { useGetVoteByIdQuery } from '../../services/vote';
-import { Button, CircularProgress, IconButton, Snackbar } from '@mui/material';
+import { CircularProgress, IconButton, Snackbar } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { useGetPollByIdQuery } from '../../services/poll';
-import { Auth, Option } from '../../services/types';
-import PollReport from '../../pages/report/[id]';
+import { Auth, Option, Poll } from '../../services/types';
 import CloseIcon from '@mui/icons-material/Close';
-import { getPollLink } from '../../utility';
-import { MdOutlineMail } from 'react-icons/md';
-import { MdOutlineMessage } from 'react-icons/md';
-import { BiShare } from 'react-icons/bi';
-import { BsWhatsapp } from 'react-icons/bs';
-import analytics from '../../app/analytics';
 import { StyledEngineProvider } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
+import ShareButton from '../ShareButton/ShareButton';
 
 type PollReport = {
     id?: string,// Poll Id,
@@ -125,84 +115,7 @@ const Report = (params: any) => {
                             fontSize: '1.5rem',
                             fontWeight: 'bold'
                         }}>LINK</h3>
-                        <div>
-                            <span style={{
-                                opacity: '75%',
-                                fontSize: 'medium'
-                            }}>{getPollLink(params?.id)}</span>
-                            <IconButton onClick={() => {
-                                navigator.clipboard.writeText(getPollLink(params?.id));
-                                setCopied(true);
-                            }}>
-                                <ContentCopyIcon color='primary' />
-                            </IconButton>
-                            <Snackbar
-                                open={isCoppied}
-                                autoHideDuration={2000}
-                                onClose={handleClose}
-                                message="Link Copied"
-                                action={action}
-                            />
-                            <br />
-                            <br></br>
-                            <h3 style={{
-                                fontSize: '1.5rem',
-                                fontWeight: 'bold'
-                            }}>SHARE</h3>
-                            <div style={{
-                                paddingBlock: '8px',
-                                display: 'flex',
-                                gap: '8px'
-                            }}>
-                                <IconButton onClick={() => {
-                                    analytics.sharePoll(params?.id, 'wa');
-                                    window.open(`https://wa.me?text=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, "_blank");
-                                }}>
-                                    <BsWhatsapp color='green' size='1.7rem' />
-
-                                </IconButton>
-                                <IconButton onClick={() => {
-                                    analytics.sharePoll(params?.id, 'mail');
-                                    window.open(`mailto:?subject=${data?.title}&body=${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n%0a")}%0a%0aClick here to vote:\n%0a${getPollLink(params?.id)}`)
-                                }}>
-
-
-                                    <MdOutlineMail color='#0085FF' size='2rem' />
-
-                                </IconButton>
-                                <IconButton onClick={() => {
-                                    analytics.sharePoll(params?.id, 'sms');
-                                    if (navigator.userAgent.match(/Android/i)) {
-
-                                        window.open(`sms:?body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
-
-                                    }
-                                    if (navigator.userAgent.match(/iPhone/i)) {
-
-                                        window.open(`sms:&body=${data?.title}%0a${data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("%0a")}%0a%0aClick here to vote:%0a${getPollLink(params?.id)}`, '_blank')
-
-                                    }
-                                }}>
-                                    <MdOutlineMessage color='#E18989' size='1.9rem' />
-                                </IconButton>
-                                <IconButton onClick={() => {
-                                    analytics.sharePoll(params?.id, 'other');
-                                    if (navigator.share) {
-                                        navigator.share({
-                                            title: data?.title,
-                                            text: data?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n"),
-                                            url: getPollLink(params?.id),
-                                        })
-                                            .then(() => console.log('Successful share'))
-                                            .catch((error) => console.log('Error sharing', error));
-                                    }
-                                }}>
-                                    <BiShare size='2rem' style={{
-                                        transform: 'scaleX(-1)'
-                                    }} />
-                                </IconButton>
-                            </div>
-                        </div>
+                        <ShareButton poll={data as Poll}></ShareButton>
                     </div>
                 </div>
             </div>

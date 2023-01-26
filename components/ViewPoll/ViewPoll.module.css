@@ -180,5 +180,7 @@
 }
 .BadgeContainer {
   text-align: center;
-  opacity: 50%;
+  align-items: center;
+  justify-items: center;
+  /* opacity: 50%; */
 }
