@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
-import {  useLazyGetPollByIdQuery } from '../../services/poll';
-import {  useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
+import { useLazyGetPollByIdQuery } from '../../services/poll';
+import { useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
 import { BiImageAdd, BiShare } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,7 +13,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { Poll } from '../../services/types';
-import ShareButton from '../ShareButton/ShareButton';
+// import ShareButton from '../ShareButton/ShareButton';
+import dynamic from 'next/dynamic';
 const ViewPoll = (params: any) => {
     const router = useRouter();
     const { token } = useSelector((state: any) => state.auth) as any;
@@ -49,6 +50,10 @@ const ViewPoll = (params: any) => {
             event.viewPoll(params?.id)
         }
     }, []);
+    const ShareButton = dynamic(() => import('../ShareButton/ShareButton'), {
+        loading: () => null
+    })
+
     return (
         <>
             {
@@ -107,23 +112,6 @@ const ViewPoll = (params: any) => {
                             </div>
                             <div className={`${styles.TotalCount} ${vote?.data?.total ? null : styles.HiddenTotalCount}`}>Total Votes : {vote?.data?.total}</div>
                             <div className={styles.BadgeContainer}>
-
-                                {/* <Tooltip title="Anonymous Vote: No one will be able to identify the option you voted for!">
-                                    <IconButton>
-                                        <AdminPanelSettingsOutlinedIcon />
-                                    </IconButton>
-                                </Tooltip>
-
-                                <Tooltip title="Only signed in user can vote on this poll.">
-                                    <IconButton>
-                                        <LockOutlinedIcon />
-                                    </IconButton>
-                                </Tooltip>
-                                <Tooltip title="This poll is open for voting for limited time.">
-                                    <IconButton>
-                                        <AlarmOutlinedIcon />
-                                    </IconButton>
-                                </Tooltip> */}
                                 <ShareButton opacity={"50%"} poll={data}></ShareButton>
                             </div>
 

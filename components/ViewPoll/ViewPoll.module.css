@@ -182,5 +182,7 @@
   text-align: center;
   align-items: center;
   justify-items: center;
+  min-height: 4rem;
+  /* background-color: white; */
   /* opacity: 50%; */
 }
