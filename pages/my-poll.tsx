@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <div>
             <Head>
-                <title>RT Poll - My Poll</title>
+                <title>My Poll | RT Poll</title>
                 <meta name="description" content="Get your friends opinion in minutes!" />
                 <link rel="icon" href="/favicon.png" />
                 <link rel='canonical' href='https://rtpoll.com' />

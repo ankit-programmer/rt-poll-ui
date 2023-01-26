@@ -7,7 +7,7 @@ import styles from './PollList.module.css';
 const PollList = () => {
     const { data, error, isLoading, isSuccess } = useGetPollsQuery("");
 
-    return (isSuccess?<>
+    return (isSuccess ? <>
         {
             data?.length ? <>
                 <br></br>
@@ -16,7 +16,7 @@ const PollList = () => {
                 <br></br>
                 <br></br>
 
-            </> : <></>
+            </> : <><p>You haven't created any poll yet!</p></>
         }
         <div className={styles.PollContainer}>
             {
@@ -42,7 +42,7 @@ const PollList = () => {
             }
         </div>
 
-    </>:<CircularProgress></CircularProgress>);
+    </> : <CircularProgress></CircularProgress>);
 }
 
 export default PollList;
