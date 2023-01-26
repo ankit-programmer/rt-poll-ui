@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
+import CloseIcon from '@mui/icons-material/Close';
 import { useLazyGetPollByIdQuery } from '../../services/poll';
 import { useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
 import { BiImageAdd, BiShare } from 'react-icons/bi';
@@ -16,8 +17,10 @@ import { Poll } from '../../services/types';
 // import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 // import ShareButton from '../ShareButton/ShareButton';
 import dynamic from 'next/dynamic';
+import Snackbar from '@mui/material/Snackbar';
 const ViewPoll = (params: any) => {
     const [currentAction, setAction] = useState("share");
+    const [messageStatus, setMessageStatus] = useState(false);
     const router = useRouter();
     const { token, isAnonymous } = useSelector((state: any) => state.auth) as any;
     const defaultPoll: Poll = params?.poll;
@@ -26,6 +29,15 @@ const ViewPoll = (params: any) => {
     const [getVote, vote] = useLazyGetVoteByIdQuery();
     const winner = getWinner(vote?.data?.options);
     const [addVote, voteStatus] = useAddVoteMutation();
+    useEffect(() => {
+        async function showMessage() {
+            await dummyWait(5000);
+            if (vote?.isSuccess && !vote?.data?.selected) {
+                setMessageStatus(true);
+            }
+        }
+        showMessage();
+    }, [vote]);
     useEffect(() => {
         if (token && selectedOption) {
             addVote({
@@ -58,7 +70,26 @@ const ViewPoll = (params: any) => {
     }, []);
     const ShareButton = dynamic(() => import('../ShareButton/ShareButton'), {
         loading: () => null
-    })
+    });
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setMessageStatus(false);
+    };
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
     return (
         <>
@@ -126,6 +157,13 @@ const ViewPoll = (params: any) => {
                 ) : (<CircularProgress></CircularProgress>)
 
             }
+            <Snackbar
+                open={messageStatus}
+                autoHideDuration={3000}
+                onClose={handleClose}
+                message="Click on an Option to Vote."
+                action={action}
+            />
         </>
 
     )
