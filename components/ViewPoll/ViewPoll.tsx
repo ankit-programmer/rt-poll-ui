@@ -8,16 +8,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import event from '../../app/analytics';
-import { getReportLink } from '../../utility';
+import { getPollLink, getReportLink } from '../../utility';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { Poll } from '../../services/types';
+// import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 // import ShareButton from '../ShareButton/ShareButton';
 import dynamic from 'next/dynamic';
 const ViewPoll = (params: any) => {
+    const [currentAction, setAction] = useState("share");
     const router = useRouter();
-    const { token } = useSelector((state: any) => state.auth) as any;
+    const { token, isAnonymous } = useSelector((state: any) => state.auth) as any;
     const defaultPoll: Poll = params?.poll;
     const [selectedOption, selectOption] = useState("");
     const [getPoll, { data = defaultPoll, error, isLoading }] = useLazyGetPollByIdQuery();
@@ -42,7 +44,11 @@ const ViewPoll = (params: any) => {
         if (voteStatus?.isSuccess) {
             event.voteAdded(voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
         }
-    }, [voteStatus.data])
+        if (!vote?.data?.selected && voteStatus?.isError && isAnonymous) {
+            setAction("login");
+            router.push(`/auth?message="You need to login in order to vote!"&redirect=${getPollLink(params?.id)}`)
+        }
+    }, [voteStatus])
     useEffect(() => {
         if (params?.id) {
 
@@ -112,7 +118,7 @@ const ViewPoll = (params: any) => {
                             </div>
                             <div className={`${styles.TotalCount} ${vote?.data?.total ? null : styles.HiddenTotalCount}`}>Total Votes : {vote?.data?.total}</div>
                             <div className={styles.BadgeContainer}>
-                                <ShareButton opacity={"50%"} poll={data}></ShareButton>
+                                {(currentAction == "share") ? <ShareButton opacity={"50%"} poll={data}></ShareButton> : <></>}
                             </div>
 
                         </form>
@@ -120,7 +126,6 @@ const ViewPoll = (params: any) => {
                 ) : (<CircularProgress></CircularProgress>)
 
             }
-
         </>
 
     )

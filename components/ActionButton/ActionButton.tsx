@@ -9,27 +9,25 @@ type ActionButtonProps = {
 };
 
 const MainActionButton = (props: ActionButtonProps) => {
-    const { progress = false } = props;
+    const { progress = false, message = "SHARE", icon } = props;
     return (
         <>
-
-
             <Button style={{
                 backgroundColor: 'white',
                 boxShadow: '0 1px 6px 0 rgba(32, 33, 36, 0.28)',
                 borderRadius: '32px',
                 fontSize: '20px',
-                paddingInline: '16px',
+                paddingInline: '20px',
                 fontStretch: 'semi-expanded',
                 letterSpacing: '6px'
             }} onClick={props?.onClick} disabled={progress} className={styles.PrimaryActionButton} endIcon={
-                progress ? <CircularProgress size="2rem" /> : <BiShare style={{
+                progress ? <CircularProgress size="2rem" /> : icon || <BiShare style={{
                     transform: 'scaleX(-1)',
                     opacity: '50%'
                 }} size="2rem" />
 
             }>
-                SHARE
+                {message}
             </Button>
         </>
     )

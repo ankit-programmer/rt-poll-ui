@@ -179,10 +179,14 @@
   visibility: hidden;
 }
 .BadgeContainer {
+  display: flex;
   text-align: center;
   align-items: center;
   justify-items: center;
   min-height: 4rem;
+  margin: 4px;
+  justify-content: center;
+  align-content: center;
   /* background-color: white; */
   /* opacity: 50%; */
 }
