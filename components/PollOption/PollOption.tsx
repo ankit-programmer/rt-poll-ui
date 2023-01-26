@@ -22,19 +22,25 @@ type PollOptionProp = {
     option: Option,
     id: string | number
 }
+let currentImagePopupState = false;
 const PollOption = (props: PollOptionProp) => {
     const ImageUpload = dynamic(() => import('../ImageUpload/ImageUpload'), {
         loading: () => null
     })
 
     const { handleChange, handleDelete, option, id } = props;
-    const [imagePopup, setImagePopup] = useState(false);
+    const [imagePopup, setImagePopup] = useState(currentImagePopupState);
+    function switchImagePopup(status: boolean) {
+        setImagePopup(status);
+        currentImagePopupState = status;
+    }
     function handleOptionChange(event: any) {
         const value = event?.target?.value;
         option.text = value || "";
         handleChange(option);
     }
     function handleImageChange(imageUrl: string) {
+        analytics.imageUploaded(!!imageUrl);
         option.image = imageUrl;
         handleChange(option);
     }
@@ -48,13 +54,13 @@ const PollOption = (props: PollOptionProp) => {
 
                     const file = files.pop();
                     if (file) handleImageChange(file?.downloadUrl);
-                    setImagePopup(false);
+                    switchImagePopup(false);
                 }}></ImageUpload> : null}
             </ErrorBoundary>
             <div className={styles.Option}>
                 <div onClick={() => {
                     analytics.addOptionImage();
-                    setImagePopup(true);
+                    switchImagePopup(true);
                 }} className={styles.OptionIcon}>
                     {
                         option?.image ?

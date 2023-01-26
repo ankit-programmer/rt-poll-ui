@@ -63,6 +63,11 @@ class Event {
             type: "option_image"
         })
     }
+    imageUploaded(status: boolean) {
+        analytics.logEvent("image_uploaded", {
+            status: status
+        })
+    }
     pollCreated(pollId: string) {
         analytics.logEvent("poll_created", {
             id: pollId

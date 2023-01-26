@@ -9,6 +9,7 @@ import MainActionButton from '../ActionButton/ActionButton';
 import { getReportLink } from '../../utility';
 import analytics from '../../app/analytics';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import QuestionInput from '../QuestionInput/QuestionInput';
 
 const ACTIONS = {
   ADD_OPTION: 'add-option',
@@ -54,10 +55,9 @@ function reducer(options: Option[], action: any): Option[] {
 }
 const CreatePoll = () => {
   const router = useRouter();
-  let placeholders = ["What shoud I cover in my next video?", "Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
-  let [placeholder, setPlaceholder] = useState("");
-  const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
 
+  const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
+  const [question, setQuestion] = useState("");
   const [addPoll, { isLoading, data, isError, isSuccess }] = useAddNewPollMutation();
   useEffect(() => {
     if (isSuccess) {
@@ -75,7 +75,11 @@ const CreatePoll = () => {
     dispatch({ type: ACTIONS.REMOVE_OPTION, payload: { index } })
 
   }
-  const quesRef: any = useRef(null);
+
+  function handleQuestionChange(text: string) {
+    setQuestion(text);
+  }
+
 
 
   function handleSubmit(e: any) {
@@ -85,30 +89,10 @@ const CreatePoll = () => {
     if (validatedOptions.length < 2) {
       // TOTO: ANKIT  Show error message
     }
-    addPoll({ title: quesRef?.current?.value, options: validatedOptions });
+    addPoll({ title: question, options: validatedOptions });
   }
 
-  useEffect(() => {
-    if (quesRef.current) {
-      quesRef?.current?.focus();
-    }
-    (async () => {
-      while (placeholders.length) {
-        let ph = placeholders.shift();
-        placeholders.push(ph || "");
-        let sent = "";
-        let words = ph?.split(" ") || [];
-        for (const word of words) {
-          sent += `${word} `;
-          setPlaceholder(sent);
-          await wait(300);
-        }
-        await wait(5000);
 
-      }
-
-    })();
-  }, [])
   return (
     <div className={styles.PollContainer} >
       <ErrorBoundary>
@@ -118,10 +102,8 @@ const CreatePoll = () => {
         }} autoComplete="off">
 
 
-          <div className={styles.QuestionIcon}>Q</div>
 
-          <input ref={quesRef} autoFocus className={styles.QuestionInput} type="text" id='question' placeholder={placeholder} ></input>
-
+          <QuestionInput question={question} changeHandler={handleQuestionChange}></QuestionInput>
           <div className={styles.OptionContainer}>
             {
               options.map((option: any, i) => (
@@ -151,11 +133,5 @@ const CreatePoll = () => {
   )
 }
 
-function wait(time = 1000) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      return resolve(true);
-    }, time);
-  })
-}
+
 export default CreatePoll

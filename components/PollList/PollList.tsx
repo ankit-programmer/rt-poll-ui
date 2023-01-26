@@ -1,12 +1,13 @@
+import { CircularProgress } from '@mui/material';
 import React from 'react';
 import { useGetPollsQuery } from '../../services/poll';
 import ViewPoll from '../ViewPoll/ViewPoll';
 import styles from './PollList.module.css';
 
 const PollList = () => {
-    const { data, error, isLoading } = useGetPollsQuery("");
+    const { data, error, isLoading, isSuccess } = useGetPollsQuery("");
 
-    return (<>
+    return (isSuccess?<>
         {
             data?.length ? <>
                 <br></br>
@@ -41,7 +42,7 @@ const PollList = () => {
             }
         </div>
 
-    </>);
+    </>:<CircularProgress></CircularProgress>);
 }
 
 export default PollList;

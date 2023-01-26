@@ -12,7 +12,7 @@ import UppyFirebasePlugin from '../../utility/UppyFirebasePlugin';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 const uppy = new Uppy({
     restrictions: {
-        maxFileSize: 5000000,
+        maxFileSize: 10000000,
         maxNumberOfFiles: 1,
         allowedFileTypes: ['image/*', '.jpg', '.jpeg', '.png']
     }
@@ -52,14 +52,14 @@ export default function ImageUpload({ onClose }: any) {
     const isMobile = useMediaQuery('(max-width:480px)');
     useEffect(() => {
         uppy.on('file-editor:complete', () => {
-            uppy.upload();
+            uppy.upload()
         });
     }, []);
     return (<div className={styles.ImageUploadPopup}>
         <div style={{
             position: 'relative'
         }}>
-            <Dashboard proudlyDisplayPoweredByUppy={false} showRemoveButtonAfterComplete autoOpenFileEditor doneButtonHandler={() => {
+            <Dashboard proudlyDisplayPoweredByUppy={false} hideUploadButton showRemoveButtonAfterComplete autoOpenFileEditor doneButtonHandler={() => {
                 onClose(uppy.getFiles() || []);
                 uppy.getFiles() && uppy.removeFile(uppy.getFiles()[0]?.id);
             }} width={isMobile ? '95vw' : ""} uppy={uppy} plugins={['ImageEditor']} />

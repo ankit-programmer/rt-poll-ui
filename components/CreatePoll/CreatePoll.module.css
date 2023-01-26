@@ -1,28 +1,4 @@
-.QuestionInput {
-  width: 100%;
-  padding: 16px;
-  border-radius: 2em;
-  padding-left: 3em;
-  padding-right: 1.5em;
-  box-shadow: 10px;
-  font-size: larger;
-  margin-bottom: 32px;
-  outline: 0;
-}
-.QuestionIcon {
-  position: absolute;
-  font-size: 2rem;
-  color: red;
-  opacity: 30%;
-  padding-left: 0.8rem;
-  margin: 6px;
-  cursor: default;
-}
 
-.QuestionInput:focus,
-.OptionInput:focus {
-  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
-}
 .PollContainer {
   margin: auto;
   position: relative;
