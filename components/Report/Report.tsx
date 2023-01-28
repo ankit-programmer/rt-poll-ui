@@ -7,7 +7,8 @@ import { Auth, Option, Poll } from '../../services/types';
 import CloseIcon from '@mui/icons-material/Close';
 import { StyledEngineProvider } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
-import ShareButton from '../ShareButton/ShareButton';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { getPollLink } from '../../utility';
 
 type PollReport = {
     id?: string,// Poll Id,
@@ -18,6 +19,9 @@ const Report = (params: any) => {
     const { token, uid } = useSelector((state: any) => state.auth) as Auth;
     const [isCoppied, setCopied] = useState(false);
     const PollChart = dynamic(() => import("../PollChart/PollChart"), {
+        loading: () => null
+    })
+    const ShareButton = dynamic(() => import('../ShareButton/ShareButton'), {
         loading: () => null
     })
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
@@ -106,6 +110,7 @@ const Report = (params: any) => {
                     }
                 </div>
 
+
                 <div className={styles.ShareContainer}>
                     <div style={{
                         textAlign: 'left'
@@ -115,7 +120,38 @@ const Report = (params: any) => {
                             fontSize: '1.5rem',
                             fontWeight: 'bold'
                         }}>LINK</h3>
-                        <ShareButton poll={data as Poll}></ShareButton>
+                        <div>
+                            <span style={{
+                                opacity: '75%',
+                                fontSize: 'medium'
+                            }}>{getPollLink(params?.id)}</span>
+                            <IconButton onClick={() => {
+                                navigator.clipboard.writeText(getPollLink(params?.id));
+                                setCopied(true);
+                            }}>
+                                <ContentCopyIcon color='primary' />
+                            </IconButton>
+                            <Snackbar
+                                open={isCoppied}
+                                autoHideDuration={2000}
+                                onClose={handleClose}
+                                message="Link Copied"
+                                action={action}
+                            />
+                            <br />
+                            <br></br>
+                            <h3 style={{
+                                fontSize: '1.5rem',
+                                fontWeight: 'bold'
+                            }}>SHARE</h3>
+                            <div style={{
+                                paddingBlock: '8px',
+                                display: 'flex',
+                                gap: '8px'
+                            }}>
+                                <ShareButton poll={data as Poll}></ShareButton>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
