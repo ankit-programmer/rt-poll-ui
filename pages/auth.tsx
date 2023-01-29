@@ -133,7 +133,7 @@ export default function Auth() {
                             tosUrl: '/terms-of-service',
                             privacyPolicyUrl: '/privacy-policy',
                             signInOptions: [
-                                EmailAuthProvider.PROVIDER_ID,
+                                // EmailAuthProvider.PROVIDER_ID,
                                 GoogleAuthProvider.PROVIDER_ID
                             ]
                         }} firebaseAuth={firebaseAuth}></Auth>
