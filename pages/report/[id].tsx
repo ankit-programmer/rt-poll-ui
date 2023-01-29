@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import NavBar from '../../components/NavBar/NavBar'
 import { Provider, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,7 +20,7 @@ export default function PollReport() {
                 <link rel="icon" href="/favicon.png" />
                 <link rel='canonical' href='https://rtpoll.com' />
             </Head>
-            <NavBar />
+            {/* <NavBar /> */}
             <>
                 <div className='w-full h-screen text-center'>
                     <div className='max-w-[1240px] w-full h-full mx-auto p-2 flex justify-center items-center'>

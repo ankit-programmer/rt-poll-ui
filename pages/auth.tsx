@@ -3,19 +3,17 @@ import Head from 'next/head'
 import { useDispatch, useSelector } from 'react-redux';
 // import Navbar from '../components/NavBar/NavBar';
 import { auth as firebaseAuth } from '../app/firebaseApp'
-import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { EmailAuthProvider, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { setAuth } from '../services/auth';
 import dynamic from 'next/dynamic';
 import { CircularProgress } from '@mui/material';
 import { useMergeUserMutation } from '../services/user';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 let anonymousToken: string = "";
 export default function Auth() {
     const router = useRouter();
     const { redirect, message } = router.query;
-    const NavBar = dynamic(() => import('../components/NavBar/NavBar'), {
-        loading: () => null
-    });
     const Auth = dynamic(() => import('../components/Auth/Auth'), {
         loading: () => null
     })
@@ -30,11 +28,11 @@ export default function Auth() {
                 <meta name='keywords' content='RTPoll login,RTPoll sign in,RTPoll signup,RTPoll account,RTPoll registration,RTPoll team polling,RTPoll real-time opinions,RTPoll secure login,RTPoll private polls,RTPoll team decision making'></meta>
                 <link rel="icon" href="/favicon.png" />
             </Head>
-            <NavBar></NavBar>
+            {/* <NavBar></NavBar> */}
             <div className='w-full h-screen text-center'>
                 <div className='max-w-[1240px] min-h-screen w-full h-full mx-auto p-2 grid grid-cols-1 justify-center items-center'>
                     <div>
-                        {message ? (<><h3>{message}</h3><br></br></> ) : <></>}
+                        {message ? (<><h3>{message}</h3><br></br></>) : <></>}
                         <Auth uiConfig={{
                             autoUpgradeAnonymousUsers: true,
                             callbacks: {
@@ -135,7 +133,7 @@ export default function Auth() {
                             tosUrl: '/terms-of-service',
                             privacyPolicyUrl: '/privacy-policy',
                             signInOptions: [
-                                // EmailAuthProvider.PROVIDER_ID,
+                                EmailAuthProvider.PROVIDER_ID,
                                 GoogleAuthProvider.PROVIDER_ID
                             ]
                         }} firebaseAuth={firebaseAuth}></Auth>

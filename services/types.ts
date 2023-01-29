@@ -32,3 +32,14 @@ export type Auth = {
     isAnonymous?: boolean,
     uid?: string
 }
+
+export interface User {
+    id?: string,
+    firstName?: string,
+    middleName?: string,
+    lastName?: string,
+    email?: string,
+    avatar?: string,
+    emailVerified?: boolean,
+    gender?: "male" | "female"
+}

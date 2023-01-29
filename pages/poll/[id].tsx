@@ -7,9 +7,6 @@ export default function Home(props: any) {
     const router = useRouter();
     const { id } = router.query;
     const { poll } = props;
-    const NavBar = dynamic(() => import('../../components/NavBar/NavBar'), {
-        loading: () => null
-    })
     return (
 
 
@@ -22,7 +19,7 @@ export default function Home(props: any) {
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320217016148645" crossOrigin="anonymous"></script>
 
             </Head>
-            <NavBar />
+            {/* <NavBar /> */}
             <>
                 <div className='w-full mt-24 text-center'>
                     <div style={{

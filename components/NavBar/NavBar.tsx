@@ -9,8 +9,9 @@ import { auth } from '../../app/firebaseApp';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Auth } from '../../services/types';
 import { setUser } from '../../app/analytics';
-import {  onIdTokenChanged, signInAnonymously } from 'firebase/auth';
+import { onAuthStateChanged, onIdTokenChanged, signInAnonymously } from 'firebase/auth';
 import { setAuth } from '../../services/auth';
+import { useCreateUserMutation, useLazyGetUserQuery } from '../../services/user';
 let lastScrollY = 0;
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ const Navbar = () => {
   const [shadow, setShadow] = useState(false);
   const [navBg, setNavBg] = useState('#ecf0f3');
   const [linkColor, setLinkColor] = useState('#1f2937');
+  const [getUserProfile, userStatus] = useLazyGetUserQuery();
+  const [createUserProfile, createUserStatus] = useCreateUserMutation();
   const { token, isAnonymous } = useSelector((state: any) => state.auth) as Auth;
   const [visible, setNavVisibility] = useState(true);
   const handleNav = () => {
@@ -26,7 +29,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    return onIdTokenChanged(auth, (user: any) => {
+
+    onIdTokenChanged(auth, (user: any) => {
       if (user) {
         console.log(user);
         setUser(user.uid, user.isAnonymous);
@@ -41,7 +45,27 @@ const Navbar = () => {
         })
       }
     })
+
+    onAuthStateChanged(auth, async (user) => {
+      console.log("USER", user);
+      if (user?.email) {
+        await getUserProfile(user?.uid);
+
+      }
+    })
   }, []);
+
+  useEffect(() => {
+    if (userStatus?.isSuccess) {
+      console.log("User Profile", userStatus?.data);
+      if (!userStatus?.data) {
+        const user = auth.currentUser;
+        createUserProfile({
+          firstName: user?.displayName as string
+        })
+      }
+    }
+  }, [userStatus])
 
 
   useEffect(() => {

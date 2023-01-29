@@ -4,11 +4,7 @@ import { useSelector } from 'react-redux';
 // import Navbar from '../components/NavBar/NavBar';
 import dynamic from 'next/dynamic';
 export default function Home() {
-  const { token } = useSelector((state: any) => state.auth) as any;
   const CreatePoll = dynamic(() => import('../components/CreatePoll/CreatePoll'), {
-    loading: () => null
-  })
-  const NavBar = dynamic(() => import('../components/NavBar/NavBar'), {
     loading: () => null
   })
   return (
@@ -20,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320217016148645" crossOrigin="anonymous"></script>
       </Head>
-      <NavBar></NavBar>
+      {/* <NavBar></NavBar> */}
       <div className='w-full h-screen text-center'>
         <div className='max-w-[1240px] w-full h-full mx-auto p-2 grid grid-cols-1 justify-center items-center'>
 

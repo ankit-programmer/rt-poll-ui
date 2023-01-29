@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { Poll } from './types'
+import type { Poll, User } from './types'
 import { store } from '../app/store';
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
@@ -17,7 +17,14 @@ export const userApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getUser: builder.query<Poll, string>({
+        createUser: builder.mutation({
+            query: (user: User) => ({
+                url: '/user',
+                method: 'POST',
+                body: user
+            })
+        }),
+        getUser: builder.query<User, string>({
             query: () => {
                 return {
                     url: '/user'
@@ -38,4 +45,4 @@ export const userApi = createApi({
     }),
 })
 
-export const { useGetUserQuery, useMergeUserMutation } = userApi;
+export const { useGetUserQuery, useMergeUserMutation, useCreateUserMutation, useLazyGetUserQuery } = userApi;
