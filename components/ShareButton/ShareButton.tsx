@@ -67,18 +67,19 @@ const ShareButton = ({ poll, method, opacity }: { poll: Poll, method?: string[],
             </IconButton> : <></>}
 
             {items?.has('copy') ? <IconButton onClick={() => {
+                analytics.sharePoll(poll?.id, "copy");
                 navigator.clipboard.writeText(getShareMessage(poll));
                 setCopied(true);
             }}>
                 <ContentCopyIcon color='primary' />
             </IconButton> : <></>}
-           
+
             {items.has('other') ? <IconButton onClick={() => {
                 analytics.sharePoll(poll?.id, 'other');
                 if (navigator.share) {
                     navigator.share({
                         title: poll?.title,
-                        text: poll?.options?.map((value: any, index) => `${index + 1}: ${value?.text}\n`).join("\n"),
+                        text: getShareMessage(poll, false),
                         url: getPollLink(poll?.id),
                     })
                         .then(() => console.log('Successful share'))
@@ -91,21 +92,21 @@ const ShareButton = ({ poll, method, opacity }: { poll: Poll, method?: string[],
             </IconButton> : <></>}
         </div>
         <Snackbar
-                open={isCoppied}
-                autoHideDuration={2000}
-                onClose={handleClose}
-                message="Coppied to clipboard!"
-                action={action}
-            />
+            open={isCoppied}
+            autoHideDuration={2000}
+            onClose={handleClose}
+            message="Coppied to clipboard!"
+            action={action}
+        />
     </>)
 }
 
-function getShareMessage(poll: Poll) {
+function getShareMessage(poll: Poll, link: boolean = true) {
     let message = `${poll?.title}\n`;
     poll?.options?.forEach((option, index) => {
         message = message.concat(`\n${index + 1} : ${option?.text}`);
     })
-    message = message.concat(`\n\nYou can share your opinion here : \n${getPollLink(poll?.id)}`);
+    message = message.concat(`\n\nYou can share your opinion here : \n${link ? getPollLink(poll?.id) : ""}`);
 
     return message;
 }
