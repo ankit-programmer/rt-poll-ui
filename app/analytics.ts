@@ -23,15 +23,17 @@ class Event {
         })
     }
 
-    addVote(pollId: string, optionId: string) {
+    addVote(uid: string = "", pollId: string, optionId: string) {
         analytics.logEvent("add_vote", {
+            uid: uid,
             id: pollId,
             optionId: optionId
         })
     }
 
-    voteAdded(pollId: string, optionId: string) {
+    voteAdded(uid: string = "", pollId: string, optionId: string) {
         analytics.logEvent("vote_added", {
+            uid: uid,
             id: pollId,
             optionId: optionId
         });

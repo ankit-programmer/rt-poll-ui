@@ -22,7 +22,7 @@ const ViewPoll = (params: any) => {
     const [currentAction, setAction] = useState("share");
     const [messageStatus, setMessageStatus] = useState(false);
     const router = useRouter();
-    const { token, isAnonymous } = useSelector((state: any) => state.auth) as any;
+    const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
     const defaultPoll: Poll = params?.poll;
     const [selectedOption, selectOption] = useState("");
     const [getPoll, { data = defaultPoll, error, isLoading }] = useLazyGetPollByIdQuery();
@@ -54,7 +54,7 @@ const ViewPoll = (params: any) => {
     }, [token]);
     useEffect(() => {
         if (voteStatus?.isSuccess) {
-            event.voteAdded(voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
+            event.voteAdded(uid, voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
         }
         if (!vote?.data?.selected && voteStatus?.isError && isAnonymous) {
             setAction("login");
@@ -124,7 +124,7 @@ const ViewPoll = (params: any) => {
 
                                     data?.options?.map((option, i) => (
                                         <div onClick={() => {
-                                            event.addVote(vote?.data?.pollId || "", option?.id);
+                                            event.addVote(uid, vote?.data?.pollId || "", option?.id);
                                             selectOption(option?.id);
                                         }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
 
