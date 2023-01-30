@@ -104,7 +104,7 @@ const Navbar = () => {
       }
     >
       <div className='flex justify-between items-center w-full h-full px-2 2xl:px-16'>
-        <Link legacyBehavior href='/'>
+        <Link prefetch={false} legacyBehavior href='/'>
           <a>
             <Image priority
               src={NavLogo}
@@ -118,28 +118,28 @@ const Navbar = () => {
         <div>
           <ul style={{ color: `${linkColor}` }} className='hidden md:flex'>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/'>Create</Link>
+              <Link prefetch={false} legacyBehavior href='/'>Create</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/my-poll'>My Poll</Link>
+              <Link prefetch={false} legacyBehavior href='/my-poll'>My Poll</Link>
             </li>
             {/* <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/pricing'>Pricing</Link>
+              <Link prefetch={false} legacyBehavior href='/pricing'>Pricing</Link>
             </li> */}
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/feedback'>Feedback</Link>
+              <Link prefetch={false} legacyBehavior href='/feedback'>Feedback</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/about'>About Us</Link>
+              <Link prefetch={false} legacyBehavior href='/about'>About Us</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link legacyBehavior href='/privacy'>Privacy</Link>
+              <Link prefetch={false} legacyBehavior href='/privacy'>Privacy</Link>
             </li>
             <li className='ml-10 text-sm uppercase hover:border-b'>
               {
-                !isAnonymous ? <Link onClick={() => {
+                !isAnonymous ? <Link prefetch={false} onClick={() => {
                   auth.signOut();
-                }} href={''} >Logout</Link> : <Link legacyBehavior href='/auth'>Login</Link>
+                }} href={''} >Logout</Link> : <Link prefetch={false} legacyBehavior href='/auth'>Login</Link>
               }
 
             </li>
@@ -172,7 +172,7 @@ const Navbar = () => {
         >
           <div>
             <div className='flex w-full items-center justify-between'>
-              <Link legacyBehavior href='/'>
+              <Link prefetch={false} legacyBehavior href='/'>
                 <a>
                   <Image
                     src={NavLogo}
@@ -198,44 +198,44 @@ const Navbar = () => {
           <div className='py-4 flex flex-col'>
             <ul className='uppercase'>
 
-              <Link legacyBehavior href='/'>
+              <Link prefetch={false} legacyBehavior href='/'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Create
                 </li>
               </Link>
-              <Link legacyBehavior href='/my-poll'>
+              <Link prefetch={false} legacyBehavior href='/my-poll'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   My Poll
                 </li>
               </Link>
-              {/* <Link legacyBehavior href='/pricing'>
+              {/* <Link prefetch={false} legacyBehavior href='/pricing'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Pricing
                 </li>
               </Link> */}
-              <Link legacyBehavior href='/feedback'>
+              <Link prefetch={false} legacyBehavior href='/feedback'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Feedback
                 </li>
               </Link>
-              <Link legacyBehavior href='/about'>
+              <Link prefetch={false} legacyBehavior href='/about'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   About Us
                 </li>
               </Link>
-              <Link legacyBehavior href='/privacy'>
+              <Link prefetch={false} legacyBehavior href='/privacy'>
                 <li onClick={() => setNav(false)} className='py-4 text-sm'>
                   Privacy
                 </li>
               </Link>
               {
-                !isAnonymous ? <Link onClick={() => {
+                !isAnonymous ? <Link prefetch={false} onClick={() => {
                   auth.signOut();
                 }} href={''}>
                   <li onClick={() => setNav(false)} className='py-4 text-sm'>
                     Logout
                   </li>
-                </Link> : <Link legacyBehavior href='/auth'>
+                </Link> : <Link prefetch={false} legacyBehavior href='/auth'>
                   <li onClick={() => setNav(false)} className='py-4 text-sm'>
                     Login
                   </li>
