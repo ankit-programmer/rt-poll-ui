@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ViewPoll.module.css';
 import CloseIcon from '@mui/icons-material/Close';
-import { useLazyGetPollByIdQuery } from '../../services/poll';
+import { useGetPollByIdQuery, useLazyGetPollByIdQuery } from '../../services/poll';
 import { useAddVoteMutation, useLazyGetVoteByIdQuery } from '../../services/vote';
 import { BiImageAdd, BiShare } from 'react-icons/bi';
 import { GiAchievement } from 'react-icons/gi';
@@ -25,7 +25,7 @@ const ViewPoll = (params: any) => {
     const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
     const defaultPoll: Poll = params?.poll;
     const [selectedOption, selectOption] = useState("");
-    const [getPoll, { data = defaultPoll, error, isLoading }] = useLazyGetPollByIdQuery();
+    const { data = defaultPoll, error, isLoading } = useGetPollByIdQuery(params?.id);
     const [getVote, vote] = useLazyGetVoteByIdQuery();
     const winner = getWinner(vote?.data?.options);
     const [addVote, voteStatus] = useAddVoteMutation();
@@ -61,13 +61,13 @@ const ViewPoll = (params: any) => {
             router.push(`/auth?message="You need to login in order to vote!"&redirect=${getPollLink(params?.id)}`)
         }
     }, [voteStatus])
-    useEffect(() => {
-        if (params?.id) {
+    // useEffect(() => {
+    //     if (params?.id) {
 
-            getPoll(params?.id);
-            event.viewPoll(params?.id)
-        }
-    }, []);
+    //         getPoll(params?.id);
+    //         event.viewPoll(params?.id)
+    //     }
+    // }, []);
     const ShareButton = dynamic(() => import('../ShareButton/ShareButton'), {
         loading: () => null
     });

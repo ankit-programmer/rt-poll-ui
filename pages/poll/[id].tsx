@@ -2,36 +2,35 @@ import Head from 'next/head'
 import ViewPoll from '../../components/ViewPoll/ViewPoll'
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { useGetPollByIdQuery } from '../../services/poll';
+import { useEffect } from 'react';
 
 export default function Home(props: any) {
     const router = useRouter();
     const { id } = router.query;
     const { poll } = props;
-    return (
+    return (<>
+        <Head>
+            <title>Vote | RT Poll</title>
+            <meta name="description" content="SHARE YOUR OPINION :)" />
+            <link rel="icon" href="/favicon.png" />
+            <link rel='canonical' href='https://rtpoll.com' />
+            <script async defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320217016148645" crossOrigin="anonymous"></script>
+
+        </Head>
+        {/* <NavBar /> */}
+
+        <div className='w-full mt-24 text-center'>
+            <div style={{
+                minHeight: "85vh"
+            }} className='max-w-[1240px] min-h-screen w-full h-full mx-auto p-2 flex justify-center items-center styles.MainContainer' >
+                {id ? <ViewPoll poll={poll} key={id} id={id}></ViewPoll> : <></>}
+
+            </div>
+        </div>
 
 
-        <div>
-            <Head>
-                <title>Vote | RT Poll</title>
-                <meta name="description" content="SHARE YOUR OPINION :)" />
-                <link rel="icon" href="/favicon.png" />
-                <link rel='canonical' href='https://rtpoll.com' />
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320217016148645" crossOrigin="anonymous"></script>
-
-            </Head>
-            {/* <NavBar /> */}
-            <>
-                <div className='w-full mt-24 text-center'>
-                    <div style={{
-                        minHeight: "85vh"
-                    }} className='max-w-[1240px] min-h-screen w-full h-full mx-auto p-2 flex justify-center items-center styles.MainContainer' >
-                        <ViewPoll poll={poll} key={id} id={id}></ViewPoll>
-
-                    </div>
-                </div>
-
-            </>
-        </div >
+    </>
     )
 }
 
