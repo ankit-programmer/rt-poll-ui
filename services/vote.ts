@@ -45,32 +45,33 @@ export const voteApi = createApi({
 
                         const data = JSON.parse(event.data);
                         console.log(data);
+                        const payload = data?.payload;
                         updateCachedData((draft) => {
-                            switch (data?.event) {
-                                case 'add': {
+                            switch (data?.type) {
+                                case 'vote_added': {
                                     const tempData = { ...draft };
-                                    tempData.options[data?.optionId].count++;
+                                    tempData.options[payload?.optionId].count++;
                                     tempData.total++;
-                                    tempData.selected = (data?.uid == store.getState().auth.uid) ? data?.optionId : tempData.selected;
+                                    tempData.selected = (payload?.uid == store.getState().auth.uid) ? payload?.optionId : tempData.selected;
                                     Object.assign(draft, tempData);
 
                                     break;
                                 }
-                                case 'remove': {
+                                case 'vote_removed': {
                                     const tempData = { ...draft };
-                                    tempData.options[data?.optionId].count--;
+                                    tempData.options[payload?.optionId].count--;
                                     tempData.total--;
-                                    tempData.selected = (data?.uid == store.getState().auth.uid) ? 'null' : tempData.selected;
+                                    tempData.selected = (payload?.uid == store.getState().auth.uid) ? 'null' : tempData.selected;
                                     Object.assign(draft, tempData);
                                 }
 
                                     break;
-                                case 'sync': {
+                                case 'sync_vote': {
                                     const tempData = { ...draft };
-                                    if (tempData?.pollId == data?.pollId) {
-                                        if (!data?.total || !data?.options) return;
-                                        tempData.total = data?.total;
-                                        tempData.options = { ...tempData?.options, ...data?.options };
+                                    if (tempData?.pollId == payload?.pollId) {
+                                        if (!payload?.total || !payload?.options) return;
+                                        tempData.total = payload?.total;
+                                        tempData.options = { ...tempData?.options, ...payload?.options };
                                         Object.assign(draft, tempData);
                                     }
                                 }
