@@ -37,6 +37,7 @@ const ViewPoll = (params: any) => {
             }
         }
         showMessage();
+        selectOption("");
     }, [vote]);
     useEffect(() => {
         if (token && selectedOption) {
@@ -125,8 +126,11 @@ const ViewPoll = (params: any) => {
                                     data?.options?.map((option, i) => (
                                         <div onClick={() => {
                                             event.addVote(uid, vote?.data?.pollId || "", option?.id);
-                                            selectOption(option?.id);
-                                        }} className={`${styles.Option} ${(option?.id == vote?.data?.selected) ? styles.Selected : ""}`} key={i}>
+                                            if (!vote?.data?.selected) {
+
+                                                selectOption(option?.id);
+                                            }
+                                        }} className={`${styles.Option} ${((option?.id == vote?.data?.selected) || (option?.id == selectedOption)) ? styles.Selected : ""}`} key={i}>
 
                                             <div className={styles.OptionIcon}>
                                                 {option?.image ? <Image style={{
