@@ -28,6 +28,7 @@ const ViewPoll = (params: any) => {
     const { data = defaultPoll, error, isLoading } = useGetPollByIdQuery(params?.id);
     const [getVote, vote] = useLazyGetVoteByIdQuery();
     const winner = getWinner(vote?.data?.options);
+    const imagePoll = isImagePoll(data);
     const [addVote, voteStatus] = useAddVoteMutation();
     useEffect(() => {
         async function showMessage() {
@@ -132,14 +133,14 @@ const ViewPoll = (params: any) => {
                                             }
                                         }} className={`${styles.Option} ${((option?.id == vote?.data?.selected) || (option?.id == selectedOption)) ? styles.Selected : ""}`} key={i}>
 
-                                            <div className={styles.OptionIcon}>
+                                            {imagePoll ? <div className={styles.OptionIcon}>
                                                 {option?.image ? <Image style={{
                                                     borderRadius: '8px'
                                                 }} height={100} width={100} src={option?.image || ""} alt={''}></Image> :
                                                     <BiImageAdd style={{
                                                         opacity: "15%"
                                                     }} size="4em"></BiImageAdd>}
-                                            </div>
+                                            </div> : <></>}
                                             <div className={styles.OptionText}><span>{option.text}
                                                 {option?.id == winner ? <GiAchievement style={{
                                                     display: 'inline'
@@ -205,6 +206,12 @@ function getWinner(options: any) {
         return a?.count - b?.count;
     });
     return keys.pop();
+}
+
+function isImagePoll(poll: Poll) {
+    if (!poll) return false;
+    const options = poll?.options;
+    return options.some((option) => !!option?.image);
 }
 
 export default ViewPoll;

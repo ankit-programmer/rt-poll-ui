@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   margin-inline: 24px;
-  margin-block: 16px;
+  margin-block: 1rem;
 }
 
 .QuestionText {
