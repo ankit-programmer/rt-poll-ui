@@ -15,7 +15,7 @@ export default function Home(props: any) {
             <meta name="description" content="SHARE YOUR OPINION :)" />
             <link rel="icon" href="/favicon.png" />
             <link rel='canonical' href='https://rtpoll.com' />
-            <script async defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320217016148645" crossOrigin="anonymous"></script>
+            {/* <script async defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8320217016148645" crossOrigin="anonymous"></script> */}
 
         </Head>
         {/* <NavBar /> */}
