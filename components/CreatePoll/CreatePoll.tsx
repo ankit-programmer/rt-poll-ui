@@ -11,6 +11,7 @@ import analytics from '../../app/analytics';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import QuestionInput from '../QuestionInput/QuestionInput';
 
+const MAX_OPTIONS = 10;
 const ACTIONS = {
   ADD_OPTION: 'add-option',
   REMOVE_OPTION: 'remove-option',
@@ -23,7 +24,7 @@ function reducer(options: Option[], action: any): Option[] {
   switch (action.type) {
     case ACTIONS.ADD_OPTION:
       {
-        if (options.length >= 8) return options;
+        if (options.length >= MAX_OPTIONS) return options;
         return [...options, { text: "" }];
         break;
       }
@@ -107,7 +108,7 @@ const CreatePoll = () => {
           <div className={styles.OptionContainer}>
             {
               options.map((option: any, i) => (
-                <PollOption key={i} id={i} option={option} handleChange={(option: Option) => {
+                <PollOption key={i} index={i} id={i} option={option} handleChange={(option: Option) => {
                   changeOption(option.text || "", i);
                 }} handleDelete={() => {
                   console.log(`Deleting Option at : ${i}`);
@@ -117,7 +118,7 @@ const CreatePoll = () => {
               ))
             }
             {
-              (options.length < 8) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
+              (options.length < MAX_OPTIONS) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
             }
           </div>
           <br />

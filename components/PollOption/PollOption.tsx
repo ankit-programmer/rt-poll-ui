@@ -16,11 +16,14 @@ import analytics from '../../app/analytics';
 import Image from 'next/image';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import dynamic from 'next/dynamic';
+
+const numberText = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
 type PollOptionProp = {
     handleChange: (option: Option) => void,
     handleDelete: any,
     option: Option,
-    id: string | number
+    id: string | number,
+    index: number
 }
 let currentImagePopupState = false;
 const PollOption = (props: PollOptionProp) => {
@@ -28,7 +31,7 @@ const PollOption = (props: PollOptionProp) => {
         loading: () => null
     })
 
-    const { handleChange, handleDelete, option, id } = props;
+    const { handleChange, handleDelete, option, id, index } = props;
     const [imagePopup, setImagePopup] = useState(currentImagePopupState);
     function switchImagePopup(status: boolean) {
         setImagePopup(status);
@@ -73,7 +76,7 @@ const PollOption = (props: PollOptionProp) => {
                     }
 
                 </div>
-                <input className={styles.OptionInput} type="text" onChange={handleOptionChange} value={option.text} placeholder='Option One'></input>
+                <input className={styles.OptionInput} type="text" onChange={handleOptionChange} value={option.text} placeholder={`Option ${numberText[index]}`}></input>
 
                 <Tooltip onClick={handleDelete} title="Delete">
                     <IconButton >
