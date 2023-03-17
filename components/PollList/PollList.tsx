@@ -1,4 +1,5 @@
-import { CircularProgress } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useGetPollsQuery } from '../../services/poll';
 import ViewPoll from '../ViewPoll/ViewPoll';
@@ -6,7 +7,7 @@ import styles from './PollList.module.css';
 
 const PollList = () => {
     const { data, error, isLoading, isSuccess } = useGetPollsQuery("");
-
+    const router = useRouter();
     return (isSuccess ? <>
         {
             data?.length ? <>
@@ -16,7 +17,14 @@ const PollList = () => {
                 <br></br>
                 <br></br>
 
-            </> : <><p>You haven&apos;t created any poll yet!</p></>
+            </> : <>
+                <p>You haven&apos;t created any poll yet!<br></br>
+
+                    <Button onClick={() => {
+                        router.push("/");
+                    }}>Create New Poll</Button>
+                </p>
+            </>
         }
         <div className={styles.PollContainer}>
             {
