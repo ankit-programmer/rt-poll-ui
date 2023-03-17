@@ -9,12 +9,14 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { getPollLink } from '../../utility';
+import { useRouter } from 'next/router';
 
 type PollReport = {
     id?: string,// Poll Id,
     options?: Option[]
 }
 const Report = (params: any) => {
+    const router = useRouter();
     const { data, error, isLoading } = useGetPollByIdQuery(params?.id);
     const { token, uid } = useSelector((state: any) => state.auth) as Auth;
     const [isCoppied, setCopied] = useState(false);
@@ -121,7 +123,9 @@ const Report = (params: any) => {
                             fontWeight: 'bold'
                         }}>LINK</h3>
                         <div>
-                            <span style={{
+                            <span onClick={() => {
+                                router.push(getPollLink(params?.id));
+                            }} style={{
                                 opacity: '75%',
                                 fontSize: 'medium'
                             }}>{getPollLink(params?.id)}</span>
