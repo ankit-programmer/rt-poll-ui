@@ -5,7 +5,7 @@ import styles from './QuestionInput.module.css';
 const QuestionInput = (props: any) => {
     const { question, changeHandler } = props;
     const quesRef: any = useRef(null);
-    let placeholders = ["What shoud I cover in my next video?", "Who will you vote for?", "Who will win FIFA WC 2022?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
+    let placeholders = ["What shoud I cover in my next video?", "Who will win FIFA WC?", "Who will win this T20 World Cup?", "Where should we go for vacation?"];
     let [placeholder, setPlaceholder] = useState("");
     function handleChange(event: any) {
         const value = event?.target?.value;

@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { pollApi } from '../services/poll'
 import { userApi } from '../services/user'
 import { voteApi } from '../services/vote';
+import { draftApi } from '../services/draft';
 import authReducer from '../services/auth';
 
 export const store = configureStore({
@@ -12,12 +13,16 @@ export const store = configureStore({
         [pollApi.reducerPath]: pollApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
         [voteApi.reducerPath]: voteApi.reducer,
+        [draftApi.reducerPath]: draftApi.reducer,
         auth: authReducer
     },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat(pollApi.middleware).concat(userApi.middleware).concat(voteApi.middleware);
+        return getDefaultMiddleware().concat(pollApi.middleware)
+            .concat(userApi.middleware)
+            .concat(voteApi.middleware)
+            .concat(draftApi.middleware);
     }
     ,
 })

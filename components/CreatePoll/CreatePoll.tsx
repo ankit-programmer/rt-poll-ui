@@ -10,17 +10,18 @@ import { getReportLink } from '../../utility';
 import analytics from '../../app/analytics';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import QuestionInput from '../QuestionInput/QuestionInput';
+import { useDeleteDraftMutation, useLazyGetDraftQuery, useSaveDraftMutation } from '../../services/draft';
+import { useSelector } from 'react-redux';
 
 const MAX_OPTIONS = 10;
 const ACTIONS = {
   ADD_OPTION: 'add-option',
   REMOVE_OPTION: 'remove-option',
-  CHANGE_OPTION: 'change-option'
+  CHANGE_OPTION: 'change-option',
+  REPLACE_OPTIONS: 'replace-options'
 }
 
 function reducer(options: Option[], action: any): Option[] {
-  console.log(options);
-  console.log(action);
   switch (action.type) {
     case ACTIONS.ADD_OPTION:
       {
@@ -46,27 +47,60 @@ function reducer(options: Option[], action: any): Option[] {
         return opt;
         break;
       }
-
+    case ACTIONS.REPLACE_OPTIONS:
+      {
+        const opts = action?.payload?.options || [];
+        return opts;
+      }
     default:
       return options;
       break;
   }
-
-
 }
 const CreatePoll = () => {
   const router = useRouter();
 
   const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
   const [question, setQuestion] = useState("");
+  const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
   const [addPoll, { isLoading, data, isError, isSuccess }] = useAddNewPollMutation();
+  const [getDraft, draftStatus] = useLazyGetDraftQuery();
+  const [deleteDraft, deleteStatus] = useDeleteDraftMutation();
+  const [saveDraft] = useSaveDraftMutation();
   useEffect(() => {
     if (isSuccess) {
       event.pollCreated(data?.id);
       router.push(getReportLink(data?.id));
+      deleteDraft(null);
     }
-
   }, [data]);
+
+  useEffect(() => {
+    if (token) {
+      getDraft("");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (draftStatus?.isSuccess) {
+      const { title, options } = draftStatus.data || {};
+      if (title) {
+        setQuestion(title);
+      }
+      if (options) {
+        dispatch({ type: ACTIONS.REPLACE_OPTIONS, payload: { options: options } })
+      }
+    }
+  }, [draftStatus]);
+
+  useEffect(() => {
+    // console.log("OPTIONS", options);
+    if (options[0]?.text || options[0]?.image) {
+      console.log("Saving draft");
+      saveDraft({ title: question, options: options })
+    }
+  }, [options]);
+
 
   function changeOption(text: string, index: number) {
     dispatch({ type: ACTIONS.CHANGE_OPTION, payload: { text, index } });
@@ -80,8 +114,6 @@ const CreatePoll = () => {
   function handleQuestionChange(text: string) {
     setQuestion(text);
   }
-
-
 
   function handleSubmit(e: any) {
     e?.preventDefault();
