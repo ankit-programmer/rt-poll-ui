@@ -88,7 +88,7 @@ const CreatePoll = () => {
         setQuestion(title);
       }
       if (options) {
-        dispatch({ type: ACTIONS.REPLACE_OPTIONS, payload: { options: options } })
+        dispatch({ type: ACTIONS.REPLACE_OPTIONS, payload: { options: options?.map(option=> Object.assign({},option)) } })
       }
     }
   }, [draftStatus]);
