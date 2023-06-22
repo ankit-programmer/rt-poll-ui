@@ -69,7 +69,7 @@ const PollSetting = (props: PollSettingProps) => {
                     </Tooltip>
                     <Tooltip title="Only authenticated users can vote.">
 
-                        <FormControlLabel value="authenticated" control={<Radio />} label="Authenticated" />
+                        <FormControlLabel value="authenticated" control={<Radio />} label="Signed-in" />
                     </Tooltip>
                     <Tooltip title="Only invited users can vote.">
                         <FormControlLabel value="invite" control={<Radio />} label="Invite Only" />

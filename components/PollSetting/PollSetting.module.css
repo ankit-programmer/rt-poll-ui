@@ -7,10 +7,14 @@
     justify-items: left;
     align-items: center;
     padding: 8px;
-    padding-left: 24px;
-    margin: 8px;
+    padding-inline: 32px;
+    /* margin: 8px; */
 }
-
+@media screen and (max-width: 480px) {
+    .SettingContainer {
+      padding-inline: 16px;
+    }
+  }
 .SettingName {
     text-align: left;
     font-weight: 400;
