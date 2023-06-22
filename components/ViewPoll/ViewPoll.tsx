@@ -21,6 +21,7 @@ import dynamic from 'next/dynamic';
 const ViewPoll = (params: any) => {
     const [currentAction, setAction] = useState("share");
     const [messageStatus, setMessageStatus] = useState(false);
+    const [isVoted, setVoted] = useState(false);
     const router = useRouter();
     const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
     const defaultPoll: Poll = params?.poll;
@@ -32,9 +33,13 @@ const ViewPoll = (params: any) => {
     const [addVote, voteStatus] = useAddVoteMutation();
     useEffect(() => {
         async function showMessage() {
-            await dummyWait(5000);
-            if (vote?.isSuccess && !vote?.data?.selected) {
-                setMessageStatus(true);
+            if (vote?.isSuccess) {
+                if (vote?.data?.selected) {
+                    setVoted(true)
+                } else {
+                    await dummyWait(5000);
+                    setMessageStatus(true);
+                }
             }
         }
         showMessage();
@@ -56,6 +61,7 @@ const ViewPoll = (params: any) => {
     }, [token]);
     useEffect(() => {
         if (voteStatus?.isSuccess) {
+            setVoted(true);
             event.voteAdded(uid, voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
         }
         if (!vote?.data?.selected && voteStatus?.isError && isAnonymous) {
@@ -147,7 +153,8 @@ const ViewPoll = (params: any) => {
                                                 }} display={"inline"} size="1.5em" color='green'></GiAchievement> : ""}</span>
                                             </div>
                                             <div className={styles.OptionStat}>{
-                                                (((voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) || vote.isLoading) ? <CircularProgress size={'1em'}></CircularProgress> : (vote?.isSuccess ? getOptionCountView(vote, option?.id) : ""))
+
+                                                (voteStatus.isLoading && (voteStatus.originalArgs?.optionId == option?.id)) ? <CircularProgress size={'1em'}></CircularProgress> : (isVoted ? getOptionCountView(vote, option?.id) : "")
                                             } </div>
                                         </div>
 
