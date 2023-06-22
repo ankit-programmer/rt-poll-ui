@@ -12,6 +12,8 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import QuestionInput from '../QuestionInput/QuestionInput';
 import { useDeleteDraftMutation, useLazyGetDraftQuery, useSaveDraftMutation } from '../../services/draft';
 import { useSelector } from 'react-redux';
+import PollSetting from '../PollSetting/PollSetting';
+import Divider from '@mui/material/Divider/Divider';
 
 const MAX_OPTIONS = 10;
 const ACTIONS = {
@@ -61,6 +63,7 @@ const CreatePoll = () => {
   const router = useRouter();
 
   const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
+  const [setting, setSetting] = useState({ privacy: 'public', comment: false, anonymous: false });
   const [question, setQuestion] = useState("");
   const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
   const [addPoll, { isLoading, data, isError, isSuccess }] = useAddNewPollMutation();
@@ -83,12 +86,15 @@ const CreatePoll = () => {
 
   useEffect(() => {
     if (draftStatus?.isSuccess) {
-      const { title, options } = draftStatus.data || {};
+      const { title, options, setting } = draftStatus.data || {};
       if (title) {
         setQuestion(title);
       }
       if (options) {
-        dispatch({ type: ACTIONS.REPLACE_OPTIONS, payload: { options: options?.map(option=> Object.assign({},option)) } })
+        dispatch({ type: ACTIONS.REPLACE_OPTIONS, payload: { options: options?.map(option => Object.assign({}, option)) } })
+      }
+      if (setting) {
+        setSetting(Object.assign({}, setting as any));
       }
     }
   }, [draftStatus]);
@@ -97,7 +103,7 @@ const CreatePoll = () => {
     // console.log("OPTIONS", options);
     if (options[0]?.text || options[0]?.image) {
       console.log("Saving draft");
-      saveDraft({ title: question, options: options })
+      saveDraft({ title: question, options: options, setting: setting })
     }
   }, [options]);
 
@@ -122,8 +128,10 @@ const CreatePoll = () => {
     if (validatedOptions.length < 2) {
       // TOTO: ANKIT  Show error message
     }
-    addPoll({ title: question, options: validatedOptions });
+ 
+    addPoll({ title: question, options: validatedOptions, setting: setting });
   }
+  
 
 
   return (
@@ -153,6 +161,10 @@ const CreatePoll = () => {
               (options.length < MAX_OPTIONS) ? <AddOption onClick={() => dispatch({ type: ACTIONS.ADD_OPTION })} /> : null
             }
           </div>
+          <br />
+          <Divider>SETTING</Divider>
+          <PollSetting data={setting as any} handleChange={(setting: any) => setSetting(setting)}></PollSetting>
+          <Divider></Divider>
           <br />
           <br />
           <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />

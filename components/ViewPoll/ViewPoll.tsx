@@ -162,7 +162,7 @@ const ViewPoll = (params: any) => {
                                 }
 
                             </div>
-                            <div className={`${styles.TotalCount} ${vote?.data?.total ? null : styles.HiddenTotalCount}`}>Total Votes : {vote?.data?.total}</div>
+                            <div className={`${styles.TotalCount} `}>Total Votes : {vote?.data?.total || 0}</div>
                             <div className={styles.BadgeContainer}>
                                 {(currentAction == "share") ? <ShareButton opacity={"50%"} poll={data}></ShareButton> : <></>}
                             </div>

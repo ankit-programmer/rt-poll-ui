@@ -17,7 +17,14 @@ export type Poll = {
         text: string,
         id: string,
         image?: string
-    }]
+    }],
+    setting?: PollSetting
+}
+
+export type PollSetting = {
+    privacy: 'public' | 'authenticated' | 'invite',
+    comment?: boolean,
+    anonymous?: boolean
 }
 
 export type Option = {
