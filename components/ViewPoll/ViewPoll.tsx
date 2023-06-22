@@ -148,7 +148,7 @@ const ViewPoll = (params: any) => {
                                                     }} size="4em"></BiImageAdd>}
                                             </div> : <></>}
                                             <div className={styles.OptionText}><span>{option.text}
-                                                {option?.id == winner ? <GiAchievement style={{
+                                                {(option?.id == winner && isVoted) ? <GiAchievement style={{
                                                     display: 'inline'
                                                 }} display={"inline"} size="1.5em" color='green'></GiAchievement> : ""}</span>
                                             </div>
