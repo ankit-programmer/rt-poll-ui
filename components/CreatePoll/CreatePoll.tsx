@@ -62,7 +62,7 @@ function reducer(options: Option[], action: any): Option[] {
 }
 const CreatePoll = () => {
   const router = useRouter();
-  const isMobile = useMediaQuery('(max-width:480px)');
+  const isMobile = useMediaQuery('(max-width:600px)');
   const [options, dispatch] = useReducer(reducer, isMobile ? [{ text: "" }, { text: "" }] : [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
   const [setting, setSetting] = useState({ privacy: 'public', comment: false, anonymous: false });
   const [question, setQuestion] = useState("");
