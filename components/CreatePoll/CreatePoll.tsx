@@ -14,6 +14,7 @@ import { useDeleteDraftMutation, useLazyGetDraftQuery, useSaveDraftMutation } fr
 import { useSelector } from 'react-redux';
 import PollSetting from '../PollSetting/PollSetting';
 import Divider from '@mui/material/Divider/Divider';
+import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
 
 const MAX_OPTIONS = 10;
 const ACTIONS = {
@@ -61,8 +62,8 @@ function reducer(options: Option[], action: any): Option[] {
 }
 const CreatePoll = () => {
   const router = useRouter();
-
-  const [options, dispatch] = useReducer(reducer, [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
+  const isMobile = useMediaQuery('(max-width:480px)');
+  const [options, dispatch] = useReducer(reducer, isMobile ? [{ text: "" }, { text: "" }] : [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
   const [setting, setSetting] = useState({ privacy: 'public', comment: false, anonymous: false });
   const [question, setQuestion] = useState("");
   const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
@@ -128,10 +129,10 @@ const CreatePoll = () => {
     if (validatedOptions.length < 2) {
       // TOTO: ANKIT  Show error message
     }
- 
+
     addPoll({ title: question, options: validatedOptions, setting: setting });
   }
-  
+
 
 
   return (
