@@ -28,9 +28,65 @@
 
 .ShareContainer {
     flex: 2;
-    display: grid;
-    /* width: 100%; */
-    /* background-color: red; */
+    min-width: 320px;
+    display: block;
+    padding: 0 1rem;
+    align-self: flex-start;
+}
+
+.ShareCard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.SectionLabel {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+}
+
+.LinkRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.3rem 0.3rem 0.3rem 0.85rem;
+}
+
+.LinkText {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--brand);
+    cursor: pointer;
+}
+
+.LinkText:hover {
+    text-decoration: underline;
+}
+
+.CopyBtn {
+    flex-shrink: 0;
+}
+
+.ShareIcons {
+    margin-left: -0.5rem;
 }
 
 @media screen and (max-width: 480px) {
@@ -42,10 +98,10 @@
         padding-top: 4vh;
     }
     .ShareContainer{
-        flex: 0;
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        padding: 0;
         padding-bottom: 4rem;
-        
     }
-
-
 }

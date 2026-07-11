@@ -22,9 +22,17 @@ export type Poll = {
 }
 
 export type PollSetting = {
-    privacy: 'public' | 'authenticated' | 'invite',
-    comment?: boolean,
-    anonymous?: boolean
+    privacy: 'public' | 'authenticated' | 'invite'
+}
+
+export type Invite = {
+    id?: string,
+    pollId?: string,
+    type: 'email',
+    email: string,
+    name?: string,
+    status: 'pending' | 'sent' | 'voted',
+    createdAt?: string
 }
 
 export type Option = {

@@ -1,0 +1,19 @@
+.PreviewContainer {
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.Question {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.Option {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin-block: 0.5rem;
+}

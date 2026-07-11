@@ -64,7 +64,7 @@ const CreatePoll = () => {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:600px)');
   const [options, dispatch] = useReducer(reducer, isMobile ? [{ text: "" }, { text: "" }] : [{ text: "" }, { text: "" }, { text: "" }] as Option[]);
-  const [setting, setSetting] = useState({ privacy: 'public', comment: false, anonymous: false });
+  const [setting, setSetting] = useState({ privacy: 'public' });
   const [question, setQuestion] = useState("");
   const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
   const [addPoll, { isLoading, data, isError, isSuccess }] = useAddNewPollMutation();
@@ -168,7 +168,7 @@ const CreatePoll = () => {
           <Divider></Divider>
           <br />
           <br />
-          <MainActionButton onClick={handleSubmit} progress={isLoading ? true : false} />
+          <MainActionButton message="Create Poll" onClick={handleSubmit} progress={isLoading ? true : false} />
 
         </form>
 

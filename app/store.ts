@@ -5,6 +5,7 @@ import { pollApi } from '../services/poll'
 import { userApi } from '../services/user'
 import { voteApi } from '../services/vote';
 import { draftApi } from '../services/draft';
+import { inviteApi } from '../services/invite';
 import authReducer from '../services/auth';
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
         [userApi.reducerPath]: userApi.reducer,
         [voteApi.reducerPath]: voteApi.reducer,
         [draftApi.reducerPath]: draftApi.reducer,
+        [inviteApi.reducerPath]: inviteApi.reducer,
         auth: authReducer
     },
     // Adding the api middleware enables caching, invalidation, polling,
@@ -22,7 +24,8 @@ export const store = configureStore({
         return getDefaultMiddleware().concat(pollApi.middleware)
             .concat(userApi.middleware)
             .concat(voteApi.middleware)
-            .concat(draftApi.middleware);
+            .concat(draftApi.middleware)
+            .concat(inviteApi.middleware);
     }
     ,
 })

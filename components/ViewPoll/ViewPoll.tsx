@@ -21,6 +21,7 @@ import dynamic from 'next/dynamic';
 const ViewPoll = (params: any) => {
     const [currentAction, setAction] = useState("share");
     const [messageStatus, setMessageStatus] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [isVoted, setVoted] = useState(false);
     const router = useRouter();
     const { token, isAnonymous, uid } = useSelector((state: any) => state.auth) as any;
@@ -49,7 +50,8 @@ const ViewPoll = (params: any) => {
         if (token && selectedOption) {
             addVote({
                 pollId: params?.id,
-                optionId: selectedOption
+                optionId: selectedOption,
+                key: router?.query?.key
             })
         }
     }, [token, selectedOption]);
@@ -64,9 +66,15 @@ const ViewPoll = (params: any) => {
             setVoted(true);
             event.voteAdded(uid, voteStatus?.originalArgs?.pollId, voteStatus?.originalArgs?.optionId);
         }
-        if (!vote?.data?.selected && voteStatus?.isError && isAnonymous) {
-            setAction("login");
-            router.push(`/auth?message="You need to login in order to vote!"&redirect=${getPollLink(params?.id)}`)
+        if (!vote?.data?.selected && voteStatus?.isError) {
+            if (data?.setting?.privacy == 'invite') {
+                // Invite-only poll : logging in won't help, show why the vote was rejected.
+                const message = (voteStatus?.error as any)?.data?.message;
+                setErrorMessage((typeof message == 'string' && message) || 'This poll is invite only. Please use your invite link to vote.');
+            } else if (isAnonymous) {
+                setAction("login");
+                router.push(`/auth?message="You need to login in order to vote!"&redirect=${getPollLink(params?.id)}`)
+            }
         }
     }, [voteStatus])
     // useEffect(() => {
@@ -178,6 +186,25 @@ const ViewPoll = (params: any) => {
                 onClose={handleClose}
                 message="Click on an Option to Vote."
                 action={action}
+            />
+            <Snackbar
+                open={!!errorMessage}
+                autoHideDuration={5000}
+                onClose={(event: React.SyntheticEvent | Event, reason?: string) => {
+                    if (reason === 'clickaway') return;
+                    setErrorMessage("");
+                }}
+                message={errorMessage}
+                action={
+                    <IconButton
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
+                        onClick={() => setErrorMessage("")}
+                    >
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                }
             />
         </>
 

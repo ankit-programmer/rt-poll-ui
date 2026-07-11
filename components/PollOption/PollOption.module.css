@@ -2,18 +2,32 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    background-color: white;
-    border-radius: 8px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     align-items: center;
-    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.Option:hover {
+    box-shadow: var(--shadow-md);
+}
+.Option:focus-within {
+    border-color: var(--brand);
+    box-shadow: var(--ring), var(--shadow-sm);
 }
 .OptionInput {
     flex: 1;
-    font-size: larger;
+    min-width: 0;
+    font-size: 1.0625rem;
     outline: 0;
     overflow: auto;
-    box-shadow: 8px;
-    padding-left: 8px;
+    background: transparent;
+    padding: 12px 8px 12px 12px;
+}
+.OptionInput::placeholder {
+    color: var(--text-muted);
+    opacity: 0.75;
 }
 .OptionIcon {
     height: 4rem;
@@ -23,6 +37,9 @@
 }
 
 .OptionActionButton {
-    color: red;
-    opacity: 25%;
+    color: #98a2b3;
+    transition: color 0.15s ease;
+}
+.OptionActionButton:hover {
+    color: var(--danger);
 }

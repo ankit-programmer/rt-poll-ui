@@ -50,7 +50,7 @@ const PollList = () => {
             }
         </div>
 
-    </> : <CircularProgress></CircularProgress>);
+    </> : error ? (<p>Something Went Wrong. Please refresh the page.</p>) : <CircularProgress></CircularProgress>);
 }
 
 export default PollList;

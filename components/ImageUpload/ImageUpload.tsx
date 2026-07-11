@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Uppy from '@uppy/core'
 import { Dashboard } from '@uppy/react'
 import ImageEditor from '@uppy/image-editor'
@@ -10,15 +10,18 @@ import { Button, IconButton, useMediaQuery } from '@mui/material';
 import { storage } from '../../app/firebaseApp'
 import UppyFirebasePlugin from '../../utility/UppyFirebasePlugin';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-const uppy = new Uppy({
-    restrictions: {
-        maxFileSize: 10000000,
-        maxNumberOfFiles: 1,
-        allowedFileTypes: ['image/*', '.jpg', '.jpeg', '.png']
-    }
-});
+// One Uppy instance per mounted ImageUpload: a shared module-level instance
+// accumulates event handlers and bleeds files/state across poll options.
+function createUppy() {
+    const uppy = new Uppy({
+        restrictions: {
+            maxFileSize: 10000000,
+            maxNumberOfFiles: 1,
+            allowedFileTypes: ['image/*', '.jpg', '.jpeg', '.png']
+        }
+    });
 
-uppy.use(ImageEditor, {
+    uppy.use(ImageEditor, {
     quality: 0.8,
     cropperOptions: {
         viewMode: 1,
@@ -42,19 +45,27 @@ uppy.use(ImageEditor, {
         cropWidescreenVertical: false,
     },
 
-});
+    });
 
-uppy.use(UppyFirebasePlugin, {
-    storageRef: storage.ref()
-} as any);
+    uppy.use(UppyFirebasePlugin, {
+        storageRef: storage.ref()
+    } as any);
+    return uppy;
+}
 
 export default function ImageUpload({ onClose }: any) {
     const isMobile = useMediaQuery('(max-width:480px)');
+    const [uppy] = useState(createUppy);
     useEffect(() => {
-        uppy.on('file-editor:complete', () => {
+        const onEditorComplete = () => {
             uppy.upload()
-        });
-    }, []);
+        };
+        uppy.on('file-editor:complete', onEditorComplete);
+        return () => {
+            uppy.off('file-editor:complete', onEditorComplete);
+            uppy.close();
+        }
+    }, [uppy]);
     return (<div className={styles.ImageUploadPopup}>
         <div style={{
             position: 'relative'

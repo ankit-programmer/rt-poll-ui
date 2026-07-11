@@ -9,7 +9,6 @@ export const userApi = createApi({
         baseUrl: 'https://api.rtpoll.com',
         prepareHeaders: (headers, { getState }) => {
             const token = store.getState().auth.token;
-            console.log("Token", token);
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }

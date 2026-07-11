@@ -37,8 +37,9 @@ export default function Auth() {
                             autoUpgradeAnonymousUsers: true,
                             callbacks: {
                                 signInSuccessWithAuthResult(authResult, redirectUrl?) {
-                                    successUrl = redirectUrl || "/";
-                                    return true;
+                                    // Send the user back to where they came from (e.g. the poll they were voting on).
+                                    window.location.assign(successUrl);
+                                    return false;
                                 },
                                 signInFailure(err) {
                                     if (err.code != 'firebaseui/anonymous-upgrade-merge-conflict') {

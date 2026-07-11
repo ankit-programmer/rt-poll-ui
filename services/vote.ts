@@ -96,22 +96,12 @@ export const voteApi = createApi({
             ({
                 url: `/vote/${vote.pollId}`,
                 params: {
-                    optionId: vote.optionId
+                    optionId: vote.optionId,
+                    // Invite-only polls need the invite key shared in the invite link.
+                    ...(vote.key ? { key: vote.key } : {})
                 },
                 method: 'POST'
-            }),
-            async onQueryStarted({ vote, ...patch }, { dispatch, queryFulfilled }) {
-                console.log("VOTE", vote)
-                const patchResult = dispatch(voteApi.util.updateQueryData('getVoteById', vote?.pollId, (draft) => {
-                    console.log("DRAFT", draft);
-                    Object.assign(draft, patch);
-                }))
-                try {
-                    await queryFulfilled
-                } catch {
-                    patchResult.undo();
-                }
-            }
+            })
         })
     }),
 })

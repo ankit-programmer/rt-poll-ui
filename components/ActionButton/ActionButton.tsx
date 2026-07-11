@@ -13,18 +13,19 @@ const MainActionButton = (props: ActionButtonProps) => {
     return (
         <>
             <Button style={{
-                backgroundColor: 'white',
-                boxShadow: '0 1px 6px 0 rgba(32, 33, 36, 0.28)',
-                borderRadius: '32px',
-                fontSize: '20px',
-                paddingInline: '20px',
-                fontStretch: 'semi-expanded',
-                letterSpacing: '6px'
+                background: 'linear-gradient(135deg, #5651e5 0%, #709dff 100%)',
+                color: '#fff',
+                borderRadius: '999px',
+                fontSize: '17px',
+                fontWeight: 700,
+                fontFamily: 'inherit',
+                padding: '10px 28px',
+                letterSpacing: '3px'
             }} onClick={props?.onClick} disabled={progress} className={styles.PrimaryActionButton} endIcon={
-                progress ? <CircularProgress size="2rem" /> : icon || <BiShare style={{
+                progress ? <CircularProgress style={{ color: '#fff' }} size="1.5rem" /> : icon || <BiShare style={{
                     transform: 'scaleX(-1)',
-                    opacity: '50%'
-                }} size="2rem" />
+                    opacity: '90%'
+                }} size="1.4rem" />
 
             }>
                 {message}

@@ -25,17 +25,16 @@ type PollOptionProp = {
     id: string | number,
     index: number
 }
-let currentImagePopupState = false;
+// Module scope: dynamic() inside the component body would create a new
+// component type each render, remounting the popup mid-use.
+const ImageUpload = dynamic(() => import('../ImageUpload/ImageUpload'), {
+    loading: () => null
+})
 const PollOption = (props: PollOptionProp) => {
-    const ImageUpload = dynamic(() => import('../ImageUpload/ImageUpload'), {
-        loading: () => null
-    })
-
     const { handleChange, handleDelete, option, id, index } = props;
-    const [imagePopup, setImagePopup] = useState(currentImagePopupState);
+    const [imagePopup, setImagePopup] = useState(false);
     function switchImagePopup(status: boolean) {
         setImagePopup(status);
-        currentImagePopupState = status;
     }
     function handleOptionChange(event: any) {
         const value = event?.target?.value;
@@ -98,10 +97,13 @@ export const AddOption = (props: any) => {
                     display: 'flex',
                     width: '100%',
                     flexDirection: 'row',
-                    backgroundColor: 'white',
-                    borderRadius: '8px',
+                    minHeight: '4rem',
+                    backgroundColor: 'transparent',
+                    borderRadius: '12px',
                     alignItems: 'center',
-                    boxShadow: '0 1px 6px 0 rgba(32, 33, 36, 0.28)',
+                    border: '2px dashed var(--border-strong)',
+                    boxShadow: 'none',
+                    color: 'var(--text-muted)',
                 }} className={styles.Option}>
                     <div style={{
                         flex: 1
@@ -109,7 +111,7 @@ export const AddOption = (props: any) => {
                         <BsPlusCircleDotted style={{
                             display: 'inline',
                             opacity: '50%'
-                        }} size="3em"></BsPlusCircleDotted>
+                        }} size="2em"></BsPlusCircleDotted>
 
                     </div>
 

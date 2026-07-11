@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import styles from './Report.module.css'
-import { CircularProgress, IconButton, Snackbar } from '@mui/material';
+import { CircularProgress, IconButton, Snackbar, Tooltip } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useGetPollByIdQuery } from '../../services/poll';
 import { Auth, Option, Poll } from '../../services/types';
@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { getPollLink } from '../../utility';
 import { useRouter } from 'next/router';
+import InviteUsers from '../Invite/Invite';
 
 type PollReport = {
     id?: string,// Poll Id,
@@ -114,48 +115,44 @@ const Report = (params: any) => {
 
 
                 <div className={styles.ShareContainer}>
-                    <div style={{
-                        textAlign: 'left'
-                    }}>
+                    <div className={styles.ShareCard}>
 
-                        <h3 style={{
-                            fontSize: '1.5rem',
-                            fontWeight: 'bold'
-                        }}>LINK</h3>
-                        <div>
-                            <span onClick={() => {
-                                router.push(getPollLink(params?.id));
-                            }} style={{
-                                opacity: '75%',
-                                fontSize: 'medium'
-                            }}>{getPollLink(params?.id)}</span>
-                            <IconButton onClick={() => {
-                                navigator.clipboard.writeText(getPollLink(params?.id));
-                                setCopied(true);
-                            }}>
-                                <ContentCopyIcon color='primary' />
-                            </IconButton>
-                            <Snackbar
-                                open={isCoppied}
-                                autoHideDuration={2000}
-                                onClose={handleClose}
-                                message="Link Copied"
-                                action={action}
-                            />
-                            <br />
-                            <br></br>
-                            <h3 style={{
-                                fontSize: '1.5rem',
-                                fontWeight: 'bold'
-                            }}>SHARE</h3>
-                            <div style={{
-                                paddingBlock: '8px',
-                                display: 'flex',
-                                gap: '8px'
-                            }}>
+                        <section className={styles.Section}>
+                            <div className={styles.SectionLabel}>Link</div>
+                            <div className={styles.LinkRow}>
+                                <span onClick={() => {
+                                    router.push(getPollLink(params?.id));
+                                }} className={styles.LinkText}>{getPollLink(params?.id)}</span>
+                                <Tooltip title="Copy link">
+                                    <IconButton className={styles.CopyBtn} size="small" onClick={() => {
+                                        navigator.clipboard.writeText(getPollLink(params?.id));
+                                        setCopied(true);
+                                    }}>
+                                        <ContentCopyIcon color='primary' fontSize="small" />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
+                        </section>
+
+                        <section className={styles.Section}>
+                            <div className={styles.SectionLabel}>Share via</div>
+                            <div className={styles.ShareIcons}>
                                 <ShareButton poll={data as Poll}></ShareButton>
                             </div>
-                        </div>
+                        </section>
+
+                        {(data?.setting?.privacy === 'invite' && data?.owner === uid) ?
+                            <section className={styles.Section}>
+                                <InviteUsers pollId={params?.id}></InviteUsers>
+                            </section> : null}
+
+                        <Snackbar
+                            open={isCoppied}
+                            autoHideDuration={2000}
+                            onClose={handleClose}
+                            message="Link Copied"
+                            action={action}
+                        />
                     </div>
                 </div>
             </div>

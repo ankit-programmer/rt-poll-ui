@@ -1,10 +1,17 @@
 .PrimaryActionButton {
-    background-color: white;
-    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
-    border-radius: 32px;
-    font-size: 20px;
-    padding-inline: 16px;
-    font-stretch: semi-expanded;
-    letter-spacing: 6px;
+    box-shadow: var(--shadow-brand);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.PrimaryActionButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px rgba(86, 81, 229, 0.45);
+}
+
+.PrimaryActionButton:active {
+    transform: translateY(0);
+}
+
+.PrimaryActionButton:disabled {
+    opacity: 0.75;
+}
