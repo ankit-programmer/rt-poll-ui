@@ -32,6 +32,7 @@ type PollSettingProps = {
     handleChange: (setting: PollSetting) => void,
     data?: PollSetting
 }
+const radioSx = { '&.Mui-checked': { color: '#5651e5' } };
 const PollSetting = (props: PollSettingProps) => {
     const [setting, dispatch] = React.useReducer(reducer, props?.data);
     useEffect(() => {
@@ -50,14 +51,14 @@ const PollSetting = (props: PollSettingProps) => {
                     dispatch({ type: ACTIONS.CHANGE_PRIVACY, payload: value });
                 }} row>
                     <Tooltip title="Anyone with link can vote.">
-                        <FormControlLabel value="public" control={<Radio />} label="Public" />
+                        <FormControlLabel value="public" control={<Radio sx={radioSx} />} label="Public" />
                     </Tooltip>
                     <Tooltip title="Only authenticated users can vote.">
 
-                        <FormControlLabel value="authenticated" control={<Radio />} label="Signed-in" />
+                        <FormControlLabel value="authenticated" control={<Radio sx={radioSx} />} label="Signed-in" />
                     </Tooltip>
                     <Tooltip title="Only invited users can vote.">
-                        <FormControlLabel value="invite" control={<Radio />} label="Invite Only" />
+                        <FormControlLabel value="invite" control={<Radio sx={radioSx} />} label="Invite Only" />
                     </Tooltip>
                 </RadioGroup>
             </div>
